@@ -70,11 +70,11 @@
                         <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">
                             <i class="fas fa-solid fa-user-tie me-2"></i></i>مدير النظام</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="system-administrator.html" class="dropdown-item active">ادارة حسابات مستخدمي لوحة
+                            <a href="system-administrator.html" class="dropdown-item ">ادارة حسابات مستخدمي لوحة
                                 التحكم</a>
                             <a href="permissions.html" class="dropdown-item">ادارة الصلاحيات</a>
-                            <a href="administration-of-depatments.html" class="dropdown-item">ادارة الادارات</a>
-                            <a href="officeManagement.html" class="dropdown-item">ادارة المكاتب</a>
+                            <a href="administration-of-depatments.html" class="dropdown-item active">ادارة الادارات</a>
+                            <a href="officeManagement.html" class="dropdown-item ">ادارة المكاتب</a>
                             <a href="#" class="dropdown-item">ادارة طلبات الاصناف</a>
                             <a href="#" class="dropdown-item">ادارة طلبات النماذج</a>
                             <a href="#" class="dropdown-item">ادارة الموظفين</a>
@@ -242,7 +242,6 @@
                             <a href="#" class="dropdown-item">Log Out</a>
                         </div>
                     </div>
-               
                 </div>
             </nav>
             <!-- Navbar End -->
@@ -250,14 +249,21 @@
 
             <div class="container-fluid pt-4 px-4">
                 <div class="bg-light rounded h-100 p-4">
-                    <h6 class="mb-4">إضافة مستخدم لإدارة لوحة التحكم</h6>
+                    <h6 class="mb-4">إضافةادارة </h6>
                     <div class="m-n2">
                         <button type="button" class="btn btn-primary m-2" id="openDialog"><i
-                                class="fas fa-solid fa-user-plus me-2"></i>اضافة مستخدم</button>
+                                class="fas fa-solid fa-user-plus me-2"></i>اضافة ادارة </button>
                     </div>
                 </div>
             </div>
-
+            <div class="container-fluid pt-4 px-4">
+                <div class="bg-light rounded h-100 p-4">
+                    <form class="d-none d-md-flex ms-4">
+                        <input class="form-control border-0" type="search" placeholder="ابحث عن إدارة او قسم او وحدة">
+                    </form>
+                   
+                </div>
+            </div>
             <div class="dialog-overlay" id="dialog">
                 <div class="dialog-content">
                     <!-- Your dialog content goes here -->
@@ -265,21 +271,33 @@
                         <div class="d-flex flex-column align-items-center mb-3">
                             <img src="img\qacc.png" alt="شعار الموقع"
                                 style="width: 115px; height: 80px; margin-bottom: 45px;">
-                            <h5>انشاء حساب مستخدم</h5>
+                            <h5>  اضافة ادارة </h5>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingText" placeholder="jhondoe">
-                            <label for="floatingText">اسم المستخدم</label>
+                            <input type="text" class="form-control" id="officeName" placeholder="مكتب ">
+                            <label for="officeName">اسم الادارة </label>
                         </div>
-                        <div class="form-floating mb-3">
-                            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-                            <label for="floatingInput">كلمة المرور</label>
-                        </div>
+                       
+<!-- قائمة الاختيار مع تعديلات اللون الأبيض والسهم السفلي -->
+<div class="form-floating mb-3">
+    <select class="form-control custom-select" id="user-select">
+        <option value="">   </option>
+        <option value="">فتحي موسى الحباسي</option>
+        <option value="user1">عبد الحفيظ عمر خليفة</option>
+        <option value="user2">عبد الباسط فاتح نصير</option>
+        <option value="user3">اكرام خليفة محمد العرضاوي</option>
+        <option value="user4">ايناس سالم السني قشوط</option>
+    </select>
+    <label for="user-select">اختر مدير الادارة  </label>
+</div>
+
+<!-- CSS مخصص لتعديل اللون وإظهار السهم السفلي -->
+
 
 
                         <div class="d-grid gap-2 d-md-flex justify-content-between">
-                            <button type="submit" class="btn btn-primary py-3 w-100 mb-4" onclick="validateForm()">إنشاء
-                                حساب</button>
+                            <button type="submit" class="btn btn-primary py-3 w-100 mb-4" onclick="validateFormOffice()"> اضافة مكتب 
+                                </button>
                             <button type="button" class="btn btn-secondary py-3 w-0 mb-4"
                                 id="closeDialog">إلغاء</button>
                         </div>
@@ -293,65 +311,50 @@
 
                     <div class="col-12">
                         <div class="bg-light rounded h-100 p-4">
-                            <h6 class="mb-4">Responsive Table</h6>
+                            <h6 class="mb-4">جدول الادارات </h6>
                             <div class="table-responsive">
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th scope="col">الرقم</th>
-                                            <th scope="col">اسم المستخدم </th>
-                                            <th scope="col"> الصلاحيات </th>
-                                            <th scope="col">الاجراءات  </th>
-                                          
+                                            <th scope="col">الرقم </th>
+                                            <th scope="col">الادارة</th>
+                                            <th scope="col">القسم  </th>
+                                            <th scope="col">الوحدة</th>
+                                            <th scope="col">الاجراءات   </th>
+                                         
+                                            
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
                                             <th scope="row">1</th>
-                                            <td>اكرام العرضاوي </td>
+                                            <td> ادراة الشؤون الادارية والمالية </td>
+                                            <td>قسم شؤون الموظفين </td>
+                                            <td>وحدة شؤون الموظفين</td>
                                             <td>
                                                 <a href="#" class="btn btn-success custom-btn">التفاصيل</a>
-                                            </td>
-                                            <td>
-                                                <!-- زر حذف باللون الأحمر -->
-                                                <a href="#" class="btn btn-danger custom-btn">حذف</a>
-                                                <!-- زر تقييد باللون البرتقالي -->
-                                                <a href="#" class="btn btn-primary custom-btn">تقييد</a>
-                                                <!-- زر سجل النشاطات باللون الأزرق -->
-                                                <a href="#" class="btn btn-primary custom-btn">سجل النشاطات</a>
                                             </td>
                                             
                                         </tr>
                                         <tr>
                                             <th scope="row">2</th>
-                                            <td>رحمة سعيد</td>
+                                            <td>  ادارة الشؤون الادارية والمالية  </td>
+                                            <td> قسم الخدمات والحركة </td>
+                                            <td>لا يوجد</td>
                                             <td>
                                                 <a href="#" class="btn btn-success custom-btn">التفاصيل</a>
-                                            </td>
-                                            <td>
-                                                <!-- زر حذف باللون الأحمر -->
-                                                <a href="#" class="btn btn-danger custom-btn custom-btn">حذف</a>
-                                                <!-- زر تقييد باللون البرتقالي -->
-                                                <a href="#" class="btn btn-primary custom-btn">تقييد</a>
-                                                <!-- زر سجل النشاطات باللون الأزرق -->
-                                                <a href="#" class="btn btn-primary custom-btn ">سجل النشاطات</a>
                                             </td>
                                             
                                         </tr>
                                         <tr>
                                             <th scope="row">3</th>
-                                            <td>فتحي موسى</td>
+                                            <td> ادارة الاعتماد المؤسسي</td>
+                                            <td>قسم اعتماد  المؤسسات التدريبية  </td>
+                                            <td>لا يوجد</td>
                                             <td>
-                                                <a href="#" class="btn btn-success custom-btn" >التفاصيل</a>
+                                                <a href="#" class="btn btn-success custom-btn">التفاصيل</a>
                                             </td>
-                                            <td>
-                                                <!-- زر حذف باللون الأحمر -->
-                                                <a href="#" class="btn btn-danger custom-btn">حذف</a>
-                                                <!-- زر تقييد باللون البرتقالي -->
-                                                <a href="#" class="btn btn-primary custom-btn">تقييد</a>
-                                                <!-- زر سجل النشاطات باللون الأزرق -->
-                                                <a href="#" class="btn btn-primary custom-btn">سجل النشاطات</a>
-                                            </td>
+                                            
                                         </tr>
                                     </tbody>
                                 </table>
