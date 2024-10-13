@@ -407,3 +407,27 @@ body {
 .form-floating>label {
     right: 0;
 }
+
+.user-selection {
+    position: relative;
+}
+.user-selection select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    appearance: none; /* إخفاء السهم الافتراضي */
+    -webkit-appearance: none; /* إخفاء السهم الافتراضي في Safari */
+    -moz-appearance: none; /* إخفاء السهم الافتراضي في Firefox */
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>');
+    background-repeat: no-repeat;
+    background-position: left 10px center; /* ضبط موضع السهم إلى اليسار */
+    background-size: 12px; /* حجم السهم */
+    transition: border-color 0.3s;
+}
+.user-selection select:focus {
+    border-color: #4b4b4b; /* تغيير لون الحدود عند التركيز */
+    outline: none; /* إزالة التحديد الافتراضي */
+}
