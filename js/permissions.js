@@ -22,7 +22,7 @@ document.getElementById('save-button').addEventListener('click', () => {
         Swal.fire({
             icon: 'warning',               // أيقونة التحذير
             title: 'خطأ!',                 // عنوان التنبيه
-            text: 'يرجى اسم مستخدم',  // نص التنبيه
+            text: 'يرجى ادخال اسم مستخدم',  // نص التنبيه
             confirmButtonText: 'حسنًا',     // نص زر التأكيد
             customClass: {
                 confirmButton: 'btn btn-primary'  // تخصيص الزر إذا كنت تستخدم Bootstrap أو CSS
