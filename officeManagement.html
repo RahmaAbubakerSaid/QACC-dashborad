@@ -57,7 +57,7 @@
                 <a href="index.html" class="d-flex align-items-center ms-4 mb-4">
                     <img src="img\qacc.png" alt="شعار الموقع"
                     style="width: 100px; height: 65px; margin-bottom: 15px;">
-                    <h6 class="text-primary">مركز ادارة الجودة والمعايرة المهنية</h6>
+                    <h6 class="text-primary">مركز ضمان الجودة والمعايرة المهنية</h6>
                 </a>
                
                 <div class="navbar-nav w-100">
@@ -250,6 +250,7 @@
             <div class="container-fluid pt-4 px-4">
                 <div class="bg-light rounded h-100 p-4">
                     <h6 class="mb-4">إضافة مكتب </h6>
+                    
                     <div class="m-n2">
                         <button type="button" class="btn btn-primary m-2" id="openDialog"><i
                                 class="fas fa-solid fa-user-plus me-2"></i>اضافة مكتب </button>
@@ -270,6 +271,21 @@
                             <input type="text" class="form-control" id="officeName" placeholder="مكتب ">
                             <label for="officeName">اسم المكتب</label>
                         </div>
+                        <div class="form-floating mb-3">
+                            <div class="form-floating mb-3">
+                                <div class="user-selection">
+                                    <select id="user-select">
+                                        <option value="" hidden> اختر مدير المكتب</option>
+                                        <option value="user1">  فتحي موسى الحباسي  </option>
+                                        <option value="user2">عبد الحفيظ عمر خليفة</option>
+                                        <option value="user3"> عبد الباسط فاتح نصير </option>
+                                        <option value="user4">اكرام خليفة محمد العرضاوي</option>
+                                        <option value="user5"> ايناس سالم السني قشوط</option>
+                                    </select>
+                                    
+                                </div>
+                            </div>
+                        </div>
                        
 
 
@@ -277,7 +293,7 @@
                             <button type="submit" class="btn btn-primary py-3 w-100 mb-4" onclick="validateFormOffice()"> اضافة مكتب 
                                 </button>
                             <button type="button" class="btn btn-secondary py-3 w-0 mb-4"
-                                id="closeDialog">إلغاء</button>
+                                id="closeDialog">رجوع</button>
                         </div>
                     </div>
                 </div>

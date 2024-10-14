@@ -57,7 +57,7 @@
                 <a href="index.html" class="d-flex align-items-center ms-4 mb-4">
                     <img src="img\qacc.png" alt="شعار الموقع"
                     style="width: 100px; height: 65px; margin-bottom: 15px;">
-                    <h6 class="text-primary">مركز ادارة الجودة والمعايرة المهنية</h6>
+                    <h6 class="text-primary">مركز ضمان الجودة والمعايرة المهنية</h6>
                 </a>
                
                 <div class="navbar-nav w-100">
@@ -252,7 +252,7 @@
                     <h6 class="mb-4">إضافةادارة </h6>
                     <div class="m-n2">
                         <button type="button" class="btn btn-primary m-2" id="openDialog"><i
-                                class="fas fa-solid fa-user-plus me-2"></i>اضافة ادارة </button>
+                                class="fas fa-solid fa-user-plus me-2"></i>اضافة  </button>
                     </div>
                 </div>
             </div>
@@ -271,35 +271,82 @@
                         <div class="d-flex flex-column align-items-center mb-3">
                             <img src="img\qacc.png" alt="شعار الموقع"
                                 style="width: 115px; height: 80px; margin-bottom: 45px;">
-                            <h5>  اضافة ادارة </h5>
+                            <h5>  اضافة ادارة</h5>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="officeName" placeholder="مكتب ">
-                            <label for="officeName">اسم الادارة </label>
+                            <input type="text" class="form-control" id="departementName" placeholder="مكتب ">
+                            <label for="departementName">اسم الادارة </label>
                         </div>
                        
-<!-- قائمة الاختيار مع تعديلات اللون الأبيض والسهم السفلي -->
-<div class="form-floating mb-3">
-    <select class="form-control custom-select" id="user-select">
-        <option value="">   </option>
-        <option value="">فتحي موسى الحباسي</option>
-        <option value="user1">عبد الحفيظ عمر خليفة</option>
-        <option value="user2">عبد الباسط فاتح نصير</option>
-        <option value="user3">اكرام خليفة محمد العرضاوي</option>
-        <option value="user4">ايناس سالم السني قشوط</option>
-    </select>
-    <label for="user-select">اختر مدير الادارة  </label>
-</div>
-
-<!-- CSS مخصص لتعديل اللون وإظهار السهم السفلي -->
-
-
-
+                        <div class="form-floating mb-3">
+                            <div class="form-floating mb-3">
+                                <div class="user-selection">
+                                    <select id="user-select">
+                                        <option value="">اختر مدير ادارة</option>
+                                        <option value="user1">  فتحي موسى الحباسي  </option>
+                                        <option value="user2">عبد الحفيظ عمر خليفة</option>
+                                        <option value="user3"> عبد الباسط فاتح نصير </option>
+                                        <option value="user4">اكرام خليفة محمد العرضاوي</option>
+                                        <option value="user5"> ايناس سالم السني قشوط</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="">
+                            <div class="row g-4">
+            
+            
+                                <div class="col-12">
+                                    <div class="">
+                                        <h6 class="mb-4">جدول الادارات </h6>
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">الرقم </th>
+                                                        <th scope="col">الادارة</th>
+                                                        <th scope="col">الاجراءات   </th>
+                                                     
+                                                        
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <th scope="row">1</th>
+                                                        <td> ادراة الشؤون الادارية والمالية </td>
+                                                        <td>
+                                                            <a href="#" class="btn btn-success custom-btn">الاقسام</a>
+                                                        </td>
+                                                        
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">2</th>
+                                                        <td>  ادارة التفتيش والمعايرة  </td>
+                                                        <td>
+                                                            <a href="#" class="btn btn-success custom-btn">الاقسام</a>
+                                                        </td>
+                                                        
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">3</th>
+                                                        <td> ادارة الاعتماد المؤسسي</td>
+                                                        <td>
+                                                            <a href="#" class="btn btn-success custom-btn">الاقسام</a>
+                                                        </td>
+                                                        
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="d-grid gap-2 d-md-flex justify-content-between">
-                            <button type="submit" class="btn btn-primary py-3 w-100 mb-4" onclick="validateFormOffice()"> اضافة مكتب 
+                            <button type="submit" class="btn btn-primary py-3 w-100 mb-4" onclick="validateFormdepartement()"> اضافة ادارة 
                                 </button>
                             <button type="button" class="btn btn-secondary py-3 w-0 mb-4"
-                                id="closeDialog">إلغاء</button>
+                                id="closeDialog">رجوع</button>
                         </div>
                     </div>
                 </div>
@@ -364,7 +411,6 @@
                 </div>
             </div>
             <!-- Table End -->
-
         </div>
         <!-- Content End -->
 

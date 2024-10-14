@@ -431,3 +431,13 @@ body {
     border-color: #4b4b4b; /* تغيير لون الحدود عند التركيز */
     outline: none; /* إزالة التحديد الافتراضي */
 }
+.custom-btn {
+    padding: 2px 10px;  /* تقليل الحشو الأفقي والعمودي */
+    height: 30px;       /* التحكم في الارتفاع إذا لزم الأمر */
+}
+
+
+
+.swal2-container {
+    z-index: 9999 !important;  /* تأكيد أن SweetAlert2 في المقدمة */
+}

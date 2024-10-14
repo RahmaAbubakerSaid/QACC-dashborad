@@ -18,10 +18,89 @@ dialog.addEventListener('click', function (event) {
         dialog.style.display = 'none';
     }
 });
+
+function validateFormdepartement() {
+    var departementName = document.getElementById('departementName').value;
+    var selectedUser = document.getElementById('user-select').value;
+
+    // التحقق من اسم الادارة
+    if (departementName.trim() === '') {
+        Swal.fire({
+            icon: 'warning',               // أيقونة التحذير
+            title: 'خطأ!',                 // عنوان التنبيه
+            text: 'يرجى إدخال اسم الادارة',  // نص التنبيه
+            confirmButtonText: 'حسنًا',     // نص زر التأكيد
+            customClass: {
+                confirmButton: 'btn btn-primary'  // تخصيص الزر إذا كنت تستخدم Bootstrap أو CSS
+            },
+            buttonsStyling: false,           // تعطيل التنسيق الافتراضي للأزرار
+            allowOutsideClick: false,        // منع الإغلاق عند النقر على الخلفية
+            backdrop: true                   // إضافة خلفية سوداء
+        });
+        return false;
+    }
+
+    // التحقق من اختيار مدير الإدارة
+    if (selectedUser === '') {
+        Swal.fire({
+            icon: 'warning',               // أيقونة التحذير
+            title: 'خطأ!',                 // عنوان التنبيه
+            text: 'يرجى اختيار مدير الإدارة',  // نص التنبيه
+            confirmButtonText: 'حسنًا',     // نص زر التأكيد
+            customClass: {
+                confirmButton: 'btn btn-primary'  // تخصيص الزر إذا كنت تستخدم Bootstrap أو CSS
+            },
+            buttonsStyling: false,           // تعطيل التنسيق الافتراضي للأزرار
+            allowOutsideClick: false,        // منع الإغلاق عند النقر على الخلفية
+            backdrop: true                   // إضافة خلفية سوداء
+        });
+        return false;
+    }
+
+    // إذا كانت جميع القيم صحيحة، قم بإعادة تعيين الحقول
+    Swal.fire({
+        icon: 'success',
+        title: 'تمت الإضافة بنجاح!',
+        confirmButtonText: 'حسنًا',
+        customClass: {
+            confirmButton: 'btn btn-primary'
+        },
+        buttonsStyling: false,
+        allowOutsideClick: false,
+        backdrop: true
+    }).then(() => {
+        // مسح الحقول بعد الإضافة
+        document.getElementById('departementName').value = '';
+        document.getElementById('user-select').selectedIndex = 0;
+    });
+
+    return true;
+}
+
+
 function validateFormOffice(){
-    var officeName = document.getElementById('officeName').value;
+    // var officeName = document.getElementById('officeName').value;
     
-    //التحقق من اسم المكتب 
+    // //التحقق من اسم المكتب 
+    // if (officeName.trim() === '') {
+    //     Swal.fire({
+    //         icon: 'warning',               // أيقونة التحذير
+    //         title: 'خطأ!',                 // عنوان التنبيه
+    //         text: 'يرجى إدخال اسم المكتب',  // نص التنبيه
+    //         confirmButtonText: 'حسنًا',     // نص زر التأكيد
+    //         customClass: {
+    //             confirmButton: 'btn btn-primary'  // تخصيص الزر إذا كنت تستخدم Bootstrap أو CSS
+    //         },
+    //         buttonsStyling: false,           // تعطيل التنسيق الافتراضي للأزرار
+    //         allowOutsideClick: false,        // منع الإغلاق عند النقر على الخلفية
+    //         backdrop: true                   // إضافة خلفية سوداء
+    //     });
+    //     return false;
+    // }
+    var officeName = document.getElementById('officeName').value;
+    var selectedUser = document.getElementById('user-select').value;
+
+    // التحقق من اسم المكتب
     if (officeName.trim() === '') {
         Swal.fire({
             icon: 'warning',               // أيقونة التحذير
@@ -38,6 +117,41 @@ function validateFormOffice(){
         return false;
     }
 
+    // التحقق من اختيار مدير المكتب
+    if (selectedUser === '') {
+        Swal.fire({
+            icon: 'warning',               // أيقونة التحذير
+            title: 'خطأ!',                 // عنوان التنبيه
+            text: 'يرجى اختيار مدير المكتب',  // نص التنبيه
+            confirmButtonText: 'حسنًا',     // نص زر التأكيد
+            customClass: {
+                confirmButton: 'btn btn-primary'  // تخصيص الزر إذا كنت تستخدم Bootstrap أو CSS
+            },
+            buttonsStyling: false,           // تعطيل التنسيق الافتراضي للأزرار
+            allowOutsideClick: false,        // منع الإغلاق عند النقر على الخلفية
+            backdrop: true                   // إضافة خلفية سوداء
+        });
+        return false;
+    }
+
+    // إذا كانت جميع القيم صحيحة، قم بإعادة تعيين الحقول
+    Swal.fire({
+        icon: 'success',
+        title: 'تمت الإضافة بنجاح!',
+        confirmButtonText: 'حسنًا',
+        customClass: {
+            confirmButton: 'btn btn-primary'
+        },
+        buttonsStyling: false,
+        allowOutsideClick: false,
+        backdrop: true
+    }).then(() => {
+        // مسح الحقول بعد الإضافة
+        document.getElementById('officeName').value = '';
+        document.getElementById('user-select').selectedIndex = 0;
+    });
+
+    return true;
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////
 // الكود هنا
