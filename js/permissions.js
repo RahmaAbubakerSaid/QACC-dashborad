@@ -19,8 +19,19 @@ document.getElementById('save-button').addEventListener('click', () => {
     const selectedUser = userSelect.options[userSelect.selectedIndex].text;
 
     if (selectedUser === "اختر مستخدم") {
-        alert('يرجى اختيار مستخدم.');
-        return;
+        Swal.fire({
+            icon: 'warning',               // أيقونة التحذير
+            title: 'خطأ!',                 // عنوان التنبيه
+            text: 'يرجى اسم مستخدم',  // نص التنبيه
+            confirmButtonText: 'حسنًا',     // نص زر التأكيد
+            customClass: {
+                confirmButton: 'btn btn-primary'  // تخصيص الزر إذا كنت تستخدم Bootstrap أو CSS
+            },
+            buttonsStyling: false,           // تعطيل التنسيق الافتراضي للأزرار
+            allowOutsideClick: false,        // منع الإغلاق عند النقر على الخلفية
+            backdrop: true                   // إضافة خلفية سوداء
+        });
+        return false;
     }
 
     const allPermissions = []; // لإضافة جميع الصلاحيات
