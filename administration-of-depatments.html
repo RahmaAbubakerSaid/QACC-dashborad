@@ -313,28 +313,46 @@
                                                 <tbody>
                                                     <tr>
                                                         <th scope="row">1</th>
-                                                        <td> ادراة الشؤون الادارية والمالية </td>
-                                                        <td>
-                                                            <a href="#" class="btn btn-success custom-btn">الاقسام</a>
+                                                        <td>ادارة الشؤون الادارية والمالية</td>
+                                                        <td class="d-flex align-items-center">    
+                                                            <a href="#" class="btn btn-success custom-btn" onclick="openSectionsDialog('ادارة الشؤون الادارية والمالية')">الأقسام</a>
+                                                            <a href="#" class="custom-btn" onclick="editUnit('    ادارة الشؤون الادارية والمالية  ')">
+                                                                <i class="fas fa-pencil-alt" style="color: #007bff;"></i> <!-- لون تعديل -->
+                                                            </a>
+                                                            <a href="#" class="custom-btn" onclick="deleteUnit('ادارة الشؤون الادارية والمالية      ')">
+                                                                <i class="fas fa-trash-alt" style="color: #dc3545;"></i> <!-- أيقونة حذف -->
+                                                          
                                                         </td>
-                                                        
                                                     </tr>
                                                     <tr>
                                                         <th scope="row">2</th>
-                                                        <td>  ادارة التفتيش والمعايرة  </td>
-                                                        <td>
-                                                            <a href="#" class="btn btn-success custom-btn">الاقسام</a>
+                                                        <td>ادارة التفتيش والمعايرة</td>
+                                                        <td class="d-flex align-items-center">    
+                                                            <a href="#" class="btn btn-success custom-btn" onclick="openSectionsDialog('ادارة التفتيش والمعايرة')">الأقسام</a>
+                                                            <a href="#" class="custom-btn" onclick="editUnit('    ادارة التفتيش والمعايرة  ')">
+                                                                <i class="fas fa-pencil-alt" style="color: #007bff;"></i> <!-- لون تعديل -->
+                                                            </a>
+                                                            <a href="#" class="custom-btn" onclick="deleteUnit('ادارة التفتيش والمعايرة      ')">
+                                                                <i class="fas fa-trash-alt" style="color: #dc3545;"></i> <!-- أيقونة حذف -->
+                                                          
                                                         </td>
-                                                        
                                                     </tr>
                                                     <tr>
                                                         <th scope="row">3</th>
-                                                        <td> ادارة الاعتماد المؤسسي</td>
-                                                        <td>
-                                                            <a href="#" class="btn btn-success custom-btn">الاقسام</a>
-                                                        </td>
+                                                        <td> ادارة الاعتماد المؤسسي </td>
                                                         
+                                                            <td class="d-flex align-items-center">    
+                                                            <a href="#" class="btn btn-success custom-btn" onclick="openSectionsDialog('ادارة الاعتماد المؤسسي  ')">الأقسام</a>
+                                                            <a href="#" class="custom-btn" onclick="editUnit('    ادارة الاعتماد المؤسسي ')">
+                                                                <i class="fas fa-pencil-alt" style="color: #007bff;"></i> <!-- لون تعديل -->
+                                                            </a>
+                                                            <a href="#" class="custom-btn" onclick="deleteUnit('ادارة الاعتماد المؤسسي     ')">
+                                                                <i class="fas fa-trash-alt" style="color: #dc3545;"></i> <!-- أيقونة حذف -->
+                                                          
+                                                         
+                                                        </td>
                                                     </tr>
+                                                    
                                                 </tbody>
                                             </table>
                                         </div>
@@ -434,6 +452,147 @@
     <script src="js/main.js"></script>
     <script src="js/operations.js"></script>
 
+    <!-- Dialog للأقسام -->
+<div class="dialog-overlay" id="sectionsDialog" style="display: none;">
+    <div class="dialog-content">
+        <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
+            <div class="d-flex flex-column align-items-center mb-3">
+                <h5 id="departmentTitle">إضافة قسم</h5> <!-- يتم تعديل العنوان حسب الإدارة -->
+            </div>
+
+            <!-- حقل إضافة قسم جديد -->
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="sectionName" placeholder="أدخل اسم القسم">
+                <label for="sectionName">اسم القسم</label>
+            </div>
+
+            <!-- اختيار مدير القسم -->
+            <div class="form-floating mb-3">
+                <div class="user-selection">
+                    <select id="section-manager-select">
+            
+                    <option value="">اختر مدير القسم</option>
+                    <option value="employee1">الموظف 1</option>
+                    <option value="employee2">الموظف 2</option>
+                    <option value="employee3">الموظف 3</option>
+                </select>
+                <label for="sectionManagerSelect">مدير القسم</label>
+            </div>
+</div>
+            <!-- جدول الأقسام -->
+            <h6 class="mb-4">جدول الأقسام</h6>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">الرقم</th>
+                            <th scope="col">القسم</th>
+                            <th scope="col">الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="sectionsTable">
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>قسم شؤون الموظفين</td>
+                            
+                            <td class="d-flex align-items-center">    
+                               
+                                <a href="#" class="btn btn-success custom-btn ms-2" onclick="openUnitDialog('قسم  شؤون الموظفين')">الوحدات</a>
+                                <a href="#" class="custom-btn" onclick="editSection(' قسم  شؤون الموظفين ')">
+                                    <i class="fas fa-pencil-alt" style="color: #007bff;"></i> <!-- لون تعديل -->
+                                </a>
+                                <a href="#" class="custom-btn" onclick="deleteSection('قسم شؤون الموظفين   ')">
+                                    <i class="fas fa-trash-alt" style="color: #dc3545;"></i> <!-- أيقونة حذف -->
+                                </a>
+                            </td>  </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td>قسم الخدمات والحركة</td>
+                            
+                            <td class="d-flex align-items-center">    
+                              
+                                <a href="#" class="btn btn-success custom-btn ms-2" onclick="openUnitDialog('قسم الخدمات والحركة')">الوحدات</a>
+                                <a href="#" class="custom-btn" onclick="editUnit(' قسم الخدمات والحركة ')">
+                                    <i class="fas fa-pencil-alt" style="color: #007bff;"></i> <!-- لون تعديل -->
+                                </a>
+                                <a href="#" class="custom-btn" onclick="deleteUnit('قسم الخدمات والحركة  ')">
+                                    <i class="fas fa-trash-alt" style="color: #dc3545;"></i> <!-- أيقونة حذف -->
+                                </a>
+                            </td>
+                            
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- أزرار التحكم -->
+            <div class="d-grid gap-2 d-md-flex justify-content-between">
+                <button type="button" class="btn btn-primary py-3 w-100 mb-4 " onclick="validateSectionForm()">إضافة</button>
+                <button type="button" class="btn btn-secondary py-3 w-0 mb-4" id="sectionsDialog" onclick="closeSectionsDialog()">رجوع</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Dialog for adding a unit -->
+<div class="dialog-overlay" id="unitDialog">
+    <div class="dialog-content">
+        <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
+            <div class="d-flex flex-column align-items-center mb-3">
+                <h5 id="unitDialogTitle">إضافة وحدة</h5> <!-- سيتم تعديل النص بناءً على اسم القسم -->
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="unitName" placeholder="اسم الوحدة">
+                <label for="unitName">اسم الوحدة</label>
+            </div>
+
+            <div class="form-floating mb-3">
+                <div class="user-selection">
+                    <select id="unit-manager-select">
+                        <option value="">اختر مدير الوحدة</option>
+                        <option value="user1">فتحي موسى الحباسي</option>
+                        <option value="user2">عبد الحفيظ عمر خليفة</option>
+                        <option value="user3">عبد الباسط فاتح نصير</option>
+                        <option value="user4">اكرام خليفة محمد العرضاوي</option>
+                        <option value="user5">ايناس سالم السني قشوط</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">الرقم</th>
+                            <th scope="col">الوحدة</th>
+                            <th scope="col">الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="unitTableBody">
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>وحدة شؤون الموظفين</td>
+                                <td class="d-flex align-items-center">    
+                                    <a href="#" class="custom-btn" onclick="editUnit(' وحدة  شؤون الموظفين ')">
+                                        <i class="fas fa-pencil-alt" style="color: #007bff;"></i> <!-- لون تعديل -->
+                                    </a>
+                                    <a href="#" class="custom-btn" onclick="deleteUnit('وحدة شؤون الموظفين   ')">
+                                        <i class="fas fa-trash-alt" style="color: #dc3545;"></i> <!-- أيقونة حذف -->
+                                  
+                            </td>
+                        </tr>
+                        <!-- مزيد من الصفوف سيتم إضافتها هنا -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="d-grid gap-2 d-md-flex justify-content-between">
+                <button type="submit" class="btn btn-primary py-3 w-100 mb-4" onclick="validateFormUnit()">إضافة وحدة</button>
+                <button type="button" class="btn btn-secondary py-3 w-0 mb-4" id="unitDialog" onclick="closeUnitDialog()">رجوع</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 </body>
