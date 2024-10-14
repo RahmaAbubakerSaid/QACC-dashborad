@@ -84,11 +84,11 @@
                     <!-- ------------------------------------------------------------------------- -->
 
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown"><i
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
                                 class="fas fa-solid fa-users me-2"></i>رئيس وحدة شوؤن الموظفين</a>
                         <div class="dropdown-menu bg-transparent border-0">
                             <a href="#" class="dropdown-item">ادارة الموظفين</a>
-                            <a href="leaveNotifications.html" class="dropdown-item active" >الاجازات</a>
+                            <a href="leaveNotifications.html" class="dropdown-item">الاجازات</a>
                             <a href="#" class="dropdown-item">الحضور والانصراف</a>
                         </div>
                     </div>
@@ -126,10 +126,10 @@
                     <!-- ------------------------------------------------------------------------- -->
 
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                        <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown"><i
                                 class="fas fa-solid fa-headset me-2"></i>قسم الاعلانات</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="ads.html" class="dropdown-item">ادارة الاعلانات</a>
+                            <a href="ads.html" class="dropdown-item active">ادارة الاعلانات</a>
                         </div>
                     </div>
                     <!-- ------------------------------------------------------------------------- -->
@@ -248,46 +248,119 @@
             <!-- Navbar End -->
 
 
-            <!-- Other Elements Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="bg-light rounded h-100 p-4">
+                    <h6 class="mb-4">إضافة مستخدم لإدارة لوحة التحكم</h6>
+                    <div class="m-n2">
+                        <button type="button" class="btn btn-primary m-2" id="openDialog"><i
+                                class="fas fa-solid fa-user-plus me-2"></i>اضافة مستخدم</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dialog-overlay" id="dialog">
+                <div class="dialog-content">
+                    <!-- Your dialog content goes here -->
+                    <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
+                        <div class="d-flex flex-column align-items-center mb-3">
+                            <img src="img\qacc.png" alt="شعار الموقع"
+                                style="width: 115px; height: 80px; margin-bottom: 45px;">
+                            <h5>انشاء حساب مستخدم</h5>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="floatingText" placeholder="jhondoe">
+                            <label for="floatingText">اسم المستخدم</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                            <label for="floatingInput">كلمة المرور</label>
+                        </div>
+
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-between">
+                            <button type="submit" class="btn btn-primary py-3 w-100 mb-4" onclick="validateForm()">إنشاء
+                                حساب</button>
+                            <button type="button" class="btn btn-secondary py-3 w-0 mb-4"
+                                id="closeDialog">إلغاء</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Table Start -->
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
-                    <div class="col-sm-12">
-                        <div class="bg-light rounded h-100 p-4">
-                            <h4 class="mb-4">إخطارات قبول طلب الإجازات</h4>
-                            <div class="alert alert-primary alert-dismissible fade show" role="alert">
-                                <i class="fa fa-exclamation-circle me-2" style="margin: 10px;"></i>نود إخطاركم بأن طلب إجازة (نوع الإجازة) الخاصة بالموظف (اسم الموظف) قد تم قبولها. يُرجى التواصل معه لإتمام الإجراءات النهائية والتوقيع.
-                                <button type="button" class="b-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                <div style="display: flex; flex-direction: column;align-items: end; padding: 15px;">
-                                    <button type="button" class="btn btn-success custom-btn">التفاصيل</button>
 
-                                </div>
-                                
-                            </div>
-                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                <i class="fa fa-exclamation-circle" style="margin: 10px;"></i>
-                                <span class="alert-text">نود إخطاركم بأن طلب إجازة (نوع الإجازة) الخاصة بالموظف (اسم الموظف) قد تم قبولها. يُرجى التواصل معه لإتمام الإجراءات النهائية والتوقيع.</span>
-                                <button type="button" class="b-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                <div style="display: flex; flex-direction: column;align-items: end; padding: 15px;">
-                                    <button type="button" class="btn btn-success custom-btn">التفاصيل</button>
-                                </div>
-                            </div>
-                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                                <i class="fa fa-exclamation-circle" style="margin: 10px;"></i>
-                                <span class="alert-text">نود إخطاركم بأن طلب إجازة (نوع الإجازة) الخاصة بالموظف (اسم الموظف) قد تم قبولها. يُرجى التواصل معه لإتمام الإجراءات النهائية والتوقيع.</span>
-                                <button type="button" class="b-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                <div style="display: flex; flex-direction: column;align-items: end; padding: 15px;">
-                                    <button type="button" class="btn btn-success custom-btn">التفاصيل</button>
-                                </div>
+
+                    <div class="col-12">
+                        <div class="bg-light rounded h-100 p-4">
+                            <h6 class="mb-4">Responsive Table</h6>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">الرقم</th>
+                                            <th scope="col">اسم المستخدم </th>
+                                            <th scope="col"> الصلاحيات </th>
+                                            <th scope="col">الاجراءات  </th>
+                                          
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td>اكرام العرضاوي </td>
+                                            <td>
+                                                <a href="#" class="btn btn-success custom-btn">التفاصيل</a>
+                                            </td>
+                                            <td>
+                                                <!-- زر حذف باللون الأحمر -->
+                                                <a href="#" class="btn btn-danger custom-btn">حذف</a>
+                                                <!-- زر تقييد باللون البرتقالي -->
+                                                <a href="#" class="btn btn-primary custom-btn">تقييد</a>
+                                                <!-- زر سجل النشاطات باللون الأزرق -->
+                                                <a href="#" class="btn btn-primary custom-btn">سجل النشاطات</a>
+                                            </td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">2</th>
+                                            <td>رحمة سعيد</td>
+                                            <td>
+                                                <a href="#" class="btn btn-success custom-btn">التفاصيل</a>
+                                            </td>
+                                            <td>
+                                                <!-- زر حذف باللون الأحمر -->
+                                                <a href="#" class="btn btn-danger custom-btn custom-btn">حذف</a>
+                                                <!-- زر تقييد باللون البرتقالي -->
+                                                <a href="#" class="btn btn-primary custom-btn">تقييد</a>
+                                                <!-- زر سجل النشاطات باللون الأزرق -->
+                                                <a href="#" class="btn btn-primary custom-btn ">سجل النشاطات</a>
+                                            </td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">3</th>
+                                            <td>فتحي موسى</td>
+                                            <td>
+                                                <a href="#" class="btn btn-success custom-btn" >التفاصيل</a>
+                                            </td>
+                                            <td>
+                                                <!-- زر حذف باللون الأحمر -->
+                                                <a href="#" class="btn btn-danger custom-btn">حذف</a>
+                                                <!-- زر تقييد باللون البرتقالي -->
+                                                <a href="#" class="btn btn-primary custom-btn">تقييد</a>
+                                                <!-- زر سجل النشاطات باللون الأزرق -->
+                                                <a href="#" class="btn btn-primary custom-btn">سجل النشاطات</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
-
-
                 </div>
             </div>
-            <!-- Other Elements End -->
-
-
+            <!-- Table End -->
 
         </div>
         <!-- Content End -->
