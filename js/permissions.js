@@ -1,3 +1,19 @@
+// تحديد الكل
+document.getElementById('select-all').addEventListener('click', () => {
+    const functionCheckboxes = document.querySelectorAll('.function-checkbox');
+    
+    if (document.getElementById('select-all').checked) {
+        functionCheckboxes.forEach(checkbox => {
+            checkbox.checked = true;
+        });
+    } else {
+        functionCheckboxes.forEach(checkbox => {
+            checkbox.checked = false;
+        });
+    }
+});
+
+// حفظ البيانات
 document.getElementById('save-button').addEventListener('click', () => {
     const userSelect = document.getElementById('user-select');
     const selectedUser = userSelect.options[userSelect.selectedIndex].text;
@@ -10,6 +26,18 @@ document.getElementById('save-button').addEventListener('click', () => {
     const allPermissions = []; // لإضافة جميع الصلاحيات
 
     const rows = document.querySelectorAll('tbody tr');
+    let userRow = null;
+
+    rows.forEach(row => {
+        if (row.cells[0].textContent === selectedUser) {
+            userRow = row;
+        }
+    });
+
+    if (userRow) {
+        userRow.remove(); // إزالة السطر الحالي للمستخدم إذا كان موجودًا
+    }
+
     rows.forEach(row => {
         const section = row.cells[0].textContent;
         const functionCheckboxes = row.querySelectorAll('.function-checkbox:checked');
@@ -42,4 +70,7 @@ document.getElementById('save-button').addEventListener('click', () => {
     document.querySelectorAll('.function-checkbox').forEach(checkbox => {
         checkbox.checked = false; // إفراغ الوظائف
     });
+
+    document.getElementById('select-all').checked = false;
+
 });
