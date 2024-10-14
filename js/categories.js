@@ -1,23 +1,29 @@
 // إظهار dialog
-const openDialogButton = document.getElementById('openDialogCategories');
-const closeDialogButton = document.getElementById('closeDialogCategories');
-const dialog = document.getElementById('dialogCategories');
+const openDialogButtons = document.querySelectorAll('.openDialogCategories');
+const dialogs = document.querySelectorAll('.dialog');
 
-openDialogButton.addEventListener('click', function () {
-    dialog.style.display = 'block';
+openDialogButtons.forEach((button) => {
+    button.addEventListener('click', function (event) {
+        event.preventDefault();
+        const dialogId = button.getAttribute('id');
+        const dialog = document.getElementById(dialogId);
+        dialog.style.display = 'block';
+    });
 });
 
-closeDialogButton.addEventListener('click', function () {
-    dialog.style.display = 'none';
-});
-
-// إضافة إغلاق المربع الحواري بالنقر على الخلفية السوداء
-dialog.addEventListener('click', function (event) {
-    if (event.target === dialog) {
+dialogs.forEach((dialog) => {
+    const closeDialogButton = dialog.querySelector('.closeDialogCategories');
+    
+    closeDialogButton.addEventListener('click', function () {
         dialog.style.display = 'none';
-    }
-});
+    });
 
+    dialog.addEventListener('click', function (event) {
+        if (event.target === dialog) {
+            dialog.style.display = 'none';
+        }
+    });
+});
 
 
 // كود تعديل الكمية
