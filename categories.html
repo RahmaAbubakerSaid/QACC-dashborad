@@ -30,12 +30,12 @@
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
 
-    
-     <!-- SweetAlert2 CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
-<!-- SweetAlert2 JS -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>
 
@@ -55,11 +55,10 @@
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-light navbar-light">
                 <a href="index.html" class="d-flex align-items-center ms-4 mb-4">
-                    <img src="img\qacc.png" alt="شعار الموقع"
-                    style="width: 100px; height: 65px; margin-bottom: 15px;">
+                    <img src="img\qacc.png" alt="شعار الموقع" style="width: 100px; height: 65px; margin-bottom: 15px;">
                     <h6 class="text-primary">مركز ضمان الجودة والمعايرة المهنية</h6>
                 </a>
-               
+
                 <div class="navbar-nav w-100">
                     <a href="index.html" class="nav-item nav-link"><i
                             class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
@@ -242,7 +241,7 @@
                             <a href="#" class="dropdown-item">Log Out</a>
                         </div>
                     </div>
-               
+
                 </div>
             </nav>
             <!-- Navbar End -->
@@ -250,39 +249,54 @@
 
             <div class="container-fluid pt-4 px-4">
                 <div class="bg-light rounded h-100 p-4">
-                    <h6 class="mb-4">إضافة مستخدم لإدارة لوحة التحكم</h6>
-                    <div class="m-n2">
-                        <button type="button" class="btn btn-primary m-2" id="openDialog"><i
-                                class="fas fa-solid fa-user-plus me-2"></i>اضافة مستخدم</button>
-                    </div>
+                    <h5>إدارة طلبات الأصناف</h5>
                 </div>
             </div>
-
-            <div class="dialog-overlay" id="dialog">
+            <!-- Categories Dialog-->
+            <div class="dialog-overlay" id="dialogCategories">
                 <div class="dialog-content">
                     <!-- Your dialog content goes here -->
-                    <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
-                        <div class="d-flex flex-column align-items-center mb-3">
-                            <img src="img\qacc.png" alt="شعار الموقع"
-                                style="width: 115px; height: 80px; margin-bottom: 45px;">
-                            <h5>انشاء حساب مستخدم</h5>
+                    <div class="col-sm-12">
+                        <div class="bg-light rounded h-100 p-4">
+                            <h6 class="mb-4">تفاصيل الطلب</h6>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">اسم الصنف</th>
+                                        <th scope="col">الكمية</th>
+                                        <th scope="col">الإجراء</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>اقلام</td>
+                                        <td><span>5</span><input type="number" style="display: none;"></td>
+                                        <td><button class="edit-quantity btn btn-success custom-btn" onclick="editQuantity(this)">تعديل
+                                                الكمية</button><button class="save-quantity btn btn-success custom-btn" style="display: none;"
+                                                onclick="saveQuantity(this)">حفظ</button></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">2</th>
+                                        <td>ورق</td>
+                                        <td><span>10</span><input type="number" style="display: none;"></td>
+                                        <td><button class="edit-quantity btn btn-success custom-btn" onclick="editQuantity(this)">تعديل
+                                                الكمية</button><button class="save-quantity btn btn-success custom-btn" style="display: none;"
+                                                onclick="saveQuantity(this)">حفظ</button></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">3</th>
+                                        <td>اقلام حبر</td>
+                                        <td><span>4</span><input type="number" style="display: none;"></td>
+                                        <td><button class="edit-quantity btn btn-success custom-btn" onclick="editQuantity(this)">تعديل
+                                                الكمية</button><button class="save-quantity btn btn-success custom-btn" style="display: none;"
+                                                onclick="saveQuantity(this)">حفظ</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingText" placeholder="jhondoe">
-                            <label for="floatingText">اسم المستخدم</label>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-                            <label for="floatingInput">كلمة المرور</label>
-                        </div>
-
-
-                        <div class="d-grid gap-2 d-md-flex justify-content-between">
-                            <button type="submit" class="btn btn-primary py-3 w-100 mb-4" onclick="validateForm()">إنشاء
-                                حساب</button>
-                            <button type="button" class="btn btn-secondary py-3 w-0 mb-4"
-                                id="closeDialog">إلغاء</button>
-                        </div>
+                        <div id="closeDialogCategories"></div>
                     </div>
                 </div>
             </div>
@@ -299,58 +313,28 @@
                                     <thead>
                                         <tr>
                                             <th scope="col">الرقم</th>
-                                            <th scope="col">اسم المستخدم </th>
-                                            <th scope="col"> الصلاحيات </th>
-                                            <th scope="col">الاجراءات  </th>
-                                          
+                                            <th scope="col">اسم الموظف </th>
+                                            <th scope="col"> الإدارة </th>
+                                            <th scope="col">القسم </th>
+                                            <th scope="col">الإجراءات </th>
+
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
                                             <th scope="row">1</th>
                                             <td>اكرام العرضاوي </td>
+                                            <td>تقنية معلومات </td>
+
+                                            <td>البرمجة </td>
                                             <td>
-                                                <a href="#" class="btn btn-success custom-btn">التفاصيل</a>
-                                            </td>
-                                            <td>
-                                                <!-- زر حذف باللون الأحمر -->
+                                                <!-- التفاصيل -->
+                                                <a href="#" class="btn btn-success custom-btn"
+                                                    id="openDialogCategories">التفاصيل</a>
+                                                <!-- قبول -->
+                                                <a href="#" class="btn btn-success custom-btn">قبول</a>
+                                                <!-- رفض -->
                                                 <a href="#" class="btn btn-danger custom-btn">حذف</a>
-                                                <!-- زر تقييد باللون البرتقالي -->
-                                                <a href="#" class="btn btn-primary custom-btn">تقييد</a>
-                                                <!-- زر سجل النشاطات باللون الأزرق -->
-                                                <a href="#" class="btn btn-primary custom-btn">سجل النشاطات</a>
-                                            </td>
-                                            
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">2</th>
-                                            <td>رحمة سعيد</td>
-                                            <td>
-                                                <a href="#" class="btn btn-success custom-btn">التفاصيل</a>
-                                            </td>
-                                            <td>
-                                                <!-- زر حذف باللون الأحمر -->
-                                                <a href="#" class="btn btn-danger custom-btn custom-btn">حذف</a>
-                                                <!-- زر تقييد باللون البرتقالي -->
-                                                <a href="#" class="btn btn-primary custom-btn">تقييد</a>
-                                                <!-- زر سجل النشاطات باللون الأزرق -->
-                                                <a href="#" class="btn btn-primary custom-btn ">سجل النشاطات</a>
-                                            </td>
-                                            
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">3</th>
-                                            <td>فتحي موسى</td>
-                                            <td>
-                                                <a href="#" class="btn btn-success custom-btn" >التفاصيل</a>
-                                            </td>
-                                            <td>
-                                                <!-- زر حذف باللون الأحمر -->
-                                                <a href="#" class="btn btn-danger custom-btn">حذف</a>
-                                                <!-- زر تقييد باللون البرتقالي -->
-                                                <a href="#" class="btn btn-primary custom-btn">تقييد</a>
-                                                <!-- زر سجل النشاطات باللون الأزرق -->
-                                                <a href="#" class="btn btn-primary custom-btn">سجل النشاطات</a>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -383,7 +367,7 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
-    <script src="js/operations.js"></script>
+    <script src="js/categories.js"></script>
 
 
 
