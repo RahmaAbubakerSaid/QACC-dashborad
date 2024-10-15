@@ -508,3 +508,171 @@ body {
     bottom: 45px;
     z-index: 99;
 }
+.main-container {
+    display: flex;
+    width: 100%;
+    height: 90%;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .left-container {
+    width: 30%;
+    border-right: 1px solid #ddd;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #f0f2f5;
+  }
+
+  .search-container {
+    display: flex;
+    padding: 10px;
+    background-color: #f0f2f5;
+  }
+
+  .search-container .input {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 20px;
+    padding: 5px 10px;
+    width: 100%;
+  }
+
+  .search-container .input i {
+    font-size: 16px;
+    color: #666;
+    margin-right: 10px;
+  }
+
+  .search-container .input input {
+    border: none;
+    outline: none;
+    background-color: transparent;
+    width: 100%;
+    font-size: 14px;
+  }
+
+  .employee-list {
+    height: calc(100% - 80px);
+    overflow-y: auto;
+  }
+
+  .employee-box {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .employee-box:hover {
+    background-color: #f0f2f5;
+  }
+
+  .employee-box input[type="checkbox"] {
+    margin-right: 10px;
+  }
+
+  .right-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .header {
+    padding: 10px;
+    background-color: #f0f2f5;
+  }
+
+  .chat-container {
+    flex: 1;
+    background-color: #e5ddd5;
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  .message-wrapper {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .message-box {
+    max-width: 60%;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #dcf8c6;
+    flex: 1;
+  }
+
+  .message-box p, .message-box a {
+    font-size: 14px;
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  .message-date {
+    font-size: 12px;
+    color: #888;
+    margin-top: 5px;
+  }
+
+  .delete-message {
+    cursor: pointer;
+    color: red;
+    font-size: 16px;
+    margin-left: 10px;
+  }
+
+  .chatbox-input {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f0f2f5;
+    padding: 10px;
+  }
+
+  .chatbox-input input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 20px;
+    font-size: 14px;
+    margin-left: 10px;
+  }
+
+  .chatbox-input i {
+    font-size: 20px;
+    color: #666;
+    margin: 0 10px;
+    cursor: pointer;
+  }
+
+  .file-input {
+    display: none;
+  }
+
+  .drop-area {
+    border: 2px dashed #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    margin: 10px 0;
+  }
+  
+  p{
+    margin: 10px;
+  }
