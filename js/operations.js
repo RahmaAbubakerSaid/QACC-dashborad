@@ -226,11 +226,11 @@ function openSectionsDialog(departmentName) {
 }
 
 
-// دالة للتعديل على الوحدة
+// دالة للتعديل على القسم 
 function editSection(sectionName) {
     Swal.fire({
         icon: 'info',
-        title: 'تعديل الوحدة',
+        title: 'تعديل القسم',
         text: 'سيتم فتح نافذة تعديل القسم: ' + sectionName,
         confirmButtonText: 'حسنًا',
         customClass: {
@@ -241,8 +241,7 @@ function editSection(sectionName) {
         backdrop: true
     });
 }
-
-// دالة لحذف الوحدة
+   //دالة حذف القسم
 function deleteSection(sectionName) {
     Swal.fire({
         icon: 'warning',
@@ -277,7 +276,7 @@ function deleteSection(sectionName) {
     
 }
 
-// فتح dialog الوحدة وعرض اسم القسم
+// فتح dialog  وعرض اسم القسم
 function openUnitDialog(sectionName) {
     document.getElementById('unitDialogTitle').innerText = 'إضافة وحدة في ' + sectionName;
     document.getElementById('unitDialog').style.display = 'block'; // عرض النافذة
@@ -402,4 +401,64 @@ function closeUnitDialog() {
     }
 }
 
+
+// دالة للتعديل على مكتب 
+function editOffice(officeName) {
+    Swal.fire({
+        icon: 'info',
+        title: 'تعديل المكتب',
+        text: 'سيتم فتح نافذة تعديل المكتب: ' + officeName,
+        confirmButtonText: 'حسنًا',
+        customClass: {
+            confirmButton: 'btn btn-primary'
+        },
+        buttonsStyling: false,
+        allowOutsideClick: false,
+        backdrop: true
+    });
+}
+   //دالة حذف مكتب
+function deleteOffice(officeName) {
+    Swal.fire({
+        icon: 'warning',
+        title: 'هل أنت متأكد؟',
+        text: 'سيتم حذف مكتب: ' + officeName,
+        showCancelButton: true,
+        confirmButtonText: 'موافق',
+        cancelButtonText: 'إلغاء',
+        customClass: {
+            confirmButton: 'btn btn-danger ms-2',  // إضافة مسافة إلى زر موافق
+            cancelButton: 'btn btn-secondary'
+        },
+        buttonsStyling: false,
+        allowOutsideClick: false,
+        backdrop: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                icon: 'success',
+                title: 'تم الحذف بنجاح!',
+                confirmButtonText: 'حسنًا',
+                customClass: {
+                    confirmButton: 'btn btn-primary'
+                },
+                buttonsStyling: false,
+                allowOutsideClick: false,
+                backdrop: true
+            });
+        }
+    });
+
+    
+}
+
+
+function showDetails() {
+    // إظهار الـ dialog فقط بدون تمرير قائمة الموظفين
+    document.getElementById('detailsDialog').style.display = 'block';
+}
+
+function closeDetails() {
+    document.getElementById('detailsDialog').style.display = 'none';
+}
 

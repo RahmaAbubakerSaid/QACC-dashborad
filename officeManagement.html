@@ -314,7 +314,7 @@
                                             <th scope="col">اسم المكتب </th>
                                             <th scope="col"> اسم مدير المكتب</th>
                                             <th scope="col">عدد موظفي المكتب</th>
-                                            <th scope="col">بيانات الموظفين</th>
+                                            <th scope="col"> الاجراءات</th>
                                             
                                         </tr>
                                     </thead>
@@ -325,8 +325,17 @@
                                             <td>اسراء التليسي</td>
                                             <td>4</td>
                                             <td>
-                                                <a href="#" class="btn btn-success custom-btn">التفاصيل</a>
+                                                <div class="btn-group">
+                                                    <a href="#" class="btn btn-success custom-btn">التفاصيل</a>
+                                                    <a href="#" class="custom-btn-icon" onclick="editOffice('مكتب التوثيق والمعلومات')">
+                                                        <i class="fas fa-pencil-alt" style="color: #007bff;"></i> <!-- لون تعديل -->
+                                                    </a>
+                                                    <a href="#" class="custom-btn-icon" onclick="deleteOffice('مكتب التوثيق والمعلومات')">
+                                                        <i class="fas fa-trash-alt" style="color: #dc3545;"></i> <!-- أيقونة حذف -->
+                                                    </a>
+                                                </div>
                                             </td>
+                                            
                                             
                                         </tr>
                                         <tr>
@@ -335,7 +344,15 @@
                                             <td>عبد الباسط</td>
                                             <td>6</td>
                                             <td>
+                                                <div class="btn-group">
                                                 <a href="#" class="btn btn-success custom-btn">التفاصيل</a>
+                                                <a href="#" class="custom-btn-icon" onclick="editOffice(' قسم  شؤون الموظفين ')">
+                                                    <i class="fas fa-pencil-alt" style="color: #007bff;"></i> <!-- لون تعديل -->
+                                                </a>
+                                                <a href="#" class="custom-btn-icon" onclick="deleteOffice('قسم شؤون الموظفين   ')">
+                                                    <i class="fas fa-trash-alt" style="color: #dc3545;"></i> <!-- أيقونة حذف -->
+                                                </a>
+                                            </div>
                                             </td>
                                             
                                         </tr>
@@ -345,7 +362,15 @@
                                             <td>نجاح الباجقني</td>
                                             <td>2</td>
                                             <td>
+                                                <div class="btn-group">
                                                 <a href="#" class="btn btn-success custom-btn">التفاصيل</a>
+                                                <a href="#" class="custom-btn-icon" onclick="editOffice(' قسم  شؤون الموظفين ')">
+                                                    <i class="fas fa-pencil-alt" style="color: #007bff;"></i> <!-- لون تعديل -->
+                                                </a>
+                                                <a href="#" class="custom-btn-icon" onclick="deleteOffice('قسم شؤون الموظفين   ')">
+                                                    <i class="fas fa-trash-alt" style="color: #dc3545;"></i> <!-- أيقونة حذف -->
+                                                </a>
+                                                </div>
                                             </td>
                                             
                                         </tr>

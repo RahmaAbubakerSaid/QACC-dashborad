@@ -315,40 +315,45 @@
                                                         <th scope="row">1</th>
                                                         <td>ادارة الشؤون الادارية والمالية</td>
                                                         <td class="d-flex align-items-center">    
+                                                            <div class="btn-group">
                                                             <a href="#" class="btn btn-success custom-btn" onclick="openSectionsDialog('ادارة الشؤون الادارية والمالية')">الأقسام</a>
-                                                            <a href="#" class="custom-btn" onclick="editUnit('    ادارة الشؤون الادارية والمالية  ')">
+                                                            <a href="#" class="custom-btn-icon" onclick="editUnit('    ادارة الشؤون الادارية والمالية  ')">
                                                                 <i class="fas fa-pencil-alt" style="color: #007bff;"></i> <!-- لون تعديل -->
                                                             </a>
-                                                            <a href="#" class="custom-btn" onclick="deleteUnit('ادارة الشؤون الادارية والمالية      ')">
+                                                            <a href="#" class="custom-btn-icon" onclick="deleteUnit('ادارة الشؤون الادارية والمالية      ')">
                                                                 <i class="fas fa-trash-alt" style="color: #dc3545;"></i> <!-- أيقونة حذف -->
-                                                          
+                                                          </a>
+                                                        </div>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <th scope="row">2</th>
                                                         <td>ادارة التفتيش والمعايرة</td>
-                                                        <td class="d-flex align-items-center">    
+                                                        <td class="d-flex align-items-center">
+                                                            <div class="btn-group"> 
                                                             <a href="#" class="btn btn-success custom-btn" onclick="openSectionsDialog('ادارة التفتيش والمعايرة')">الأقسام</a>
-                                                            <a href="#" class="custom-btn" onclick="editUnit('    ادارة التفتيش والمعايرة  ')">
+                                                            <a href="#" class="custom-btn-icon" onclick="editUnit('    ادارة التفتيش والمعايرة  ')">
                                                                 <i class="fas fa-pencil-alt" style="color: #007bff;"></i> <!-- لون تعديل -->
                                                             </a>
-                                                            <a href="#" class="custom-btn" onclick="deleteUnit('ادارة التفتيش والمعايرة      ')">
+                                                            <a href="#" class="custom-btn-icon" onclick="deleteUnit('ادارة التفتيش والمعايرة      ')">
                                                                 <i class="fas fa-trash-alt" style="color: #dc3545;"></i> <!-- أيقونة حذف -->
-                                                          
+                                                          </a></div>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <th scope="row">3</th>
                                                         <td> ادارة الاعتماد المؤسسي </td>
                                                         
-                                                            <td class="d-flex align-items-center">    
+                                                            <td class="d-flex align-items-center">   
+                                                                <div class="btn-group">
                                                             <a href="#" class="btn btn-success custom-btn" onclick="openSectionsDialog('ادارة الاعتماد المؤسسي  ')">الأقسام</a>
-                                                            <a href="#" class="custom-btn" onclick="editUnit('    ادارة الاعتماد المؤسسي ')">
+                                                            <a href="#" class="custom-btn-icon" onclick="editUnit('    ادارة الاعتماد المؤسسي ')">
                                                                 <i class="fas fa-pencil-alt" style="color: #007bff;"></i> <!-- لون تعديل -->
                                                             </a>
-                                                            <a href="#" class="custom-btn" onclick="deleteUnit('ادارة الاعتماد المؤسسي     ')">
+                                                            <a href="#" class="custom-btn-icon" onclick="deleteUnit('ادارة الاعتماد المؤسسي     ')">
                                                                 <i class="fas fa-trash-alt" style="color: #dc3545;"></i> <!-- أيقونة حذف -->
-                                                          
+                                                           </a>
+                                                            </div> 
                                                          
                                                         </td>
                                                     </tr>
@@ -397,7 +402,8 @@
                                             <td>قسم شؤون الموظفين </td>
                                             <td>وحدة شؤون الموظفين</td>
                                             <td>
-                                                <a href="#" class="btn btn-success custom-btn">التفاصيل</a>
+                                                <a href="detiales.html" class="btn btn-success custom-btn" >التفاصيل</a>
+          
                                             </td>
                                             
                                         </tr>
@@ -407,7 +413,7 @@
                                             <td> قسم الخدمات والحركة </td>
                                             <td>لا يوجد</td>
                                             <td>
-                                                <a href="#" class="btn btn-success custom-btn">التفاصيل</a>
+                                                <a href="detiales.html" class="btn btn-success custom-btn" onclick="showDetails()">التفاصيل</a>
                                             </td>
                                             
                                         </tr>
@@ -417,7 +423,7 @@
                                             <td>قسم اعتماد  المؤسسات التدريبية  </td>
                                             <td>لا يوجد</td>
                                             <td>
-                                                <a href="#" class="btn btn-success custom-btn">التفاصيل</a>
+                                                <a href="detiales.html" class="btn btn-success custom-btn" onclick="showDetails()">التفاصيل</a>
                                             </td>
                                             
                                         </tr>
@@ -496,28 +502,31 @@
                             <td>قسم شؤون الموظفين</td>
                             
                             <td class="d-flex align-items-center">    
-                               
+                                <div class="btn-group">
+                                    
                                 <a href="#" class="btn btn-success custom-btn ms-2" onclick="openUnitDialog('قسم  شؤون الموظفين')">الوحدات</a>
-                                <a href="#" class="custom-btn" onclick="editSection(' قسم  شؤون الموظفين ')">
+                                <a href="#" class="custom-btn-icon" onclick="editSection(' قسم  شؤون الموظفين ')">
                                     <i class="fas fa-pencil-alt" style="color: #007bff;"></i> <!-- لون تعديل -->
                                 </a>
-                                <a href="#" class="custom-btn" onclick="deleteSection('قسم شؤون الموظفين   ')">
+                                <a href="#" class="custom-btn-icon" onclick="deleteSection('قسم شؤون الموظفين   ')">
                                     <i class="fas fa-trash-alt" style="color: #dc3545;"></i> <!-- أيقونة حذف -->
                                 </a>
+                                </div>
                             </td>  </tr>
                         <tr>
                             <th scope="row">2</th>
                             <td>قسم الخدمات والحركة</td>
                             
                             <td class="d-flex align-items-center">    
-                              
+                                <div class="btn-group">
                                 <a href="#" class="btn btn-success custom-btn ms-2" onclick="openUnitDialog('قسم الخدمات والحركة')">الوحدات</a>
-                                <a href="#" class="custom-btn" onclick="editUnit(' قسم الخدمات والحركة ')">
+                                <a href="#" class="custom-btn-icon" onclick="editUnit(' قسم الخدمات والحركة ')">
                                     <i class="fas fa-pencil-alt" style="color: #007bff;"></i> <!-- لون تعديل -->
                                 </a>
-                                <a href="#" class="custom-btn" onclick="deleteUnit('قسم الخدمات والحركة  ')">
+                                <a href="#" class="custom-btn-icon" onclick="deleteUnit('قسم الخدمات والحركة  ')">
                                     <i class="fas fa-trash-alt" style="color: #dc3545;"></i> <!-- أيقونة حذف -->
                                 </a>
+                                </div>
                             </td>
                             
                         </tr>
@@ -572,13 +581,15 @@
                         <tr>
                             <th scope="row">1</th>
                             <td>وحدة شؤون الموظفين</td>
-                                <td class="d-flex align-items-center">    
-                                    <a href="#" class="custom-btn" onclick="editUnit(' وحدة  شؤون الموظفين ')">
+                                <td class="d-flex align-items-center">
+                                    <div class="btn-group">  
+                                    <a href="#" class="custom-btn-icon" onclick="editUnit(' وحدة  شؤون الموظفين ')">
                                         <i class="fas fa-pencil-alt" style="color: #007bff;"></i> <!-- لون تعديل -->
                                     </a>
-                                    <a href="#" class="custom-btn" onclick="deleteUnit('وحدة شؤون الموظفين   ')">
+                                    <a href="#" class="custom-btn-icon" onclick="deleteUnit('وحدة شؤون الموظفين   ')">
                                         <i class="fas fa-trash-alt" style="color: #dc3545;"></i> <!-- أيقونة حذف -->
-                                  
+                                    </a>
+                                    </div>
                             </td>
                         </tr>
                         <!-- مزيد من الصفوف سيتم إضافتها هنا -->
@@ -594,6 +605,52 @@
     </div>
 </div>
 
+<!-- dialog for detiles -->
+    
+
+    <!-- <div id="detailsDialog">
+        <div class="dialog-content">
+            <div class="dialog-header">
+                <img src="img/logo.jpg" alt="شعار">
+                <button onclick="closeDetails()">X</button>
+            </div>
+            <div class="dialog-body">
+                <h3>مركز ضمان الجودة والمعايرة المهنية</h3>
+                <h4>إدارة الشؤون الإدارية والمالية</h4>
+                <h5>قائمة بأسماء موظفي الوحدة/القسم:</h5>
+                <table class="employee-table">
+                    <thead>
+                        <tr>
+                            <th>ر.م</th>
+                            <th>اسم الموظف</th>
+                            <th>الوظيفة</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>محمد أحمد</td>
+                            <td>مدير</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>سارة علي</td>
+                            <td>محاسب</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>أحمد خالد</td>
+                            <td>موظف إداري</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <button class="print-btn" onclick="printDetails()">طباعة</button>
+            </div>
+        </div>
+    </div> -->
+
+    
 
 </body>
 

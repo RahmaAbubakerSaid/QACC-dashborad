@@ -676,3 +676,129 @@ body {
   p{
     margin: 10px;
   }
+ /* تصميم الزر */
+ .custom-btn {
+    display: flex; /* استخدام flexbox لتسهيل التوسيط */
+    justify-content: center; /* توسيط النص أفقياً */
+    align-items: center; /* توسيط النص عمودياً */
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #28a745;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    cursor: pointer;
+    width: 100%; /* عرض الزر بنسبة 100% من الحاوية الأم */
+    box-sizing: border-box; /* التعامل مع الحواف والمسافات ضمن العرض */
+}
+
+.custom-btn:hover {
+    background-color: #218838;
+}
+
+
+/* تصميم الـ dialog */
+#detailsDialog {
+    display: none; /* التأكد من إخفاء الـ dialog عند فتح الصفحة */
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* خلفية شفافة */
+    display: flex;
+    justify-content: center; /* محاذاة أفقية في المنتصف */
+    align-items: center; /* محاذاة عمودية في المنتصف */
+}
+
+.dialog-content {
+    background-color: #fff;
+    padding: 20px;
+    width: 80%;
+    max-width: 800px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    position: relative;
+}
+
+.dialog-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dialog-header img {
+    width: 100px;
+}
+
+.dialog-header button {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.dialog-body {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.employee-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.employee-table th, .employee-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+.employee-table th {
+    background-color: #f2f2f2;
+}
+
+.print-btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.print-btn:hover {
+    background-color: #218838;
+}
+
+/* تنسيق عام */
+.no-print {
+    display: none; /* إخفاء العناصر التي تحمل هذه الصفة */
+}
+
+
+
+
+
+.btn-group {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* المسافة بين الزر والأيقونات */
+}
+
+.custom-btn-icon {
+    background: none; /* إزالة أي خلفية عن الأيقونات */
+    border: none; /* إزالة أي حدود زائدة */
+    padding: 0; /* إزالة الحواف الداخلية */
+}
+
+.custom-btn-icon i {
+    font-size: 18px; /* حجم الأيقونات */
+    cursor: pointer; /* مؤشر اليد عند تمرير الماوس */
+}
+
+
