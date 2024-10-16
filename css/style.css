@@ -348,20 +348,6 @@ body {
     z-index: 9999;
 }
 
-.dialog-content {
-    width: 35%;
-
-    position: absolute;
-    top: 50%;
-    right: 50%; /* تم تغيير القيمة هنا */
-    transform: translate(50%, -50%); /* تم تغيير القيمة هنا */
-    background-color: white;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-}
-
-
 
 
 .btn-primary {
@@ -716,6 +702,12 @@ body {
   p{
     margin: 10px;
   }
+
+  .custom-btn-category {
+    padding: 2px 10px;  /* تقليل الحشو الأفقي والعمودي */
+    height: 30px;       /* التحكم في الارتفاع إذا لزم الأمر */
+}
+
  /* تصميم الزر */
  .custom-btn {
     display: flex; /* استخدام flexbox لتسهيل التوسيط */
@@ -761,6 +753,23 @@ body {
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     position: relative;
+    top: 50%;
+    right: 50%; /* تم تغيير القيمة هنا */
+    transform: translate(50%, -50%); /* تم تغيير القيمة هنا */
+
+}
+
+.dialog-content-category {
+    width: 35%;
+
+    position: absolute;
+    top: 50%;
+    right: 50%; /* تم تغيير القيمة هنا */
+    transform: translate(50%, -50%); /* تم تغيير القيمة هنا */
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
 .dialog-header {
