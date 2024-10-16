@@ -703,9 +703,9 @@ body {
     margin: 10px;
   }
 
-  .custom-btn-category {
-    padding: 2px 10px;  /* تقليل الحشو الأفقي والعمودي */
-    height: 30px;       /* التحكم في الارتفاع إذا لزم الأمر */
+  .custom-btn-main {
+    padding: 5px 15px;  /* تقليل الحشو الأفقي والعمودي */
+    height: 35px;       /* التحكم في الارتفاع إذا لزم الأمر */
 }
 
  /* تصميم الزر */
@@ -759,7 +759,7 @@ body {
 
 }
 
-.dialog-content-category {
+.dialog-content-main{
     width: 35%;
 
     position: absolute;

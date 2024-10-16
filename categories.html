@@ -109,7 +109,7 @@
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
                                 class="fas fa-solid fa-box-open me-2"></i>امين المخازن</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="typography.html" class="dropdown-item">ادارة طلبات الاصناف</a>
+                            <a href="receive_categories_manager.html" class="dropdown-item">ادارة طلبات الاصناف</a>
                         </div>
                     </div>
 
@@ -254,7 +254,7 @@
             </div>
             <!-- Categories Dialog-->
             <div class="dialog-overlay dialog" id="dialog1">
-                <div class="dialog-content-category">
+                <div class="dialog-content-main">
                     <!-- Your dialog content goes here -->
                     <div class="col-sm-12">
                         <div class="bg-light rounded h-100 p-4">
@@ -273,24 +273,24 @@
                                         <th scope="row">1</th>
                                         <td>اقلام</td>
                                         <td><span>5</span><input type="number" style="display: none;"></td>
-                                        <td><button class="edit-quantity btn btn-success custom-btn-category" onclick="editQuantity(this)">تعديل
-                                                الكمية</button><button class="save-quantity btn btn-success custom-btn-category" style="display: none;"
+                                        <td><button class="edit-quantity btn btn-success custom-btn-main" onclick="editQuantity(this)">تعديل
+                                                الكمية</button><button class="save-quantity btn btn-success custom-btn-main" style="display: none;"
                                                 onclick="saveQuantity(this)">حفظ</button></td>
                                     </tr>
                                     <tr>
                                         <th scope="row">2</th>
                                         <td>ورق</td>
                                         <td><span>10</span><input type="number" style="display: none;"></td>
-                                        <td><button class="edit-quantity btn btn-success custom-btn-category" onclick="editQuantity(this)">تعديل
-                                                الكمية</button><button class="save-quantity btn btn-success custom-btn-category" style="display: none;"
+                                        <td><button class="edit-quantity btn btn-success custom-btn-main" onclick="editQuantity(this)">تعديل
+                                                الكمية</button><button class="save-quantity btn btn-success custom-btn-main" style="display: none;"
                                                 onclick="saveQuantity(this)">حفظ</button></td>
                                     </tr>
                                     <tr>
                                         <th scope="row">3</th>
                                         <td>اقلام حبر</td>
                                         <td><span>4</span><input type="number" style="display: none;"></td>
-                                        <td><button class="edit-quantity btn btn-success custom-btn-category" onclick="editQuantity(this)">تعديل
-                                                الكمية</button><button class="save-quantity btn btn-success custom-btn-category" style="display: none;"
+                                        <td><button class="edit-quantity btn btn-success custom-btn-main" onclick="editQuantity(this)">تعديل
+                                                الكمية</button><button class="save-quantity btn btn-success custom-btn-main" style="display: none;"
                                                 onclick="saveQuantity(this)">حفظ</button></td>
                                     </tr>
                                 </tbody>
@@ -301,7 +301,7 @@
                 </div>
             </div>
             <div class="dialog-overlay dialog" id="dialog2">
-                <div class="dialog-content-category">
+                <div class="dialog-content-main">
                     <!-- Your dialog content goes here -->
                     <div class="col-sm-12">
                         <div class="bg-light rounded h-100 p-4">
@@ -320,24 +320,24 @@
                                         <th scope="row">1</th>
                                         <td>اقلام</td>
                                         <td><span>5</span><input type="number" style="display: none;"></td>
-                                        <td><button class="edit-quantity btn btn-success custom-btn-category" onclick="editQuantity(this)">تعديل
-                                                الكمية</button><button class="save-quantity btn btn-success custom-btn-category" style="display: none;"
+                                        <td><button class="edit-quantity btn btn-success custom-btn-main" onclick="editQuantity(this)">تعديل
+                                                الكمية</button><button class="save-quantity btn btn-success custom-btn-main" style="display: none;"
                                                 onclick="saveQuantity(this)">حفظ</button></td>
                                     </tr>
                                     <tr>
                                         <th scope="row">2</th>
                                         <td>ورق</td>
                                         <td><span>10</span><input type="number" style="display: none;"></td>
-                                        <td><button class="edit-quantity btn btn-success custom-btn-category" onclick="editQuantity(this)">تعديل
-                                                الكمية</button><button class="save-quantity btn btn-success custom-btn-category" style="display: none;"
+                                        <td><button class="edit-quantity btn btn-success custom-btn-main" onclick="editQuantity(this)">تعديل
+                                                الكمية</button><button class="save-quantity btn btn-success custom-btn-main" style="display: none;"
                                                 onclick="saveQuantity(this)">حفظ</button></td>
                                     </tr>
                                     <tr>
                                         <th scope="row">3</th>
                                         <td>مشابك</td>
                                         <td><span>4</span><input type="number" style="display: none;"></td>
-                                        <td><button class="edit-quantity btn btn-success custom-btn-category" onclick="editQuantity(this)">تعديل
-                                                الكمية</button><button class="save-quantity btn btn-success custom-btn-category" style="display: none;"
+                                        <td><button class="edit-quantity btn btn-success custom-btn-main" onclick="editQuantity(this)">تعديل
+                                                الكمية</button><button class="save-quantity btn btn-success custom-btn-main" style="display: none;"
                                                 onclick="saveQuantity(this)">حفظ</button></td>
                                     </tr>
                                 </tbody>
@@ -376,11 +376,11 @@
                                             <td>البرمجة </td>
                                             <td>
                                                 <!-- التفاصيل -->
-                                                <a href="#" class="btn btn-success custom-btn-category openDialogCategories" id="dialog1">التفاصيل</a>
+                                                <a href="#" class="btn btn-success custom-btn-main openDialogCategories" id="dialog1">التفاصيل</a>
                                                 <!-- قبول -->
-                                                <a href="#" class="btn btn-success custom-btn-category">قبول</a>
+                                                <a href="#" class="btn btn-success custom-btn-main">قبول</a>
                                                 <!-- رفض -->
-                                                <a href="#" class="btn btn-danger custom-btn-category">رفض</a>
+                                                <a href="#" class="btn btn-danger custom-btn-main">رفض</a>
                                             </td>
                                         </tr>
                                         <tr>
@@ -391,11 +391,11 @@
                                             <td>البرمجة </td>
                                             <td>
                                                 <!-- التفاصيل -->
-                                                <a href="#" class="btn btn-success custom-btn-category openDialogCategories" id="dialog2">التفاصيل</a>
+                                                <a href="#" class="btn btn-success custom-btn-main openDialogCategories" id="dialog2">التفاصيل</a>
                                                 <!-- قبول -->
-                                                <a href="#" class="btn btn-success custom-btn-category">قبول</a>
+                                                <a href="#" class="btn btn-success custom-btn-main">قبول</a>
                                                 <!-- رفض -->
-                                                <a href="#" class="btn btn-danger custom-btn-category">رفض</a>
+                                                <a href="#" class="btn btn-danger custom-btn-main">رفض</a>
                                             </td>
                                         </tr>
                                     </tbody>

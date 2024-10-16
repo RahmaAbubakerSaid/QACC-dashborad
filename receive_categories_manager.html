@@ -29,7 +29,14 @@
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+
+
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+    <!-- SweetAlert2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 
 <body>
@@ -59,12 +66,12 @@
                     <!-- ------------------------------------------------------------------------- -->
 
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                             <i class="fas fa-solid fa-user-tie me-2"></i></i>مدير النظام</a>
                         <div class="dropdown-menu bg-transparent border-0">
                             <a href="system-administrator.html" class="dropdown-item">ادارة حسابات مستخدمي لوحة
                                 التحكم</a>
-                            <a href="permissions.html" class="dropdown-item active">ادارة الصلاحيات</a>
+                            <a href="permissions.html" class="dropdown-item">ادارة الصلاحيات</a>
                             <a href="administration-of-depatments.html" class="dropdown-item">ادارة الادارات</a>
                             <a href="officeManagement.html" class="dropdown-item">ادارة المكاتب</a>
                             <a href="categories.html" class="dropdown-item">ادارة طلبات الاصناف</a>
@@ -99,10 +106,10 @@
                     <!-- ------------------------------------------------------------------------- -->
 
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                        <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown"><i
                                 class="fas fa-solid fa-box-open me-2"></i>امين المخازن</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="receive_categories_manager.html" class="dropdown-item">ادارة طلبات الاصناف</a>
+                            <a href="receive_categories_manager.html" class="dropdown-item active">ادارة طلبات الاصناف</a>
                         </div>
                     </div>
 
@@ -234,6 +241,7 @@
                             <a href="#" class="dropdown-item">Log Out</a>
                         </div>
                     </div>
+
                 </div>
             </nav>
             <!-- Navbar End -->
@@ -241,15 +249,101 @@
 
             <div class="container-fluid pt-4 px-4">
                 <div class="bg-light rounded h-100 p-4">
-                    <h3 class="mb-4">تحديد الصلاحيات</h3>
-                    <div class="user-selection">
-                        <select id="user-select">
-                            <option value="">اختر مستخدم</option>
-                            <option value="user1">مستخدم 1</option>
-                            <option value="user2">مستخدم 2</option>
-                            <option value="user3">مستخدم 3</option>
-                            <option value="user4">مستخدم 4</option>
-                        </select>
+                    <h5> استقبال طلبات اصناف الموظفين</h5>
+                </div>
+            </div>
+            <!-- Categories Dialog-->
+            <div class="dialog-overlay dialog" id="dialog1">
+                <div class="dialog-content-category">
+                    <!-- Your dialog content goes here -->
+                    <div class="col-sm-12">
+                        <div class="bg-light rounded h-100 p-4">
+                            <h6 class="mb-4">تفاصيل الطلب</h6>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">اسم الصنف</th>
+                                        <th scope="col">الكمية</th>
+                                        <th scope="col">الإجراء</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>اقلام</td>
+                                        <td><span>5</span><input type="number" style="display: none;"></td>
+                                        <td><button class="edit-quantity btn btn-success custom-btn-category" onclick="editQuantity(this)">تعديل
+                                                الكمية</button><button class="save-quantity btn btn-success custom-btn-category" style="display: none;"
+                                                onclick="saveQuantity(this)">حفظ</button></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">2</th>
+                                        <td>ورق</td>
+                                        <td><span>10</span><input type="number" style="display: none;"></td>
+                                        <td><button class="edit-quantity btn btn-success custom-btn-category" onclick="editQuantity(this)">تعديل
+                                                الكمية</button><button class="save-quantity btn btn-success custom-btn-category" style="display: none;"
+                                                onclick="saveQuantity(this)">حفظ</button></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">3</th>
+                                        <td>اقلام حبر</td>
+                                        <td><span>4</span><input type="number" style="display: none;"></td>
+                                        <td><button class="edit-quantity btn btn-success custom-btn-category" onclick="editQuantity(this)">تعديل
+                                                الكمية</button><button class="save-quantity btn btn-success custom-btn-category" style="display: none;"
+                                                onclick="saveQuantity(this)">حفظ</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="closeDialogCategories"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="dialog-overlay dialog" id="dialog2">
+                <div class="dialog-content-category">
+                    <!-- Your dialog content goes here -->
+                    <div class="col-sm-12">
+                        <div class="bg-light rounded h-100 p-4">
+                            <h6 class="mb-4">تفاصيل الطلب</h6>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">اسم الصنف</th>
+                                        <th scope="col">الكمية</th>
+                                        <th scope="col">الإجراء</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>اقلام</td>
+                                        <td><span>5</span><input type="number" style="display: none;"></td>
+                                        <td><button class="edit-quantity btn btn-success custom-btn-category" onclick="editQuantity(this)">تعديل
+                                                الكمية</button><button class="save-quantity btn btn-success custom-btn-category" style="display: none;"
+                                                onclick="saveQuantity(this)">حفظ</button></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">2</th>
+                                        <td>ورق</td>
+                                        <td><span>10</span><input type="number" style="display: none;"></td>
+                                        <td><button class="edit-quantity btn btn-success custom-btn-category" onclick="editQuantity(this)">تعديل
+                                                الكمية</button><button class="save-quantity btn btn-success custom-btn-category" style="display: none;"
+                                                onclick="saveQuantity(this)">حفظ</button></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">3</th>
+                                        <td>مشابك</td>
+                                        <td><span>4</span><input type="number" style="display: none;"></td>
+                                        <td><button class="edit-quantity btn btn-success custom-btn-category" onclick="editQuantity(this)">تعديل
+                                                الكمية</button><button class="save-quantity btn btn-success custom-btn-category" style="display: none;"
+                                                onclick="saveQuantity(this)">حفظ</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="closeDialogCategories"></div>
                     </div>
                 </div>
             </div>
@@ -258,125 +352,61 @@
                 <div class="row g-4">
 
 
-                    <div class="col-sm-12 ">
+                    <div class="col-12">
                         <div class="bg-light rounded h-100 p-4">
-                            <h6 class="mb-4">الأقسام والوظائف</h6>
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>القسم</th>
-                                        <th>الوظائف</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>مدير النظام</td>
-                                        <td>
-                                            <label><input type="checkbox" class="function-checkbox" /> إدارة حسابات
-                                                مستخدمي لوحة التحكم</label><br>
-                                            <label><input type="checkbox" class="function-checkbox" /> إدارة
-                                                الصلاحيات</label><br>
-                                            <label><input type="checkbox" class="function-checkbox" /> إدارة
-                                                الإدارات</label><br>
-                                            <label><input type="checkbox" class="function-checkbox" /> إدارة
-                                                المكاتب</label><br>
-                                            <label><input type="checkbox" class="function-checkbox" /> إدارة طلبات
-                                                الأصناف - المدير</label><br>
-                                            <label><input type="checkbox" class="function-checkbox" /> إدارة طلبات
-                                                النماذج - المدير</label><br>
-                                            <label><input type="checkbox" class="function-checkbox" /> إدارة الموظفين -
-                                                المدير</label><br>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>رئيس شؤون الموظفين</td>
-                                        <td>
-                                            <label><input type="checkbox" class="function-checkbox" /> إدارة
-                                                الموظفين</label><br>
-                                            <label><input type="checkbox" class="function-checkbox" />
-                                                الإجازات</label><br>
-                                            <label><input type="checkbox" class="function-checkbox" /> الحضور
-                                                والانصراف</label><br>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>مدير إدارة الشؤون الإدارية والمالية</td>
-                                        <td>
-                                            <label><input type="checkbox" class="function-checkbox" /> إدارة طلبات
-                                                الأصناف</label><br>
-                                            <label><input type="checkbox" class="function-checkbox" /> إدارة طلبات
-                                                النماذج</label><br>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>أمين المخازن</td>
-                                        <td>
-                                            <label><input type="checkbox" class="function-checkbox" /> إدارة طلبات
-                                                الأصناف</label><br>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>رئيس وحدة المحفوظات</td>
-                                        <td>
-                                            <label><input type="checkbox" class="function-checkbox" /> إدارة
-                                                الرسائل</label><br>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>قسم الإعلانات</td>
-                                        <td>
-                                            <label><input type="checkbox" class="function-checkbox" /> إدارة
-                                                الإعلانات</label><br>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <label><input type="checkbox" id="select-all" /> تحديد الكل</label><br>
+                            <h6 class="mb-4">جدول طلبات الموظفين</h6>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">الرقم</th>
+                                            <th scope="col">اسم الموظف </th>
+                                            <th scope="col"> الإدارة </th>
+                                            <th scope="col">القسم </th>
+                                            <th scope="col">تم الموافقة من قبل </th>
+                                            <th scope="col">الإجراءات </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td>رحمة </td>
+                                            <td>تقنية معلومات </td>
+                                            <td>البرمجة </td>
+                                            <td>المدير العام </td>
 
+                                            <td>
+                                                <!-- التفاصيل -->
+                                                <a href="#" class="btn btn-success custom-btn-main openDialogCategories" id="dialog1">التفاصيل</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">2</th>
+                                            <td>اكرام العرضاوي </td>
+                                            <td>تقنية معلومات </td>
 
-                        </div>
-                    </div>
-                    <div class="col-sm-12 ">
-                        <div class="bg-light rounded h-100 p-4">
-                            <button type="button" style="width: 100%" class="btn btn-primary m-2 " id="save-button"><i
-                                    class="fas fa-solid fa-download me-2"></i>حفظ التغييرات</button>
-
-                        </div>
-                    </div>
-
-                    <div class="col-sm-12 ">
-                        <div class="bg-light rounded h-100 p-4">
-                            <h6 class="mb-4">الأقسام والوظائف</h6>
-
-                            <table class="table table-bordered" id="results-table" style="display:none;">
-                                <thead>
-                                    <tr>
-                                        <th>المستخدم</th>
-                                        <th>الصلاحيات</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="results-body">
-                                    <!-- سيتم إضافة النتائج هنا -->
-                                </tbody>
-                            </table>
+                                            <td>البرمجة </td>
+                                            <td>مدير ادارة الشوؤن الادارية والمالية </td>
+                                            <td>
+                                                <!-- التفاصيل -->
+                                                <a href="#" class="btn btn-success custom-btn-main openDialogCategories" id="dialog2">التفاصيل</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <!-- Table End -->
+
         </div>
-
-    </div>
-
-
-    </div>
-    <!-- Table End -->
-
-    </div>
-    <!-- Content End -->
+        <!-- Content End -->
 
 
-    <!-- Back to Top -->
-    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
     </div>
 
     <!-- JavaScript Libraries -->
@@ -392,8 +422,8 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
-    <script src="js/operations.js"></script>
-    <script src="js/permissions.js"></script>
+    <script src="js/categories.js"></script>
+
 
 
 </body>
