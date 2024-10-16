@@ -150,7 +150,7 @@ body {
 
 /*** Navbar ***/
 .sidebar .navbar .navbar-nav .nav-link {
-    padding: 12px 20px;
+    padding: 12px 8px;
     color: var(--dark);
     border-left: none;
     border-right: 3px solid var(--light);
