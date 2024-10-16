@@ -761,7 +761,6 @@ body {
 
 .dialog-content-main{
     width: 35%;
-
     position: absolute;
     top: 50%;
     right: 50%; /* تم تغيير القيمة هنا */

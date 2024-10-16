@@ -143,12 +143,34 @@ function validateForm() {
     var password = document.getElementById('floatingInput').value;
 
     if (username.trim() === '') {
-        alert('يرجى إدخال اسم المستخدم');
+        Swal.fire({
+            icon: 'warning',               // أيقونة التحذير
+            title: 'تنبيه!',                 // عنوان التنبيه
+            text: 'يرجى إدخال اسم المستخدم',  // نص التنبيه
+            confirmButtonText: 'حسنًا',     // نص زر التأكيد
+            customClass: {
+                confirmButton: 'btn btn-primary'  // تخصيص الزر إذا كنت تستخدم Bootstrap أو CSS
+            },
+            buttonsStyling: false,           // تعطيل التنسيق الافتراضي للأزرار
+            allowOutsideClick: false,        // منع الإغلاق عند النقر على الخلفية
+            backdrop: true                   // إضافة خلفية سوداء
+        });
         return false;
     }
 
     if (password.trim() === '') {
-        alert('يرجى إدخال كلمة المرور');
+        Swal.fire({
+            icon: 'warning',               // أيقونة التحذير
+            title: 'تنبيه!',                 // عنوان التنبيه
+            text: 'يرجى إدخال كلمة المرور',  // نص التنبيه
+            confirmButtonText: 'حسنًا',     // نص زر التأكيد
+            customClass: {
+                confirmButton: 'btn btn-primary'  // تخصيص الزر إذا كنت تستخدم Bootstrap أو CSS
+            },
+            buttonsStyling: false,           // تعطيل التنسيق الافتراضي للأزرار
+            allowOutsideClick: false,        // منع الإغلاق عند النقر على الخلفية
+            backdrop: true                   // إضافة خلفية سوداء
+        });
         return false;
     }
 }
