@@ -36,7 +36,8 @@
 
 <!-- SweetAlert2 JS -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 </head>
 
 <body>
@@ -262,25 +263,34 @@
                   </div>
                   <div class="employee-list" id="employeeList">
                     <div class="employee-box" data-employee-id="1">
+                        <input type="checkbox">
+                        <p>رحمة ابو بكر</p>
+                      </div>
+                      <div class="employee-box" data-employee-id="2">
+                        <input type="checkbox">
+                        <p>إكرام العرضاوي</p>
+                      </div>
+                      <div class="employee-box" data-employee-id="3">
+                        <input type="checkbox">
+                        <p>رحمة</p>
+                      </div>
+                      <div class="employee-box" data-employee-id="4">
+                        <input type="checkbox">
+                        <p>إكرام</p>
+                      </div>
+                      <div class="employee-box" data-employee-id="5">
+                        <input type="checkbox">
+                        <p>موظف 5</p>
+                      </div>
+                    <div class="employee-box" data-employee-id="1">
                       <input type="checkbox">
-                      <p>موظف 1</p>
+                      <p>رحمة ابو بكر</p>
                     </div>
                     <div class="employee-box" data-employee-id="2">
                       <input type="checkbox">
-                      <p>موظف 2</p>
+                      <p>إكرام العرضاوي</p>
                     </div>
-                    <div class="employee-box" data-employee-id="3">
-                      <input type="checkbox">
-                      <p>موظف 3</p>
-                    </div>
-                    <div class="employee-box" data-employee-id="4">
-                      <input type="checkbox">
-                      <p>موظف 4</p>
-                    </div>
-                    <div class="employee-box" data-employee-id="5">
-                      <input type="checkbox">
-                      <p>موظف 5</p>
-                    </div>
+
                   </div>
                 </div>
             
@@ -288,15 +298,19 @@
                   <div class="header">
                     <h4>الدردشة</h4>
                   </div>
+                  <div class="chat-search-container">
+                    <input type="text" id="messageSearchInput" placeholder="بحث عن رسالة..." onkeyup="filterMessages()">
+                </div>
                   <div class="chat-container" id="chatContainer">
                     <!-- الرسائل ستظهر هنا -->
                   </div>
                   <div class="drop-area" id="dropArea">
-                    اسحب وإفلت الملفات أو المجلدات هنا
+                    اسحب وإفلت المجلدات هنا
                   </div>
                   <div class="chatbox-input">
                     <input type="text" id="messageInput" placeholder="اكتب رسالة...">
                     <input type="file" id="fileInput" class="file-input" multiple />
+                    <!-- webkitdirectory -->
                     <i class="fas fa-solid fa-paperclip" id="attachFile"></i>
                     <i class="fas fa-solid fa-paper-plane" id="sendButton"></i>
                   </div>
@@ -326,6 +340,8 @@
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
     <script src="js/operations.js"></script>
+    <script src="js/archives.js"></script>
+
 
 
 
