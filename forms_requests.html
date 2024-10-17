@@ -30,14 +30,13 @@
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
 
-    
-     <!-- SweetAlert2 CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
-<!-- SweetAlert2 JS -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 
 <body>
@@ -56,11 +55,10 @@
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-light navbar-light">
                 <a href="index.html" class="d-flex align-items-center ms-4 mb-4">
-                    <img src="img\qacc.png" alt="شعار الموقع"
-                    style="width: 100px; height: 65px; margin-bottom: 15px;">
+                    <img src="img\qacc.png" alt="شعار الموقع" style="width: 100px; height: 65px; margin-bottom: 15px;">
                     <h6 class="text-primary">مركز ضمان الجودة والمعايرة المهنية</h6>
                 </a>
-               
+
                 <div class="navbar-nav w-100">
                     <a href="index.html" class="nav-item nav-link"><i
                             class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
@@ -90,19 +88,19 @@
                         <div class="dropdown-menu bg-transparent border-0">
                             <a href="#" class="dropdown-item">ادارة الموظفين</a>
                             <a href="leaveNotifications.html" class="dropdown-item">الاجازات</a>
-                            <a href="attendance-and-departure.html" class="dropdown-item">الحضور والانصراف</a>
+                            <a href="#" class="dropdown-item">الحضور والانصراف</a>
                         </div>
                     </div>
                     <!-- ------------------------------------------------------------------------- -->
                     <!-- ------------------------------------------------------------------------- -->
 
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                        <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown"><i
                                 class="fas fa-money-bill-wave me-2"></i>مدير ادارة الشوؤن
                             الادارية والمالية</a>
                         <div class="dropdown-menu bg-transparent border-0">
                             <a href="categories.html" class="dropdown-item">ادارة طلبات الاصناف</a>
-                            <a href="forms_requests.html" class="dropdown-item">ادارة طلبات النماذج</a>
+                            <a href="forms_requests.html" class="dropdown-item active">ادارة طلبات النماذج</a>
                         </div>
                     </div>
                     <!-- ------------------------------------------------------------------------- -->
@@ -118,10 +116,10 @@
                     <!-- ------------------------------------------------------------------------- -->
 
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown"><i
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
                                 class="fas fa-solid fa-envelope-open-text me-2"></i>رئيس وحدة المحفوظات</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="archives.html" class="dropdown-item active">ادارة الرسائل</a>
+                            <a href="archives.html" class="dropdown-item">ادارة الرسائل</a>
                         </div>
                     </div>
                     <!-- ------------------------------------------------------------------------- -->
@@ -243,79 +241,103 @@
                             <a href="#" class="dropdown-item">Log Out</a>
                         </div>
                     </div>
-               
+
                 </div>
             </nav>
             <!-- Navbar End -->
 
-            <!--Start Content -->
 
-            <div class="main-container">
-                <div class="left-container">
-                  <div class="header">
-                    <h4>الموظفين</h4>
-                  </div>
-                  <div class="search-container">
-                    <div class="input"> 
-                      <i class="fa-solid fa-magnifying-glass"></i>
-                      <input type="text" id="searchInput" placeholder="بحث عن موظف" onkeyup="filterEmployees()">
-                    </div>
-                  </div>
-                  <div class="employee-list" id="employeeList">
-                    <div class="employee-box" data-employee-id="1">
-                        <input type="checkbox">
-                        <p>رحمة ابو بكر</p>
-                      </div>
-                      <div class="employee-box" data-employee-id="2">
-                        <input type="checkbox">
-                        <p>إكرام العرضاوي</p>
-                      </div>
-                      <div class="employee-box" data-employee-id="3">
-                        <input type="checkbox">
-                        <p>رحمة</p>
-                      </div>
-                      <div class="employee-box" data-employee-id="4">
-                        <input type="checkbox">
-                        <p>إكرام</p>
-                      </div>
-                      <div class="employee-box" data-employee-id="5">
-                        <input type="checkbox">
-                        <p>موظف 5</p>
-                      </div>
-                    <div class="employee-box" data-employee-id="1">
-                      <input type="checkbox">
-                      <p>رحمة ابو بكر</p>
-                    </div>
-                    <div class="employee-box" data-employee-id="2">
-                      <input type="checkbox">
-                      <p>إكرام العرضاوي</p>
-                    </div>
+            <div class="container-fluid pt-4 px-4">
+                <div class="bg-light rounded h-100 p-4">
+                    <h5>إدارة طلبات النماذج</h5>
+                </div>
+            </div>
+            <!-- Categories Dialog-->
+            <div class="dialog-overlay dialog" id="dialog1">
+                <div class="dialog-content-main">
+                    <!-- Your dialog content goes here -->
+                    <div class="col-sm-12">
+                        <div class="bg-light rounded h-100 p-4">
+                            <h6 class="mb-4">التفاصيل</h6>
 
-                  </div>
+                        </div>
+                        <div class="closeDialogForms"></div>
+                    </div>
                 </div>
-            
-                <div class="right-container">
-                  <div class="header">
-                    <h4>الدردشة</h4>
-                  </div>
-                  <div class="chat-search-container">
-                    <input type="text" id="messageSearchInput" placeholder="بحث عن رسالة..." onkeyup="filterMessages()">
+            </div>
+            <div class="dialog-overlay dialog" id="dialog2">
+                <div class="dialog-content-main">
+                    <!-- Your dialog content goes here -->
+                    <div class="col-sm-12">
+                        <div class="bg-light rounded h-100 p-4">
+                            <h6 class="mb-4">التفاصيل</h6>
+                        </div>
+                        <div class="closeDialogForms"></div>
+                    </div>
                 </div>
-                  <div class="chat-container" id="chatContainer">
-                    <!-- الرسائل ستظهر هنا -->
-                  </div>
-                  <div class="drop-area" id="dropArea">
-                    اسحب وإفلت المجلدات هنا
-                  </div>
-                  <div class="chatbox-input">
-                    <input type="text" id="messageInput" placeholder="اكتب رسالة...">
-                    <input type="file" id="fileInput" class="file-input" multiple />
-                    <!-- webkitdirectory -->
-                    <i class="fas fa-solid fa-paperclip" id="attachFile"></i>
-                    <i class="fas fa-solid fa-paper-plane" id="sendButton"></i>
-                  </div>
+            </div>
+            <!-- Table Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="row g-4">
+
+
+                    <div class="col-12">
+                        <div class="bg-light rounded h-100 p-4">
+                            <h6 class="mb-4">جدول طلبات النماذج</h6>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">الرقم</th>
+                                            <th scope="col">اسم الموظف </th>
+                                            <th scope="col"> الإدارة </th>
+                                            <th scope="col">القسم </th>
+                                            <th scope="col">اسم النموذج </th>
+                                            <th scope="col">الإجراءات </th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td>رحمة </td>
+                                            <td>تقنية معلومات </td>
+
+                                            <td>البرمجة </td>
+                                            <td>نموذج جواز سفر </td>
+
+                                            <td>
+                                                <!-- التفاصيل -->
+                                                <a href="#" class="btn btn-success custom-btn-main openDialogForms" id="dialog1">التفاصيل</a>
+                                                <!-- قبول -->
+                                                <a href="#" class="btn btn-success custom-btn-main">قبول</a>
+                                                <!-- رفض -->
+                                                <a href="#" class="btn btn-danger custom-btn-main">رفض</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td>اكرام العرضاوي </td>
+                                            <td>تقنية معلومات </td>
+                                            <td>البرمجة </td>
+                                            <td>نموذج إفادة </td>
+
+                                            <td>
+                                                <!-- التفاصيل -->
+                                                <a href="#" class="btn btn-success custom-btn-main openDialogForms" id="dialog2">التفاصيل</a>
+                                                <!-- قبول -->
+                                                <a href="#" class="btn btn-success custom-btn-main">قبول</a>
+                                                <!-- رفض -->
+                                                <a href="#" class="btn btn-danger custom-btn-main">رفض</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
+            </div>
             <!-- Table End -->
 
         </div>
@@ -339,9 +361,7 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
-    <script src="js/operations.js"></script>
-    <script src="js/archives.js"></script>
-
+    <script src="js/forms.js"></script>
 
 
 
