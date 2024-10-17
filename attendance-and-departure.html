@@ -30,12 +30,22 @@
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
 
+    
+     <!-- SweetAlert2 CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
-    <!-- SweetAlert2 CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+<!-- SweetAlert2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <!-- SweetAlert2 JS -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<style>
+    body {
+        font-family: 'Cairo', sans-serif;
+        direction: rtl;
+    }
+    .table thead th {
+        background-color: #f8f9fa;
+    }
+</style>
 
 </head>
 
@@ -55,10 +65,11 @@
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-light navbar-light">
                 <a href="index.html" class="d-flex align-items-center ms-4 mb-4">
-                    <img src="img\qacc.png" alt="شعار الموقع" style="width: 100px; height: 65px; margin-bottom: 15px;">
+                    <img src="img\qacc.png" alt="شعار الموقع"
+                    style="width: 100px; height: 65px; margin-bottom: 15px;">
                     <h6 class="text-primary">مركز ضمان الجودة والمعايرة المهنية</h6>
                 </a>
-
+               
                 <div class="navbar-nav w-100">
                     <a href="index.html" class="nav-item nav-link"><i
                             class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
@@ -66,14 +77,14 @@
                     <!-- ------------------------------------------------------------------------- -->
 
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                        <a href="#" class="nav-link dropdown-toggle " data-bs-toggle="dropdown">
                             <i class="fas fa-solid fa-user-tie me-2"></i></i>مدير النظام</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="system-administrator.html" class="dropdown-item">ادارة حسابات مستخدمي لوحة
+                            <a href="system-administrator.html" class="dropdown-item ">ادارة حسابات مستخدمي لوحة
                                 التحكم</a>
                             <a href="permissions.html" class="dropdown-item">ادارة الصلاحيات</a>
-                            <a href="administration-of-depatments.html" class="dropdown-item">ادارة الادارات</a>
-                            <a href="officeManagement.html" class="dropdown-item">ادارة المكاتب</a>
+                            <a href="administration-of-depatments.html" class="dropdown-item ">ادارة الادارات</a>
+                            <a href="officeManagement.html" class="dropdown-item ">ادارة المكاتب</a>
                             <a href="categories_admin.html" class="dropdown-item">ادارة طلبات الاصناف</a>
                             <a href="#" class="dropdown-item">ادارة طلبات النماذج</a>
                             <a href="#" class="dropdown-item">ادارة الموظفين</a>
@@ -83,23 +94,23 @@
                     <!-- ------------------------------------------------------------------------- -->
 
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                        <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown"><i
                                 class="fas fa-solid fa-users me-2"></i>رئيس وحدة شوؤن الموظفين</a>
                         <div class="dropdown-menu bg-transparent border-0">
                             <a href="#" class="dropdown-item">ادارة الموظفين</a>
                             <a href="leaveNotifications.html" class="dropdown-item">الاجازات</a>
-                            <a href="attendance-and-departure.html" class="dropdown-item">الحضور والانصراف</a>
+                            <a href="attendance-and-departure.html" class="dropdown-item active">الحضور والانصراف</a>
                         </div>
                     </div>
                     <!-- ------------------------------------------------------------------------- -->
                     <!-- ------------------------------------------------------------------------- -->
 
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown"><i
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
                                 class="fas fa-money-bill-wave me-2"></i>مدير ادارة الشوؤن
                             الادارية والمالية</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="categories.html" class="dropdown-item active">ادارة طلبات الاصناف</a>
+                            <a href="categories.html" class="dropdown-item">ادارة طلبات الاصناف</a>
                             <a href="#" class="dropdown-item">ادارة طلبات النماذج</a>
                         </div>
                     </div>
@@ -241,179 +252,82 @@
                             <a href="#" class="dropdown-item">Log Out</a>
                         </div>
                     </div>
-
                 </div>
             </nav>
             <!-- Navbar End -->
 
 
-            <div class="container-fluid pt-4 px-4">
-                <div class="bg-light rounded h-100 p-4">
-                    <h5>إدارة طلبات الأصناف</h5>
-                </div>
-            </div>
-            <!-- Categories Dialog-->
-            <div class="dialog-overlay dialog" id="dialog1">
-                <div class="dialog-content-main">
-                    <!-- Your dialog content goes here -->
-                    <div class="col-sm-12">
-                        <div class="bg-light rounded h-100 p-4">
-                            <h6 class="mb-4">تفاصيل الطلب</h6>
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">اسم الصنف</th>
-                                        <th scope="col">الكمية</th>
-                                        <th scope="col">الإجراء</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>اقلام</td>
-                                        <td><span>5</span><input type="number" style="display: none;"></td>
-                                        <td><button class="edit-quantity btn btn-success custom-btn-main" onclick="editQuantity(this)">تعديل
-                                                الكمية</button><button class="save-quantity btn btn-success custom-btn-main" style="display: none;"
-                                                onclick="saveQuantity(this)">حفظ</button></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>ورق</td>
-                                        <td><span>10</span><input type="number" style="display: none;"></td>
-                                        <td><button class="edit-quantity btn btn-success custom-btn-main" onclick="editQuantity(this)">تعديل
-                                                الكمية</button><button class="save-quantity btn btn-success custom-btn-main" style="display: none;"
-                                                onclick="saveQuantity(this)">حفظ</button></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td>اقلام حبر</td>
-                                        <td><span>4</span><input type="number" style="display: none;"></td>
-                                        <td><button class="edit-quantity btn btn-success custom-btn-main" onclick="editQuantity(this)">تعديل
-                                                الكمية</button><button class="save-quantity btn btn-success custom-btn-main" style="display: none;"
-                                                onclick="saveQuantity(this)">حفظ</button></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="closeDialogCategories"></div>
+            <div class="container mt-5">
+                <div class="row mb-4">
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" placeholder="ابحث عن اسم الموظف">
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-select">
+                            <option selected>اختر الإدارة</option>
+                            <option value="1">الإدارة 1</option>
+                            <option value="2">الإدارة 2</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-select">
+                            <option selected>اختر القسم</option>
+                            <option value="1">القسم 1</option>
+                            <option value="2">القسم 2</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-select">
+                            <option selected>اختر الوحدة</option>
+                            <option value="1">الوحدة 1</option>
+                            <option value="2">الوحدة 2</option>
+                        </select>
                     </div>
                 </div>
-            </div>
-            <div class="dialog-overlay dialog" id="dialog2">
-                <div class="dialog-content-main">
-                    <!-- Your dialog content goes here -->
-                    <div class="col-sm-12">
-                        <div class="bg-light rounded h-100 p-4">
-                            <h6 class="mb-4">تفاصيل الطلب</h6>
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">اسم الصنف</th>
-                                        <th scope="col">الكمية</th>
-                                        <th scope="col">الإجراء</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>اقلام</td>
-                                        <td><span>5</span><input type="number" style="display: none;"></td>
-                                        <td><button class="edit-quantity btn btn-success custom-btn-main" onclick="editQuantity(this)">تعديل
-                                                الكمية</button><button class="save-quantity btn btn-success custom-btn-main" style="display: none;"
-                                                onclick="saveQuantity(this)">حفظ</button></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>ورق</td>
-                                        <td><span>10</span><input type="number" style="display: none;"></td>
-                                        <td><button class="edit-quantity btn btn-success custom-btn-main" onclick="editQuantity(this)">تعديل
-                                                الكمية</button><button class="save-quantity btn btn-success custom-btn-main" style="display: none;"
-                                                onclick="saveQuantity(this)">حفظ</button></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td>مشابك</td>
-                                        <td><span>4</span><input type="number" style="display: none;"></td>
-                                        <td><button class="edit-quantity btn btn-success custom-btn-main" onclick="editQuantity(this)">تعديل
-                                                الكمية</button><button class="save-quantity btn btn-success custom-btn-main" style="display: none;"
-                                                onclick="saveQuantity(this)">حفظ</button></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="closeDialogCategories"></div>
+                
+                
+                <div class="form-group" style="display: flex; gap: 10px;">
+                    <div class="form-floating mb-4 att-dep" style="flex: 1;">
+                        <input type="date" class="form-control att-dep" id="startDate" placeholder="تاريخ البداية" onchange="setEndDateMin()">
+                        <label for="startDate">تاريخ البداية</label>
+                    </div>
+                    <div class="form-floating mb-3" style="flex: 1;">
+                        <input type="date" class="form-control att-dep" id="endDate" placeholder="تاريخ النهاية ">
+                        <label for="endDate">تاريخ النهاية</label>
                     </div>
                 </div>
+                
+                <button id="viewButton" class="btn btn-primary" onclick="viewTable()">عرض الجدول</button>
+
+            
+                <table class="table table-bordered text-center">
+                    <thead >
+                        <tr>
+                            <th>الرقم</th>
+                            <th>اسم الموظف</th>
+                            <th>الوظيفة</th>
+                            <th>التاريخ</th>
+                            <th>اليوم</th>
+                            <th>الموعد الافتراضي للحضور</th>
+                            <th>موعد الحضور</th>
+                            <th>موعد الانصراف</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>فتحي الحباسي</td>
+                            <td>مدير</td>
+                            <td>2024-10-16</td>
+                            <td>الخميس</td>
+                            <td>08:00 - 15:00</td>
+                            <td>08:10</td>
+                            <td>15:05</td>
+                        </tr>
+                        <!-- Add more rows as needed -->
+                    </tbody>
+                </table>
             </div>
-            <!-- Table Start -->
-            <div class="container-fluid pt-4 px-4">
-                <div class="row g-4">
-
-
-                    <div class="col-12">
-                        <div class="bg-light rounded h-100 p-4">
-                            <h6 class="mb-4">جدول طلبات الأصناف</h6>
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">الرقم</th>
-                                            <th scope="col">اسم الموظف </th>
-                                            <th scope="col"> الإدارة </th>
-                                            <th scope="col">القسم </th>
-                                            <th scope="col">الإجراءات </th>
-
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>رحمة </td>
-                                            <td>تقنية معلومات </td>
-
-                                            <td>البرمجة </td>
-                                            <td>
-                                                <!-- التفاصيل -->
-                                                <a href="#" class="btn btn-success custom-btn-main openDialogCategories" id="dialog1">التفاصيل</a>
-                                                <!-- قبول -->
-                                                <a href="#" class="btn btn-success custom-btn-main">قبول</a>
-                                                <!-- رفض -->
-                                                <a href="#" class="btn btn-danger custom-btn-main">رفض</a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>اكرام العرضاوي </td>
-                                            <td>تقنية معلومات </td>
-
-                                            <td>البرمجة </td>
-                                            <td>
-                                                <!-- التفاصيل -->
-                                                <a href="#" class="btn btn-success custom-btn-main openDialogCategories" id="dialog2">التفاصيل</a>
-                                                <!-- قبول -->
-                                                <a href="#" class="btn btn-success custom-btn-main">قبول</a>
-                                                <!-- رفض -->
-                                                <a href="#" class="btn btn-danger custom-btn-main">رفض</a>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Table End -->
-
-        </div>
-        <!-- Content End -->
-
-
-        <!-- Back to Top -->
-        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
-    </div>
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -428,10 +342,26 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
-    <script src="js/categories.js"></script>
+    <script src="js/operations.js"></script>
 
-
-
+    <script>
+        $(function () {
+            $('#startDate').datetimepicker({
+                format: 'YYYY-MM-DD'
+            });
+            $('#endDate').datetimepicker({
+                format: 'YYYY-MM-DD'
+            });
+        });
+    </script>
 </body>
 
 </html>
+
+
+
+
+
+
+
+
