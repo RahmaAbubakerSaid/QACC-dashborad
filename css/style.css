@@ -872,3 +872,45 @@ body {
 #viewButton:hover {
     background-color: #b7842a; /* لون أغمق عند التمرير */
 }
+
+
+#tableContainer {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+#tableContainer th, #tableContainer td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+#tableContainer th {
+    background-color: #4CAF50; /* لون خلفية للرؤوس */
+    color: white; /* لون النص */
+    font-weight: bold;
+}
+
+#tableContainer tr:nth-child(even) {
+    background-color: #f2f2f2; /* لون خلفية للصفوف الزوجية */
+}
+
+#tableContainer tr:hover {
+    background-color: #ddd; /* تغيير لون الصف عند تمرير الفأرة */
+}
+
+#tableContainer td {
+    font-size: 14px; /* حجم الخط للخلايا */
+}
+
+#tableContainer th, #tableContainer td {
+    padding: 12px 15px; /* تعديل المسافات داخل الخلايا */
+}
+
+#tableContainer th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    background-color: #9c9a9a; /* لون داكن للرأس */
+    color: white; /* لون النص للرأس */
+}
