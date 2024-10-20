@@ -298,81 +298,83 @@
                         <label for="endDate">تاريخ النهاية</label>
                     </div>
                 </div>
+
+                <button id="toggleTableBtn">عرض/إخفاء الجدول</button>
+                <button id="printBtn" style="display:none;" onclick="printTable()">طباعة</button>
                 
-                <button id="viewButton" class="btn btn-primary" onclick="viewTable()">عرض الجدول</button>
+         
+            <table id="tableContainer"  style="display:none;" >
+                <thead >
+                    <tr>
+                        <th>الرقم</th>
+                        <th>اسم الموظف</th>
+                        <th>الوظيفة</th>
+                        <th>التاريخ</th>
+                        <th>اليوم</th>
+                        <th>الجدول الزمني</th>
+                        <th> الحالة</th>     <!-- متأخر طبيعي غائب -->
+                        <th>موعد الحضور</th>
+                        <th>موعد الانصراف</th>
+                        <th>التأخير</th> <!-- موعد حضور الموظف - موعد الحضور الافتراضي  -->
+                        <th>  ساعات الحضور</th>    <!-- موعد الانصراف - موعد الحضور -->
+                        <th>ساعات العمل  </th>        <!--موعد الانصراف الافتراضي - موعد حضور الموظف -->
+                        <th>الساعات الاضافية </th>     <!-- ساعات الحضور - 7  -->
 
-            
-                <table class="table table-bordered text-center">
-                    <thead >
-                        <tr>
-                            <th>الرقم</th>
-                            <th>اسم الموظف</th>
-                            <th>الوظيفة</th>
-                            <th>التاريخ</th>
-                            <th>اليوم</th>
-                            <th>الجدول الزمني</th>
-                            <th> الحالة</th>     <!-- متأخر طبيعي غائب -->
-                            <th>موعد الحضور</th>
-                            <th>موعد الانصراف</th>
-                            <th>التأخير</th> <!-- موعد حضور الموظف - موعد الحضور الافتراضي  -->
-                            <th>  ساعات الحضور</th>    <!-- موعد الانصراف - موعد الحضور -->
-                            <th>ساعات العمل  </th>        <!--موعد الانصراف الافتراضي - موعد حضور الموظف -->
-                            <th>الساعات الاضافية </th>     <!-- ساعات الحضور - 7  -->
-
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>فتحي الحباسي</td>
-                            <td>مدير</td>
-                            <td>2024-10-15</td>
-                            <td>التلاثاء</td>
-                            <td>08:00 - 15:00</td>
-                            <td>غائب</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>فتحي الحباسي</td>
-                            <td>مدير</td>
-                            <td>2024-10-15</td>
-                            <td>الاربعاء</td>
-                            <td>08:00 - 15:00</td>
-                            <td>متأخر</td>
-                            <td>09:40</td>
-                            <td>15:05</td>
-                            <td>10 دقائق</td>
-                            <td>6</td>
-                            <td>6</td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>فتحي الحباسي</td>
-                            <td>مدير</td>
-                            <td>2024-10-16</td>
-                            <td>الخميس</td>
-                            <td>08:00 - 15:00</td>
-                            <td>طبيعي</td>
-                            <td>08:10</td>
-                            <td>16:05</td>
-                            <td>8</td>
-                            <td>0</td>
-                            <td>7</td>
-                            <td>1</td>
-                        </tr>
-                        
-                    </tbody>
-                </table>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>فتحي الحباسي</td>
+                        <td>مدير</td>
+                        <td>2024-10-15</td>
+                        <td>التلاثاء</td>
+                        <td>08:00 - 15:00</td>
+                        <td>غائب</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>فتحي الحباسي</td>
+                        <td>مدير</td>
+                        <td>2024-10-15</td>
+                        <td>الاربعاء</td>
+                        <td>08:00 - 15:00</td>
+                        <td>متأخر</td>
+                        <td>09:40</td>
+                        <td>15:05</td>
+                        <td>10 دقائق</td>
+                        <td>6</td>
+                        <td>6</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>فتحي الحباسي</td>
+                        <td>مدير</td>
+                        <td>2024-10-16</td>
+                        <td>الخميس</td>
+                        <td>08:00 - 15:00</td>
+                        <td>طبيعي</td>
+                        <td>08:10</td>
+                        <td>16:05</td>
+                        <td>0</td>
+                        <td>8</td>
+                        <td>7</td>
+                        <td>1</td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+        
             </div>
 
-    <!-- JavaScript Libraries -->
+    
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="lib/chart/chart.min.js"></script>
@@ -396,6 +398,60 @@
                 format: 'YYYY-MM-DD'
             });
         });
+
+        document.getElementById('toggleTableBtn').addEventListener('click', function() {
+    const table = document.getElementById('tableContainer');
+    const printBtn = document.getElementById('printBtn');
+
+    // التحقق من حالة عرض الجدول
+    if (table.style.display === 'none' || table.style.display === '') {
+        table.style.display = 'table';  // عرض الجدول
+        printBtn.style.display = 'inline-block';  // إظهار زر الطباعة
+    } else {
+        table.style.display = 'none';  // إخفاء الجدول
+        printBtn.style.display = 'none';  // إخفاء زر الطباعة
+    }
+});
+
+function printTable() {
+    const tableContent = document.getElementById('tableContainer').outerHTML;  // الحصول على محتوى الجدول
+    const newWindow = window.open('', '', 'width=800, height=600');  // فتح نافذة جديدة
+
+    // كتابة محتوى جديد في النافذة للطباعة
+    newWindow.document.write(`
+        <html>
+        <head>
+            <title>طباعة الجدول</title>
+            <style>
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                }
+                th, td {
+                    border: 1px solid black ;
+                    padding: 8px ;
+                    text-align: center ;
+                }
+                /* إخفاء زر الطباعة عند الطباعة */
+                @media print {
+                    button {
+                        display: none ;
+                    }
+                }
+            </style>
+        </head>
+        <body>
+            ${tableContent}
+            <br>
+            <button onclick="window.print();">طباعة</button>  <!-- زر الطباعة في الصفحة الجديدة -->
+        </body>
+        </html>
+    `);
+
+    newWindow.document.close();  // إنهاء تحرير الصفحة
+    newWindow.focus();  // التركيز على النافذة الجديدة
+}
+
     </script>
 </body>
 
