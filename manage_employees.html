@@ -950,6 +950,54 @@
             const dialogTitle = document.getElementById('employeeDetails');
             dialogTitle.innerText = employee.name; // عرض اسم الموظف
             document.getElementById('employeeDialog').style.display = 'block'; // فتح النافذة
+
+            // إغلاق الـ dialog
+    document.getElementById('closeDialog').addEventListener('click', function() {
+        document.getElementById('employeeDialog').style.display = 'none';
+    });
+
+    // إرسال البيانات
+    document.getElementById('sendButton').addEventListener('click', function(event) {
+        event.preventDefault();
+
+        const category = document.getElementById('category').value;
+        const imageInput = document.getElementById('imageInput');
+        const sendDate = document.getElementById('sendDate').value;
+
+        // تحقق من الفئة
+        if (category === "") {
+            alert("يرجى اختيار فئة.");
+            return;
+        }
+
+        // تحقق من الصور
+        if (imageInput.files.length === 0) {
+            alert("يرجى اختيار صورة.");
+            return;
+        }
+
+        // تحقق من التاريخ
+        if (sendDate === "") {
+            alert("يرجى تحديد التاريخ.");
+            return;
+        }
+
+        const files = imageInput.files;
+
+        // إضافة كل صورة إلى الجدول
+        const tableBody = document.querySelector('#resultTable tbody');
+        for (let i = 0; i < files.length; i++) {
+            const newRow = tableBody.insertRow();
+            newRow.insertCell(0).textContent = category;
+            newRow.insertCell(1).textContent = sendDate;
+            newRow.insertCell(2).textContent = files[i].name;
+        }
+
+        // إعادة تعيين الحقول بعد الإرسال
+        document.getElementById('category').value = '';
+        document.getElementById('imageInput').value = '';
+        document.getElementById('sendDate').value = '';
+    });
         }
 
         document.getElementById('closeDialog').onclick = function () {
@@ -1057,7 +1105,7 @@
         }
 
 
-        document.getElementById('sendButton').addEventListener('click', function(event) {
+/*         document.getElementById('sendButton').addEventListener('click', function(event) {
         event.preventDefault();
 
         const category = document.getElementById('category').value;
@@ -1101,7 +1149,7 @@
 
     document.getElementById('closeDialog').addEventListener('click', function() {
         document.getElementById('employeeDialog').style.display = 'none';
-    });
+    }); */
 
     </script>
 
