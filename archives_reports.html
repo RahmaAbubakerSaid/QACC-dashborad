@@ -44,6 +44,11 @@
             .print-btn {
                 display: none;
             }
+
+            /* إخفاء حقل البحث عند الطباعة */
+            #messageSearchTable {
+                display: none;
+            }
         }
 
         /* تنسيق الشعار ليكون في أعلى اليسار */
@@ -140,6 +145,14 @@
                 <h5></h5>
             </div>
         </div>
+        <div class="header" style="display: flex;margin-top: 20px; width: 100%;">
+            <div class="chat-search-container" style="flex-grow: 1;margin-left:10px;">
+                <input type="text" id="messageSearchTable" placeholder="البحث على موظف..." onkeyup="filterTable()"
+                    style="width: 100%; padding: 8px; box-sizing: border-box;">
+            </div>
+            <!-- زر الطباعة -->
+            <button class="btn btn-success custom-btn-main print-btn" onclick="printPage()">طباعة التقارير</button>
+        </div>
 
         <!-- جدول الموظفين -->
         <div class="body mt-4">
@@ -177,45 +190,62 @@
                     </tr>
                 </tbody>
             </table>
-
-            <!-- زر الطباعة -->
-            <button class="btn btn-success custom-btn-main mt-3 print-btn" onclick="printPage()">طباعة</button>
         </div>
     </div>
 
     <!-- دالة الطباعة -->
     <script>
 
-        
-function printPage() {
+
+        function printPage() {
             window.print();
         }
 
+        function filterTable() {
+            const input = document.getElementById('messageSearchTable');
+            const filter = input.value.toLowerCase();
+            const table = document.querySelector('.employee-table');
+            const rows = table.getElementsByTagName('tr');
 
-       /*  const reportData = [
-            { employee: 'محمد أحمد', sendDate: '2024-10-01', viewDate: '2024-10-01' },
-            { employee: 'سارة علي', sendDate: '2024-10-01', viewDate: null },
-            { employee: 'أحمد خالد', sendDate: '2024-10-01', viewDate: null }
-        ];
+            // Loop through all table rows, and hide those that don't match the search query
+            for (let i = 1; i < rows.length; i++) { // Start at 1 to skip the header row
+                const cells = rows[i].getElementsByTagName('td');
+                let rowVisible = false;
 
-        function loadReport() {
-            const tbody = document.querySelector('.employee-table tbody');
-            tbody.innerHTML = ''; // مسح الجدول الحالي
+                for (let j = 0; j < cells.length; j++) {
+                    if (cells[j].textContent.toLowerCase().includes(filter)) {
+                        rowVisible = true;
+                        break;
+                    }
+                }
 
-            reportData.forEach((data, index) => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${index + 1}</td>
-                    <td>${data.employee}</td>
-                    <td>${data.sendDate}</td>
-                    <td>${data.viewDate || 'لم تتم مشاهدته بعد'}</td>
-                `;
-                tbody.appendChild(row);
-            });
+                rows[i].style.display = rowVisible ? '' : 'none';
+            }
         }
-
-        // عند تحميل صفحة التقارير، قم بتحميل البيانات
-        document.addEventListener('DOMContentLoaded', loadReport); */
+        /*  const reportData = [
+             { employee: 'محمد أحمد', sendDate: '2024-10-01', viewDate: '2024-10-01' },
+             { employee: 'سارة علي', sendDate: '2024-10-01', viewDate: null },
+             { employee: 'أحمد خالد', sendDate: '2024-10-01', viewDate: null }
+         ];
+ 
+         function loadReport() {
+             const tbody = document.querySelector('.employee-table tbody');
+             tbody.innerHTML = ''; // مسح الجدول الحالي
+ 
+             reportData.forEach((data, index) => {
+                 const row = document.createElement('tr');
+                 row.innerHTML = `
+                     <td>${index + 1}</td>
+                     <td>${data.employee}</td>
+                     <td>${data.sendDate}</td>
+                     <td>${data.viewDate || 'لم تتم مشاهدته بعد'}</td>
+                 `;
+                 tbody.appendChild(row);
+             });
+         }
+ 
+         // عند تحميل صفحة التقارير، قم بتحميل البيانات
+         document.addEventListener('DOMContentLoaded', loadReport); */
     </script>
 
 </body>
