@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="utf-8">
+    <title>تنسيق الصفحة</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- تنسيقات خاصة -->
+    <style>
+        /* تقليل هوامش الصفحة */
+        body {
+            font-family: 'Amiri', serif;
+            margin: 0;
+            padding: 0px;
+            /* تقليل الهوامش العامة */
+        }
+
+        /* إخفاء زر الطباعة عند الطباعة */
+        @media print {
+            .print-btn {
+                display: none;
+            }
+        }
+
+        /* تنسيق الشعار ليكون في أعلى اليسار */
+        .header img {
+            float: right;
+            margin-left: 20px;
+            width: 80px;
+            /* التحكم بحجم الشعار */
+        }
+
+        /* تنسيق النصوص لتكون في المنتصف وتحت الشعار */
+        .header-text {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .header h3 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .header h4 {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .header h5 {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        /* تنسيق الحاوية */
+        .header {
+            overflow: hidden;
+        }
+
+        /* تنسيق الجدول */
+        .employee-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .employee-table th,
+        .employee-table td {
+            border: 1px solid #000;
+            padding: 6px;
+            /* تقليل الهوامش الداخلية */
+            text-align: center;
+        }
+
+        /* تلوين الصف العلوي */
+        .employee-table thead tr {
+            background-color: #CA9733;
+            /* لون ذهبي مخصص للصف العلوي */
+            color: white;
+        }
+
+        /* التأكد من أن لون الصف العلوي والشعار يظهران عند الطباعة */
+        @media print {
+
+            .employee-table thead tr,
+            .header img {
+                background-color: #CA9733 !important;
+                -webkit-print-color-adjust: exact;
+                /* لتثبيت اللون عند الطباعة */
+            }
+
+            .header img {
+                -webkit-print-color-adjust: exact;
+                /* لجعل الشعار يظهر بالألوان */
+            }
+        }
+
+        /* إطار الجدول */
+        .employee-table td,
+        .employee-table th {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container mt-4">
+        <div class="header clearfix">
+            <!-- الشعار -->
+            <img src="img/logo.jpg" alt="شعار">
+
+            <!-- النصوص الثلاثة -->
+            <div class="header-text">
+                <h3>مركز ضمان الجودة والمعايرة المهنية</h3>
+                <h4>قسم وحدة المحفوظات</h4>
+                <h5></h5>
+            </div>
+        </div>
+
+        <!-- جدول الموظفين -->
+        <div class="body mt-4">
+            <table class="employee-table">
+                <thead>
+                    <tr>
+                        <th>ر.م</th>
+                        <th>اسم الموظف</th>
+                        <th>تاريخ الإرسال</th>
+                        <th>تاريخ المشاهدة</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>محمد أحمد</td>
+                        <td>2024-10-01</td>
+                        <td>2024-10-01</td>
+
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>سارة علي</td>
+
+                        <td>2024-10-01</td>
+                        <td>لم تتم مشاهدته بعد</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>أحمد خالد</td>
+
+                        <td>2024-10-01</td>
+                        <td>لم تتم مشاهدته بعد</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- زر الطباعة -->
+            <button class="btn btn-success custom-btn-main mt-3 print-btn" onclick="printPage()">طباعة</button>
+        </div>
+    </div>
+
+    <!-- دالة الطباعة -->
+    <script>
+
+        
+function printPage() {
+            window.print();
+        }
+
+
+       /*  const reportData = [
+            { employee: 'محمد أحمد', sendDate: '2024-10-01', viewDate: '2024-10-01' },
+            { employee: 'سارة علي', sendDate: '2024-10-01', viewDate: null },
+            { employee: 'أحمد خالد', sendDate: '2024-10-01', viewDate: null }
+        ];
+
+        function loadReport() {
+            const tbody = document.querySelector('.employee-table tbody');
+            tbody.innerHTML = ''; // مسح الجدول الحالي
+
+            reportData.forEach((data, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${data.employee}</td>
+                    <td>${data.sendDate}</td>
+                    <td>${data.viewDate || 'لم تتم مشاهدته بعد'}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // عند تحميل صفحة التقارير، قم بتحميل البيانات
+        document.addEventListener('DOMContentLoaded', loadReport); */
+    </script>
+
+</body>
+
+</html>
