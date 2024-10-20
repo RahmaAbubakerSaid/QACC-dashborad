@@ -90,7 +90,7 @@
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
                                 class="fas fa-solid fa-users me-2"></i>رئيس وحدة شوؤن الموظفين</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="#" class="dropdown-item">ادارة الموظفين</a>
+                            <a href="manage_employees.html" class="dropdown-item">ادارة الموظفين</a>
                             <a href="leaveNotifications.html" class="dropdown-item">الاجازات</a>
                             <a href="attendance-and-departure.html" class="dropdown-item">الحضور والانصراف</a>
                         </div>
@@ -297,9 +297,11 @@
                 </div>
             
                 <div class="right-container">
-                  <div class="header">
-                    <h4>الدردشة</h4>
-                  </div>
+                    <div class="header" style="display: flex; justify-content: space-between; align-items: center;">
+                        <h4>الدردشة</h4>
+                        <button class="btn btn-success custom-btn-main">تقارير</button>
+                    </div>
+                
                   <div class="chat-search-container">
                     <input type="text" id="messageSearchInput" placeholder="بحث عن رسالة..." onkeyup="filterMessages()">
                 </div>

@@ -493,6 +493,7 @@ body {
     /* تم تغيير القيمة من right إلى left */
     bottom: 45px;
     z-index: 99;
+    padding-top: 10px;
 }
 .main-container {
     display: flex;
@@ -529,6 +530,28 @@ body {
     background-color: #f0f2f5;
   }
 
+  form {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.form-group {
+    flex: 1 1 45%;
+    margin: 10px;
+}
+
+  .container {
+    margin: auto;
+    border-radius: 5px;
+    background-color: white;
+}
+.container-employee {
+    display: flex;
+    margin: auto;
+    border-radius: 5px;
+    background-color: #f3f6f9;
+}
+
   .search-container {
     display: flex;
     padding: 10px;
@@ -562,10 +585,32 @@ body {
     height: calc(100% - 80px);
     overflow-y: auto;
   } */
+
   .employee-list {
-    flex-grow: 1;
-    overflow-y: auto; /* شريط تمرير عند الحاجة */
+    height: calc(100% - 80px);
+    overflow-y: auto;
   }
+
+    .employee-list-name {
+        flex: 1;
+        padding: 30px;
+        border-left: 1px solid #ccc;
+        overflow-y: auto;
+        /* تمكين التمرير */
+        height: 360vh;
+        /* ارتفاع الصفحة بالكامل */
+    }
+    
+    .employee-name {
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        /* تأثير انتقال الخلفية */
+    }
+
+    .employee-name:hover {
+        background-color: #9d9d9d;
+        /* تغيير لون الخلفية عند التمرير */
+    }
 
   .employee-box {
     display: flex;
@@ -582,6 +627,7 @@ body {
   .employee-box input[type="checkbox"] {
     margin-right: 10px;
   }
+  
   .right-container {
     flex: 1;
     display: flex;
@@ -828,10 +874,6 @@ body {
     display: none; /* إخفاء العناصر التي تحمل هذه الصفة */
 }
 
-
-
-
-
 .btn-group {
     display: flex;
     align-items: center;
@@ -848,8 +890,6 @@ body {
     font-size: 18px; /* حجم الأيقونات */
     cursor: pointer; /* مؤشر اليد عند تمرير الماوس */
 }
-
-
 
 .chat-search-container input {
     width: 100%;
@@ -914,3 +954,30 @@ body {
     background-color: #9c9a9a; /* لون داكن للرأس */
     color: white; /* لون النص للرأس */
 }
+.input-section {
+    flex: 3;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.input-employee,
+select,
+textarea{
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.custom-button-employee {
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+

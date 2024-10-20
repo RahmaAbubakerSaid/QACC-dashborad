@@ -1,0 +1,1472 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>DASHMIN - Bootstrap Admin Template</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<!-- <style>
+    .table-responsive {
+        overflow-x: auto; /* إضافة تمرير أفقي */
+    }
+
+    .table {
+        width: 100%; /* جعل الجدول يأخذ عرض الحاوية بالكامل */
+        border-collapse: collapse; /* دمج الحدود */
+    }
+
+    th, td {
+        padding: 8px; /* إضافة padding للخلايا */
+        text-align: center; /* محاذاة المحتوى إلى المركز */
+        border: 1px solid #ddd; /* إضافة حدود للخلايا */
+    }
+
+    th {
+        background-color: #f8f9fa; /* لون خلفية لرؤوس الجدول */
+    }
+
+    @media (max-width: 768px) {
+        th, td {
+            font-size: 12px; /* تصغير حجم الخط في الشاشات الصغيرة */
+        }
+    }
+</style> -->
+<style>
+    .table thead th {
+        background-color: #f8f9fa;
+    }
+
+    #addEmployeeData th,
+    tr {
+        white-space: nowrap;
+        /* منع التفاف النص */
+        width: 150px;
+        /* ضبط عرض العمود */
+        text-align: center;
+        /* توسيط النص */
+    }
+
+    #resultTable th,
+    tr {
+        white-space: nowrap;
+        /* منع التفاف النص */
+        width: 150px;
+        /* ضبط عرض العمود */
+        text-align: center;
+        /* توسيط النص */
+    }
+
+    #employeeTable tr {
+        white-space: initial;
+        background: white;
+    }
+</style>
+
+<body>
+    <div class="container-xxl position-relative bg-white d-flex p-0">
+        <!-- Spinner Start -->
+        <div id="spinner"
+            class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        <!-- Spinner End -->
+
+
+        <!-- Sidebar Start -->
+        <div class="sidebar pe-4 pb-3">
+            <nav class="navbar bg-light navbar-light">
+                <a href="index.html" class="d-flex align-items-center ms-4 mb-4">
+                    <img src="img\qacc.png" alt="شعار الموقع" style="width: 100px; height: 65px; margin-bottom: 15px;">
+                    <h6 class="text-primary">مركز ضمان الجودة والمعايرة المهنية</h6>
+                </a>
+
+                <div class="navbar-nav w-100">
+                    <a href="index.html" class="nav-item nav-link"><i
+                            class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+
+                    <!-- ------------------------------------------------------------------------- -->
+
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                            <i class="fas fa-solid fa-user-tie me-2"></i></i>مدير النظام</a>
+                        <div class="dropdown-menu bg-transparent border-0">
+                            <a href="system-administrator.html" class="dropdown-item">ادارة حسابات مستخدمي لوحة
+                                التحكم</a>
+                            <a href="permissions.html" class="dropdown-item">ادارة الصلاحيات</a>
+                            <a href="administration-of-depatments.html" class="dropdown-item">ادارة الادارات</a>
+                            <a href="officeManagement.html" class="dropdown-item">ادارة المكاتب</a>
+                            <a href="categories_admin.html" class="dropdown-item">ادارة طلبات الاصناف</a>
+                            <a href="forms_requests_admin.html" class="dropdown-item">ادارة طلبات النماذج</a>
+                            <a href="#" class="dropdown-item">ادارة الموظفين</a>
+                        </div>
+                    </div>
+
+                    <!-- ------------------------------------------------------------------------- -->
+
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown"><i
+                                class="fas fa-solid fa-users me-2"></i>رئيس وحدة شوؤن الموظفين</a>
+                        <div class="dropdown-menu bg-transparent border-0">
+                            <a href="manage_employees.html" class="dropdown-item active">ادارة الموظفين</a>
+                            <a href="leaveNotifications.html" class="dropdown-item">الاجازات</a>
+                            <a href="#" class="dropdown-item">الحضور والانصراف</a>
+                        </div>
+                    </div>
+                    <!-- ------------------------------------------------------------------------- -->
+                    <!-- ------------------------------------------------------------------------- -->
+
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                                class="fas fa-money-bill-wave me-2"></i>مدير ادارة الشوؤن
+                            الادارية والمالية</a>
+                        <div class="dropdown-menu bg-transparent border-0">
+                            <a href="categories.html" class="dropdown-item">ادارة طلبات الاصناف</a>
+                            <a href="forms_requests.html" class="dropdown-item">ادارة طلبات النماذج</a>
+                        </div>
+                    </div>
+                    <!-- ------------------------------------------------------------------------- -->
+
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                                class="fas fa-solid fa-box-open me-2"></i>امين المخازن</a>
+                        <div class="dropdown-menu bg-transparent border-0">
+                            <a href="receive_categories_manager.html" class="dropdown-item">ادارة طلبات الاصناف</a>
+                        </div>
+                    </div>
+
+                    <!-- ------------------------------------------------------------------------- -->
+
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                                class="fas fa-solid fa-envelope-open-text me-2"></i>رئيس وحدة المحفوظات</a>
+                        <div class="dropdown-menu bg-transparent border-0">
+                            <a href="archives.html" class="dropdown-item">ادارة الرسائل</a>
+                        </div>
+                    </div>
+                    <!-- ------------------------------------------------------------------------- -->
+
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                                class="fas fa fa-bullhorn me-2"></i>قسم الاعلانات</a>
+                        <div class="dropdown-menu bg-transparent border-0">
+                            <a href="ads.html" class="dropdown-item">ادارة الاعلانات</a>
+                        </div>
+                    </div>
+                    <!-- ------------------------------------------------------------------------- -->
+
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                                class="far fa-file-alt me-2"></i>Pages</a>
+                        <div class="dropdown-menu bg-transparent border-0">
+                            <a href="signin.html" class="dropdown-item">Sign In</a>
+                            <a href="signup.html" class="dropdown-item">Sign Up</a>
+                            <a href="404.html" class="dropdown-item">404 Error</a>
+                            <a href="blank.html" class="dropdown-item">Blank Page</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <!-- Sidebar End -->
+
+
+        <!-- Content Start -->
+        <div class="content">
+            <!-- Navbar Start -->
+            <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
+                <a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
+                    <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
+                </a>
+                <a href="#" class="sidebar-toggler flex-shrink-0" style="color: #BB822C">
+                    <i class="fa fa-bars"></i>
+                </a>
+                <form class="d-none d-md-flex ms-4">
+                    <input class="form-control border-0" type="search" placeholder="Search">
+                </form>
+                <div class="navbar-nav align-items-center ms-auto">
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                            <i class="fa fa-envelope me-lg-2"></i>
+                            <span class="d-none d-lg-inline-flex">الرسائل</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+                            <a href="#" class="dropdown-item">
+                                <div class="d-flex align-items-center">
+                                    <img class="rounded-circle" src="img/user.jpg" alt=""
+                                        style="width: 40px; height: 40px;">
+                                    <div class="ms-2">
+                                        <h6 class="fw-normal mb-0">Jhon send you a message</h6>
+                                        <small>15 minutes ago</small>
+                                    </div>
+                                </div>
+                            </a>
+                            <hr class="dropdown-divider">
+                            <a href="#" class="dropdown-item">
+                                <div class="d-flex align-items-center">
+                                    <img class="rounded-circle" src="img/user.jpg" alt=""
+                                        style="width: 40px; height: 40px;">
+                                    <div class="ms-2">
+                                        <h6 class="fw-normal mb-0">Jhon send you a message</h6>
+                                        <small>15 minutes ago</small>
+                                    </div>
+                                </div>
+                            </a>
+                            <hr class="dropdown-divider">
+                            <a href="#" class="dropdown-item">
+                                <div class="d-flex align-items-center">
+                                    <img class="rounded-circle" src="img/user.jpg" alt=""
+                                        style="width: 40px; height: 40px;">
+                                    <div class="ms-2">
+                                        <h6 class="fw-normal mb-0">Jhon send you a message</h6>
+                                        <small>15 minutes ago</small>
+                                    </div>
+                                </div>
+                            </a>
+                            <hr class="dropdown-divider">
+                            <a href="#" class="dropdown-item text-center">See all message</a>
+                        </div>
+                    </div>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                            <i class="fa fa-bell me-lg-2"></i>
+                            <span class="d-none d-lg-inline-flex">الاشعارات</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+                            <a href="#" class="dropdown-item">
+                                <h6 class="fw-normal mb-0">Profile updated</h6>
+                                <small>15 minutes ago</small>
+                            </a>
+                            <hr class="dropdown-divider">
+                            <a href="#" class="dropdown-item">
+                                <h6 class="fw-normal mb-0">New user added</h6>
+                                <small>15 minutes ago</small>
+                            </a>
+                            <hr class="dropdown-divider">
+                            <a href="#" class="dropdown-item">
+                                <h6 class="fw-normal mb-0">Password changed</h6>
+                                <small>15 minutes ago</small>
+                            </a>
+                            <hr class="dropdown-divider">
+                            <a href="#" class="dropdown-item text-center">See all notifications</a>
+                        </div>
+                    </div>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                            <img class="rounded-circle me-lg-2" src="img/user.jpg" alt=""
+                                style="width: 40px; height: 40px;">
+                            <span class="d-none d-lg-inline-flex">John Doe</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+                            <a href="#" class="dropdown-item">My Profile</a>
+                            <a href="#" class="dropdown-item">Settings</a>
+                            <a href="#" class="dropdown-item">Log Out</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <!-- Navbar End -->
+            <div id="employeeDialog" class="dialog-overlay">
+                <div class="dialog-content-main" style="max-height: 80vh; overflow-y: auto;width: 50%;">
+                    <h2>الملف المعني</h2>
+                    <div id="employeeDetails"></div>
+            
+                    <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
+                        <div class="mb-3">
+                            <label for="category">اختر الفئة:</label>
+                            <select id="category" required>
+                                <option value="">اختر فئة</option>
+                                <option value="التكليفات">التكليفات</option>
+                                <option value="الزيارات">الزيارات</option>
+                                <option value="تشكيل لجان">تشكيل لجان</option>
+                                <option value="تقارير الكفاءة السنوية">تقارير الكفاءة السنوية</option>
+                                <option value="قرارات ترقيات">قرارات ترقيات</option>
+                                <option value="الإجازات">الإجازات</option>
+                                <option value="أخرى">أخرى</option>
+                            </select>
+                        </div>
+                        <div class="form-container">
+                            <label for="imageInput">اختر صورة (يمكن اختيار عدة صور):</label><br>
+                            <input type="file" id="imageInput" accept="image/*" multiple required><br><br>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="date" class="form-control" id="sendDate" placeholder="تاريخ الإرسال" required>
+                            <label for="sendDate">تاريخ الإرسال</label>
+                        </div>
+            
+                        <div class="d-grid gap-2 d-md-flex justify-content-between">
+                            <button type="button" class="btn btn-primary py-3 w-100 mb-4" id="sendButton">إرسال</button>
+                            <button type="button" class="btn btn-secondary py-3 w-0 mb-4" id="closeDialog">إلغاء</button>
+                        </div>
+            
+                        <!-- Employee's Table -->
+                        <div class="col-sm-12">
+                            <div class="bg-light rounded h-100 p-4">
+                                <h6 class="mb-4">جدول بيانات الموظفين</h6>
+                                <div style="background-color: white;">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered text-center" id="resultTable">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">نوع الفئة</th>
+                                                    <th scope="col">تاريخ الإرسال</th>
+                                                    <th scope="col">الملفات</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- سيتم إضافة بيانات الموظفين هنا -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Start Content-->
+            <div class="container-fluid pt-4 px-4">
+                <div class="bg-light rounded h-100 p-4">
+                    <h3 class="mb-4">إدارة الموظفين</h3>
+
+                </div>
+            </div>
+
+            <div class="container-fluid pt-4 px-4">
+                <div class="row g-4">
+
+
+                    <div class="col-sm-12 ">
+                        <div class="container-employee">
+                            <div class="employee-list-name">
+                                <h5 style="flex-basis: 100%; ">أسماء الموظفين</h5>
+                                <div class="">
+                                    <input type="text" class="input-employee" id="searchInput"
+                                        placeholder="ابحث عن موظف..." oninput="filterEmployees()">
+                                </div>
+                                <table class="table table-bordered text-center" id="employeeTable">
+                                    <thead>
+                                        <tr>
+                                            <th>اسم الموظف</th><br>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="employeeList">
+                                        <!-- سيتم إضافة بيانات الموظفين هنا -->
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="input-section">
+                                <h5 style="flex-basis: 100%; padding:30px;padding-right:10px">
+                                    إضافة موظف</h5>
+                                <form id="employeeForm"><br>
+                                    <!-- البيانات العامة -->
+                                    <h6 style="flex-basis: 100%; padding:10px;">البيانات العامة
+                                    </h6><br><br>
+                                    <div class="form-group">
+                                        <label for="employeeId">رقم الموظف:</label>
+                                        <input type="text" class="input-employee" id="employeeId" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="name">اسم الموظف الكامل:</label>
+                                        <input type="text" class="input-employee" id="name" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="motherName">اسم الأم:</label>
+                                        <input type="text" class="input-employee" id="motherName" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="dateOfBirth">تاريخ الميلاد:</label>
+                                        <input type="date" class="input-employee" id="dateOfBirth" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="birthPlace">مكان الميلاد:</label>
+                                        <input type="text" class="input-employee" id="birthPlace" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="age">العمر:</label>
+                                        <input type="number" class="input-employee" id="age" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="nationalId">الرقم الوطني:</label>
+                                        <input type="text" class="input-employee" id="nationalId" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="nationalIdIssuanceAuthority">جهة إصدار الرقم الوطني:</label>
+                                        <input type="text" class="input-employee" id="nationalIdIssuanceAuthority"
+                                            required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="familyBookNumber">رقم كتيب العائلة:</label>
+                                        <input type="text" class="input-employee" id="familyBookNumber" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="familyBookIssuanceAuthority">جهة إصدار كتيب العائلة:</label>
+                                        <input type="text" class="input-employee" id="familyBookIssuanceAuthority"
+                                            required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="passportNumber">رقم جواز السفر:</label>
+                                        <input type="text" class="input-employee" id="passportNumber" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="passportIssuanceAuthority">جهة إصدار جواز السفر:</label>
+                                        <input type="text" class="input-employee" id="passportIssuanceAuthority"
+                                            required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="familySheetNumber">رقم ورقة العائلة:</label>
+                                        <input type="text" class="input-employee" id="familySheetNumber" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="registrationNumber">رقم القيد:</label>
+                                        <input type="text" class="input-employee" id="registrationNumber" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="nationality">الجنسية:</label>
+                                        <input type="text" class="input-employee" id="nationality" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="gender">الجنس:</label>
+                                        <select id="gender" required>
+                                            <option value="">اختر الجنس</option>
+                                            <option value="male">ذكر</option>
+                                            <option value="female">أنثى</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="maritalStatus">الحالة الاجتماعية:</label>
+                                        <select id="maritalStatus" required>
+                                            <option value="">اختر الحالة الاجتماعية</option>
+                                            <option value="single">أعزب</option>
+                                            <option value="married">متزوج</option>
+                                            <option value="divorced">مطلق</option>
+                                            <option value="widowed">أرمل</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="childrenCount">عدد الأبناء:</label>
+                                        <input type="number" class="input-employee" id="childrenCount" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="bloodType">فصيلة الدم:</label>
+                                        <select id="bloodType" required>
+                                            <option value="">اختر فصيلة الدم</option>
+                                            <option value="A+">A+</option>
+                                            <option value="A-">A-</option>
+                                            <option value="B+">B+</option>
+                                            <option value="B-">B-</option>
+                                            <option value="O+">O+</option>
+                                            <option value="O-">O-</option>
+                                            <option value="AB+">AB+</option>
+                                            <option value="AB-">AB-</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">البريد الإلكتروني:</label>
+                                        <input type="email" class="input-employee" id="email" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="emergencyContact">رقم هاتف ليبيانا:</label>
+                                        <input type="text" class="input-employee" id="libyanaPhone" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="emergencyPhone">رقم هاتف المدار:</label>
+                                        <input type="tel" class="input-employee" id="madarPhone" required>
+                                    </div>
+                                    <br>
+                                    <h6 style="flex-basis: 100%; padding:10px;">البيانات
+                                        الوظيفية</h6><br><br>
+
+                                    <div class="form-group">
+                                        <label for="position">الوظيفة:</label>
+                                        <input type="text" class="input-employee" id="position" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="department">الإدارة:</label>
+                                        <select id="department" required>
+                                            <option value="">اختر الإدارة</option>
+                                            <option value="hr">الموارد البشرية</option>
+                                            <option value="it">تكنولوجيا المعلومات</option>
+                                            <option value="finance">المالية</option>
+                                            <option value="marketing">التسويق</option>
+                                            <option value="sales">المبيعات</option>
+                                            <option value="operations">العمليات</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="division">القسم:</label>
+                                        <select id="division" required>
+                                            <option value="">اختر القسم</option>
+                                            <option value="recruitment">التوظيف</option>
+                                            <option value="development">التطوير</option>
+                                            <option value="accounting">المحاسبة</option>
+                                            <option value="customer_service">خدمة العملاء</option>
+                                            <option value="research">البحث والتطوير</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="education">المؤهل الدراسي:</label>
+                                        <input type="text" class="input-employee" id="education" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="jobStatus">الوضع الوظيفي:</label>
+                                        <select id="jobStatus" required>
+                                            <option value="">اختر الوضع الوظيفي</option>
+                                            <option value="عقد">عقد</option>
+                                            <option value="تعيين">تعيين</option>
+                                            <option value="نذب">نذب</option>
+                                            <option value="متعاون">متعاون</option>
+
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="joinDate">تاريخ المباشرة:</label>
+                                        <input type="date" class="input-employee" id="joinDate" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="contractStartDate">تاريخ بدء العقد:</label>
+                                        <input type="date" class="input-employee" id="contractStartDate" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="contractDuration">مدة العقد بالشهر:</label>
+                                        <input type="number" class="input-employee" id="contractDuration" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="guaranteeNumber">رقم الضمان:</label>
+                                        <input type="text" class="input-employee" id="guaranteeNumber" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="currentAllowance">العلاوة الحالية:</label>
+                                        <input type="number" class="input-employee" id="currentAllowance" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="bankName">اسم المصرف:</label>
+                                        <input type="text" class="input-employee" id="bankName" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="accountNumber">رقم الحساب:</label>
+                                        <input type="text" class="input-employee" id="accountNumber" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="monthlySalary">الراتب الشهري:</label>
+                                        <input type="number" class="input-employee" id="monthlySalary" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="annualLeave">الإجازة السنوية:</label>
+                                        <input type="number" class="input-employee" id="annualLeave" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="grade">الدرجة:</label>
+                                        <input type="text" class="input-employee" id="grade" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="annualIncrease">العلاوة السنوية:</label>
+                                        <input type="number" class="input-employee" id="annualIncrease" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="emergencyLeaveBalance">رصيد الإجازة الطارئة:</label>
+                                        <input type="number" class="input-employee" id="emergencyLeaveBalance" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="employeeNumber">الرقم الوظيفي:</label>
+                                        <input type="text" class="input-employee" id="employeeNumber" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="lastPromotionDate">تاريخ آخر ترقية:</label>
+                                        <input type="date" class="input-employee" id="lastPromotionDate" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="lastAllowanceDate">تاريخ آخر علاوة:</label>
+                                        <input type="date" class="input-employee" id="lastAllowanceDate" required>
+                                    </div>
+                                    <div class="form-group" style="flex-basis: 100%;">
+                                        <label for="notes">الملاحظات:</label>
+                                        <textarea id="notes" rows="4" required></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-primary custom-button-employee">إضافة
+                                            موظف</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!--Employee's Table -->
+                    <div class="col-sm-12 ">
+                        <div class="bg-light rounded h-100 p-4">
+                            <h6 class="mb-4">جدول بيانات الموظفين</h6>
+                            <input type="text" id="searchInputTable" placeholder="ابحث عن اسم موظف..."
+                                class="form-control mb-3" oninput="filterEmployeesTable()">
+                            <div style="background-color: white;">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered text-center" id="addEmployeeData">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">رقم</th>
+                                                <th scope="col">الملف المعني</th>
+
+                                                <th scope="col">رقم الموظف</th>
+                                                <th scope="col">اسم الموظف الكامل</th>
+                                                <th scope="col"> اسم الأم </th>
+                                                <th scope="col">تاريخ الميلاد </th>
+                                                <th scope="col">مكان الميلاد</th>
+                                                <th scope="col">العمر </th>
+                                                <th scope="col"> الرقم الوطني </th>
+                                                <th scope="col">جهة إصدار الرقم الوطني </th>
+                                                <th scope="col">رقم كتيب العائلة </th>
+                                                <th scope="col"> جهة إصدار كتيب العائلة </th>
+                                                <th scope="col">رقم جواز السفر </th>
+                                                <th scope="col">جهة إصدار جواز السفر</th>
+                                                <th scope="col">رقم ورقة العائلة </th>
+                                                <th scope="col"> رقم القيد </th>
+                                                <th scope="col">الجنسية </th>
+                                                <th scope="col">الجنس</th>
+                                                <th scope="col">الحالة الاجتماعية </th>
+                                                <th scope="col"> عدد الأبناء </th>
+                                                <th scope="col">فصيلة الدم </th>
+                                                <th scope="col">البريد الإلكتروني </th>
+                                                <th scope="col"> رقم هاتف ليبيانا </th>
+                                                <th scope="col">رقم هاتف المدار </th>
+                                                <th scope="col">الوظيفة</th>
+                                                <th scope="col">الإدارة </th>
+                                                <th scope="col"> القسم </th>
+                                                <th scope="col">المؤهل الدراسي </th>
+                                                <th scope="col">الوضع الوظيفي</th>
+                                                <th scope="col">تاريخ المباشرة </th>
+                                                <th scope="col"> تاريخ بدء العقد </th>
+                                                <th scope="col">مدة العقد بالشهر </th>
+                                                <th scope="col">رقم الضمان </th>
+                                                <th scope="col"> العلاوة الحالية </th>
+                                                <th scope="col">اسم المصرف </th>
+                                                <th scope="col"> رقم الحساب </th>
+                                                <th scope="col">الراتب الشهري </th>
+                                                <th scope="col">الإجازة السنوية </th>
+                                                <th scope="col"> الدرجة </th>
+                                                <th scope="col">العلاوة السنوية </th>
+                                                <th scope="col"> رصيد الإجازة الطارئة </th>
+                                                <th scope="col">الرقم الوظيفي </th>
+                                                <th scope="col">تاريخ آخر ترقية </th>
+                                                <th scope="col">تاريخ آخر علاوة </th>
+                                                <th scope="col"> الملاحظات </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="employeeData">
+                                            <!-- سيتم إضافة بيانات الموظفين هنا -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    </div>
+    <!-- Table End -->
+
+    </div>
+    <!-- Content End -->
+
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+    </div>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/chart/chart.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="lib/tempusdominus/js/moment.min.js"></script>
+    <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+    <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+
+
+
+    <script>
+        const employees = []; // مصفوفة لتخزين بيانات الموظفين
+        let editingIndex = -1; // مؤشر الموظف الذي يتم تعديله
+
+        document.getElementById('employeeForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const newEmployee = getEmployeeDataFromForm();
+
+            if (editingIndex === -1) {
+                // إضافة موظف جديد
+                employees.push(newEmployee);
+                alert('تم إضافة الموظف بنجاح!');
+            } else {
+                // تعديل بيانات الموظف
+                employees[editingIndex] = newEmployee;
+                alert('تم تعديل بيانات الموظف بنجاح!');
+                editingIndex = -1; // إعادة تعيين المؤشر بعد التعديل
+                document.querySelector('button[type="submit"]').innerText = 'إضافة موظف'; // إعادة النص
+            }
+
+            updateEmployeeList();
+            addEmployeeTable();
+            this.reset(); // إعادة تعيين النموذج
+        });
+
+        function getEmployeeDataFromForm() {
+            return {
+                employeeId: document.getElementById('employeeId').value,
+                name: document.getElementById('name').value,
+                motherName: document.getElementById('motherName').value,
+                dateOfBirth: document.getElementById('dateOfBirth').value,
+                birthPlace: document.getElementById('birthPlace').value,
+                age: document.getElementById('age').value,
+                nationalId: document.getElementById('nationalId').value,
+                nationalIdIssuanceAuthority: document.getElementById('nationalIdIssuanceAuthority').value,
+                familyBookNumber: document.getElementById('familyBookNumber').value,
+                familyBookIssuanceAuthority: document.getElementById('familyBookIssuanceAuthority').value,
+                passportNumber: document.getElementById('passportNumber').value,
+                passportIssuanceAuthority: document.getElementById('passportIssuanceAuthority').value,
+                familySheetNumber: document.getElementById('familySheetNumber').value,
+                registrationNumber: document.getElementById('registrationNumber').value,
+                nationality: document.getElementById('nationality').value,
+                gender: document.getElementById('gender').value,
+                maritalStatus: document.getElementById('maritalStatus').value,
+                childrenCount: document.getElementById('childrenCount').value,
+                bloodType: document.getElementById('bloodType').value,
+                email: document.getElementById('email').value,
+                libyanaPhone: document.getElementById('libyanaPhone').value,
+                madarPhone: document.getElementById('madarPhone').value,
+                position: document.getElementById('position').value,
+                department: document.getElementById('department').value,
+                division: document.getElementById('division').value,
+                education: document.getElementById('education').value,
+                jobStatus: document.getElementById('jobStatus').value,
+                joinDate: document.getElementById('joinDate').value,
+                contractStartDate: document.getElementById('contractStartDate').value,
+                contractDuration: document.getElementById('contractDuration').value,
+                guaranteeNumber: document.getElementById('guaranteeNumber').value,
+                currentAllowance: document.getElementById('currentAllowance').value,
+                bankName: document.getElementById('bankName').value,
+                accountNumber: document.getElementById('accountNumber').value,
+                monthlySalary: document.getElementById('monthlySalary').value,
+                annualLeave: document.getElementById('annualLeave').value,
+                grade: document.getElementById('grade').value,
+                annualIncrease: document.getElementById('annualIncrease').value,
+                emergencyLeaveBalance: document.getElementById('emergencyLeaveBalance').value,
+                employeeNumber: document.getElementById('employeeNumber').value,
+                lastPromotionDate: document.getElementById('lastPromotionDate').value,
+                lastAllowanceDate: document.getElementById('lastAllowanceDate').value,
+                notes: document.getElementById('notes').value
+            };
+        }
+
+        function updateEmployeeList() {
+            const list = document.getElementById('employeeList');
+            list.innerHTML = ''; // مسح القائمة الحالية
+            employees.forEach((employee, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `<td class="employee-name" data-index="${index}">${employee.name}</td>`;
+                list.appendChild(row);
+            });
+
+            // إضافة حدث النقر على اسم الموظف
+            document.querySelectorAll('.employee-name').forEach(item => {
+                item.addEventListener('click', function () {
+                    populateForm(this.getAttribute('data-index'));
+                    highlightEmployeeName(this);
+                });
+            });
+        }
+
+        function highlightEmployeeName(element) {
+            element.style.backgroundColor = '#cce5ff'; // تغيير لون الخلفية عند الضغط
+            setTimeout(() => {
+                element.style.backgroundColor = ''; // إعادة الخلفية بعد 300 مللي ثانية
+            }, 300);
+        }
+
+        function addEmployeeTable() {
+            const dataEmployee = document.getElementById('employeeData');
+            dataEmployee.innerHTML = ''; // مسح القائمة الحالية
+            employees.forEach((employee, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td><a href="#" class="btn btn-success custom-btn-main openDialogTable" data-index="${index}">الملف المعني</a></td>
+                    <td>${employee.employeeId}</td>
+                    <td>${employee.name}</td>
+                    <td>${employee.motherName}</td>
+                    <td>${employee.dateOfBirth}</td>
+                    <td>${employee.birthPlace}</td>
+                    <td>${employee.age}</td>
+                    <td>${employee.nationalId}</td>
+                    <td>${employee.nationalIdIssuanceAuthority}</td>
+                    <td>${employee.familyBookNumber}</td>
+                    <td>${employee.familyBookIssuanceAuthority}</td>
+                    <td>${employee.passportNumber}</td>
+                    <td>${employee.passportIssuanceAuthority}</td>
+                    <td>${employee.familySheetNumber}</td>
+                    <td>${employee.registrationNumber}</td>
+                    <td>${employee.nationality}</td>
+                    <td>${employee.gender}</td>
+                    <td>${employee.maritalStatus}</td>
+                    <td>${employee.childrenCount}</td>
+                    <td>${employee.bloodType}</td>
+                    <td>${employee.email}</td>
+                    <td>${employee.libyanaPhone}</td>
+                    <td>${employee.madarPhone}</td>
+                    <td>${employee.position}</td>
+                    <td>${employee.department}</td>
+                    <td>${employee.division}</td>
+                    <td>${employee.education}</td>
+                    <td>${employee.jobStatus}</td>
+                    <td>${employee.joinDate}</td>
+                    <td>${employee.contractStartDate}</td>
+                    <td>${employee.contractDuration}</td>
+                    <td>${employee.guaranteeNumber}</td>
+                    <td>${employee.currentAllowance}</td>
+                    <td>${employee.bankName}</td>
+                    <td>${employee.accountNumber}</td>
+                    <td>${employee.monthlySalary}</td>
+                    <td>${employee.annualLeave}</td>
+                    <td>${employee.grade}</td>
+                    <td>${employee.annualIncrease}</td>
+                    <td>${employee.emergencyLeaveBalance}</td>
+                    <td>${employee.employeeNumber}</td>
+                    <td>${employee.lastPromotionDate}</td>
+                    <td>${employee.lastAllowanceDate}</td>
+                    <td>${employee.notes}</td>
+                `;
+                dataEmployee.appendChild(row);
+            });
+
+            // إضافة حدث للنقر على "الملف المعني"
+            document.querySelectorAll('.openDialogTable').forEach(button => {
+                button.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    const index = this.getAttribute('data-index');
+                    openEmployeeDialog(index);
+                });
+            });
+        }
+
+        function populateForm(index) {
+            const employee = employees[index];
+            document.getElementById('employeeId').value = employee.employeeId;
+            document.getElementById('name').value = employee.name;
+            document.getElementById('motherName').value = employee.motherName;
+            document.getElementById('dateOfBirth').value = employee.dateOfBirth;
+            document.getElementById('birthPlace').value = employee.birthPlace;
+            document.getElementById('age').value = employee.age;
+            document.getElementById('nationalId').value = employee.nationalId;
+            document.getElementById('nationalIdIssuanceAuthority').value = employee.nationalIdIssuanceAuthority;
+            document.getElementById('familyBookNumber').value = employee.familyBookNumber;
+            document.getElementById('familyBookIssuanceAuthority').value = employee.familyBookIssuanceAuthority;
+            document.getElementById('passportNumber').value = employee.passportNumber;
+            document.getElementById('passportIssuanceAuthority').value = employee.passportIssuanceAuthority;
+            document.getElementById('familySheetNumber').value = employee.familySheetNumber;
+            document.getElementById('registrationNumber').value = employee.registrationNumber;
+            document.getElementById('nationality').value = employee.nationality;
+            document.getElementById('gender').value = employee.gender;
+            document.getElementById('maritalStatus').value = employee.maritalStatus;
+            document.getElementById('childrenCount').value = employee.childrenCount;
+            document.getElementById('bloodType').value = employee.bloodType;
+            document.getElementById('email').value = employee.email;
+            document.getElementById('libyanaPhone').value = employee.libyanaPhone;
+            document.getElementById('madarPhone').value = employee.madarPhone;
+            document.getElementById('position').value = employee.position;
+            document.getElementById('department').value = employee.department;
+            document.getElementById('division').value = employee.division;
+            document.getElementById('education').value = employee.education;
+            document.getElementById('jobStatus').value = employee.jobStatus;
+            document.getElementById('joinDate').value = employee.joinDate;
+            document.getElementById('contractStartDate').value = employee.contractStartDate;
+            document.getElementById('contractDuration').value = employee.contractDuration;
+            document.getElementById('guaranteeNumber').value = employee.guaranteeNumber;
+            document.getElementById('currentAllowance').value = employee.currentAllowance;
+            document.getElementById('bankName').value = employee.bankName;
+            document.getElementById('accountNumber').value = employee.accountNumber;
+            document.getElementById('monthlySalary').value = employee.monthlySalary;
+            document.getElementById('annualLeave').value = employee.annualLeave;
+            document.getElementById('grade').value = employee.grade;
+            document.getElementById('annualIncrease').value = employee.annualIncrease;
+            document.getElementById('emergencyLeaveBalance').value = employee.emergencyLeaveBalance;
+            document.getElementById('employeeNumber').value = employee.employeeNumber;
+            document.getElementById('lastPromotionDate').value = employee.lastPromotionDate;
+            document.getElementById('lastAllowanceDate').value = employee.lastAllowanceDate;
+            document.getElementById('notes').value = employee.notes;
+            editingIndex = index; // تعيين المؤشر
+            document.querySelector('button[type="submit"]').innerText = 'تعديل موظف'; // تغيير نص الزر
+        }
+
+        function openEmployeeDialog(index) {
+            const employee = employees[index];
+            const dialogTitle = document.getElementById('employeeDetails');
+            dialogTitle.innerText = employee.name; // عرض اسم الموظف
+            document.getElementById('employeeDialog').style.display = 'block'; // فتح النافذة
+
+            // إغلاق الـ dialog
+    document.getElementById('closeDialog').addEventListener('click', function() {
+        document.getElementById('employeeDialog').style.display = 'none';
+    });
+
+    // إرسال البيانات
+    document.getElementById('sendButton').addEventListener('click', function(event) {
+        event.preventDefault();
+
+        const category = document.getElementById('category').value;
+        const imageInput = document.getElementById('imageInput');
+        const sendDate = document.getElementById('sendDate').value;
+
+        // تحقق من الفئة
+        if (category === "") {
+            alert("يرجى اختيار فئة.");
+            return;
+        }
+
+        // تحقق من الصور
+        if (imageInput.files.length === 0) {
+            alert("يرجى اختيار صورة.");
+            return;
+        }
+
+        // تحقق من التاريخ
+        if (sendDate === "") {
+            alert("يرجى تحديد التاريخ.");
+            return;
+        }
+
+        const files = imageInput.files;
+
+        // إضافة كل صورة إلى الجدول
+        const tableBody = document.querySelector('#resultTable tbody');
+        for (let i = 0; i < files.length; i++) {
+            const newRow = tableBody.insertRow();
+            newRow.insertCell(0).textContent = category;
+            newRow.insertCell(1).textContent = sendDate;
+            newRow.insertCell(2).textContent = files[i].name;
+        }
+
+        // إعادة تعيين الحقول بعد الإرسال
+        document.getElementById('category').value = '';
+        document.getElementById('imageInput').value = '';
+        document.getElementById('sendDate').value = '';
+    });
+        }
+
+        document.getElementById('closeDialog').onclick = function () {
+            document.getElementById('employeeDialog').style.display = 'none'; // إغلاق النافذة
+        }
+
+        window.onclick = function (event) {
+            if (event.target === document.getElementById('employeeDialog')) {
+                document.getElementById('employeeDialog').style.display = 'none'; // إغلاق النافذة عند الضغط خارجها
+            }
+        };
+
+        function filterEmployees() {
+            const searchInput = document.getElementById('searchInput').value.toLowerCase();
+            const filteredEmployees = employees.filter(employee => employee.name.toLowerCase().includes(searchInput));
+
+            const list = document.getElementById('employeeList');
+            list.innerHTML = ''; // مسح القائمة الحالية
+
+            filteredEmployees.forEach((employee) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `<td class="employee-name" data-index="${employees.indexOf(employee)}">${employee.name}</td>`;
+                list.appendChild(row);
+            });
+
+            // إعادة إضافة أحداث النقر بعد التصفية
+            document.querySelectorAll('.employee-name').forEach(item => {
+                item.addEventListener('click', function () {
+                    const employeeIndex = this.getAttribute('data-index');
+                    populateForm(employeeIndex);
+                    highlightEmployeeName(this);
+                });
+            });
+        }
+
+        // دالة البحث لتصفية الجدول
+        function filterEmployeesTable() {
+            const searchInput = document.getElementById('searchInputTable').value.toLowerCase();
+            const filteredEmployees = employees.filter(employee => employee.name.toLowerCase().includes(searchInput));
+
+            const dataEmployee = document.getElementById('employeeData');
+            dataEmployee.innerHTML = ''; // مسح القائمة الحالية
+
+            filteredEmployees.forEach((employee, index) => {
+                const originalIndex = employees.indexOf(employee); // الحصول على الفهرس الأصلي
+                const row = document.createElement('tr');
+                row.innerHTML = `
+            <td>${index + 1}</td>
+            <td><a href="#" class="btn btn-success custom-btn-main openDialogTable" data-index="${originalIndex}">الملف المعني</a></td>
+            <td>${employee.employeeId}</td>
+            <td>${employee.name}</td>
+            <td>${employee.motherName}</td>
+            <td>${employee.dateOfBirth}</td>
+            <td>${employee.birthPlace}</td>
+            <td>${employee.age}</td>
+            <td>${employee.nationalId}</td>
+            <td>${employee.nationalIdIssuanceAuthority}</td>
+            <td>${employee.familyBookNumber}</td>
+            <td>${employee.familyBookIssuanceAuthority}</td>
+            <td>${employee.passportNumber}</td>
+            <td>${employee.passportIssuanceAuthority}</td>
+            <td>${employee.familySheetNumber}</td>
+            <td>${employee.registrationNumber}</td>
+            <td>${employee.nationality}</td>
+            <td>${employee.gender}</td>
+            <td>${employee.maritalStatus}</td>
+            <td>${employee.childrenCount}</td>
+            <td>${employee.bloodType}</td>
+            <td>${employee.email}</td>
+            <td>${employee.libyanaPhone}</td>
+            <td>${employee.madarPhone}</td>
+            <td>${employee.position}</td>
+            <td>${employee.department}</td>
+            <td>${employee.division}</td>
+            <td>${employee.education}</td>
+            <td>${employee.jobStatus}</td>
+            <td>${employee.joinDate}</td>
+            <td>${employee.contractStartDate}</td>
+            <td>${employee.contractDuration}</td>
+            <td>${employee.guaranteeNumber}</td>
+            <td>${employee.currentAllowance}</td>
+            <td>${employee.bankName}</td>
+            <td>${employee.accountNumber}</td>
+            <td>${employee.monthlySalary}</td>
+            <td>${employee.annualLeave}</td>
+            <td>${employee.grade}</td>
+            <td>${employee.annualIncrease}</td>
+            <td>${employee.emergencyLeaveBalance}</td>
+            <td>${employee.employeeNumber}</td>
+            <td>${employee.lastPromotionDate}</td>
+            <td>${employee.lastAllowanceDate}</td>
+            <td>${employee.notes}</td>
+        `;
+                dataEmployee.appendChild(row);
+            });
+
+            // إضافة حدث للنقر على "الملف المعني"
+            document.querySelectorAll('.openDialogTable').forEach(button => {
+                button.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    const index = this.getAttribute('data-index');
+                    openEmployeeDialog(index); // استخدام الفهرس الأصلي
+                });
+            });
+        }
+
+
+/*         document.getElementById('sendButton').addEventListener('click', function(event) {
+        event.preventDefault();
+
+        const category = document.getElementById('category').value;
+        const imageInput = document.getElementById('imageInput');
+        const sendDate = document.getElementById('sendDate').value;
+
+        // تحقق من الفئة
+        if (category === "") {
+            alert("يرجى اختيار فئة.");
+            return;
+        }
+
+        // تحقق من الصور
+        if (imageInput.files.length === 0) {
+            alert("يرجى اختيار صورة.");
+            return;
+        }
+
+        // تحقق من التاريخ
+        if (sendDate === "") {
+            alert("يرجى تحديد التاريخ.");
+            return;
+        }
+
+        const files = imageInput.files;
+
+        // إضافة كل صورة إلى الجدول
+        const tableBody = document.querySelector('#resultTable tbody');
+        for (let i = 0; i < files.length; i++) {
+            const newRow = tableBody.insertRow();
+            newRow.insertCell(0).textContent = category;
+            newRow.insertCell(1).textContent = sendDate;
+            newRow.insertCell(2).textContent = files[i].name;
+        }
+
+        // إعادة تعيين الحقول بعد الإرسال
+        document.getElementById('category').value = '';
+        document.getElementById('imageInput').value = '';
+        document.getElementById('sendDate').value = '';
+    });
+
+    document.getElementById('closeDialog').addEventListener('click', function() {
+        document.getElementById('employeeDialog').style.display = 'none';
+    }); */
+
+    </script>
+
+
+
+
+
+
+
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+<!-- <script>
+    const employees = []; // مصفوفة لتخزين بيانات الموظفين
+    let editingIndex = -1; // مؤشر الموظف الذي يتم تعديله
+
+    document.getElementById('employeeForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const newEmployee = {
+            employeeId: document.getElementById('employeeId').value,
+            name: document.getElementById('name').value,
+            motherName: document.getElementById('motherName').value,
+            dateOfBirth: document.getElementById('dateOfBirth').value,
+            birthPlace: document.getElementById('birthPlace').value,
+            age: document.getElementById('age').value,
+            nationalId: document.getElementById('nationalId').value,
+            nationalIdIssuanceAuthority: document.getElementById('nationalIdIssuanceAuthority').value,
+            familyBookNumber: document.getElementById('familyBookNumber').value,
+            familyBookIssuanceAuthority: document.getElementById('familyBookIssuanceAuthority').value,
+            passportNumber: document.getElementById('passportNumber').value,
+            passportIssuanceAuthority: document.getElementById('passportIssuanceAuthority').value,
+            familySheetNumber: document.getElementById('familySheetNumber').value,
+            registrationNumber: document.getElementById('registrationNumber').value,
+            nationality: document.getElementById('nationality').value,
+            gender: document.getElementById('gender').value,
+            maritalStatus: document.getElementById('maritalStatus').value,
+            childrenCount: document.getElementById('childrenCount').value,
+            bloodType: document.getElementById('bloodType').value,
+            email: document.getElementById('email').value,
+            libyanaPhone: document.getElementById('libyanaPhone').value,
+            madarPhone: document.getElementById('madarPhone').value,
+            position: document.getElementById('position').value,
+            department: document.getElementById('department').value,
+            division: document.getElementById('division').value,
+            education: document.getElementById('education').value,
+            jobStatus: document.getElementById('jobStatus').value,
+            joinDate: document.getElementById('joinDate').value,
+            contractStartDate: document.getElementById('contractStartDate').value,
+            contractDuration: document.getElementById('contractDuration').value,
+            guaranteeNumber: document.getElementById('guaranteeNumber').value,
+            currentAllowance: document.getElementById('currentAllowance').value,
+            bankName: document.getElementById('bankName').value,
+            accountNumber: document.getElementById('accountNumber').value,
+            monthlySalary: document.getElementById('monthlySalary').value,
+            annualLeave: document.getElementById('annualLeave').value,
+            grade: document.getElementById('grade').value,
+            annualIncrease: document.getElementById('annualIncrease').value,
+            emergencyLeaveBalance: document.getElementById('emergencyLeaveBalance').value,
+            employeeNumber: document.getElementById('employeeNumber').value,
+            lastPromotionDate: document.getElementById('lastPromotionDate').value,
+            lastAllowanceDate: document.getElementById('lastAllowanceDate').value,
+            notes: document.getElementById('notes').value
+        };
+
+        if (editingIndex === -1) {
+            // إضافة موظف جديد
+            employees.push(newEmployee);
+            alert('تم إضافة الموظف بنجاح!');
+        } else {
+            // تعديل بيانات الموظف
+            employees[editingIndex] = newEmployee;
+            alert('تم تعديل بيانات الموظف بنجاح!');
+            editingIndex = -1; // إعادة تعيين المؤشر بعد التعديل
+            document.querySelector('button[type="submit"]').innerText = 'إضافة موظف'; // إعادة النص
+        }
+
+        updateEmployeeList(); // تحديث قائمة الموظفين
+        addEmployeeTable();
+        this.reset(); // إعادة تعيين النموذج
+    });
+
+    function updateEmployeeList() {
+        const list = document.getElementById('employeeList');
+        list.innerHTML = ''; // مسح القائمة الحالية
+        employees.forEach((employee, index) => {
+            const row = document.createElement('tr');
+            row.innerHTML = `<td class="employee-name" data-index="${index}">${employee.name}</td>`;
+            list.appendChild(row);
+        });
+
+        // إضافة حدث النقر على اسم الموظف
+        document.querySelectorAll('.employee-name').forEach(item => {
+            item.addEventListener('click', function () {
+                populateForm(this.getAttribute('data-index'));
+                this.style.backgroundColor = '#cce5ff'; // تغيير لون الخلفية عند الضغط
+                setTimeout(() => {
+                    this.style.backgroundColor = ''; // إعادة الخلفية بعد 300 مللي ثانية
+                }, 300);
+            });
+        });
+    }
+
+
+
+    function addEmployeeTable() {
+        const dataEmployee = document.getElementById('employeeData');
+        dataEmployee.innerHTML = ''; // مسح القائمة الحالية
+        employees.forEach((employee, index) => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+        <td>${index + 1}</td>
+        <td><a href="#" class="btn btn-success custom-btn-main openDialogCategories" id="dialog${index}">الملف المعني</a></td>
+        <td>${employee.employeeId}</td>
+        <td>${employee.name}</td>
+        <td>${employee.motherName}</td>
+        <td>${employee.dateOfBirth}</td>
+        <td>${employee.birthPlace}</td>
+        <td>${employee.age}</td>
+        <td>${employee.nationalId}</td>
+        <td>${employee.nationalIdIssuanceAuthority}</td>
+        <td>${employee.familyBookNumber}</td>
+        <td>${employee.familyBookIssuanceAuthority}</td>
+        <td>${employee.passportNumber}</td>
+        <td>${employee.passportIssuanceAuthority}</td>
+        <td>${employee.familySheetNumber}</td>
+        <td>${employee.registrationNumber}</td>
+        <td>${employee.nationality}</td>
+        <td>${employee.gender}</td>
+        <td>${employee.maritalStatus}</td>
+        <td>${employee.childrenCount}</td>
+        <td>${employee.bloodType}</td>
+        <td>${employee.email}</td>
+        <td>${employee.libyanaPhone}</td>
+        <td>${employee.madarPhone}</td>
+        <td>${employee.position}</td>
+        <td>${employee.department}</td>
+        <td>${employee.division}</td>
+        <td>${employee.education}</td>
+        <td>${employee.jobStatus}</td>
+        <td>${employee.joinDate}</td>
+        <td>${employee.contractStartDate}</td>
+        <td>${employee.contractDuration}</td>
+        <td>${employee.guaranteeNumber}</td>
+        <td>${employee.currentAllowance}</td>
+        <td>${employee.bankName}</td>
+        <td>${employee.accountNumber}</td>
+        <td>${employee.monthlySalary}</td>
+        <td>${employee.annualLeave}</td>
+        <td>${employee.grade}</td>
+        <td>${employee.annualIncrease}</td>
+        <td>${employee.emergencyLeaveBalance}</td>
+        <td>${employee.employeeNumber}</td>
+        <td>${employee.lastPromotionDate}</td>
+        <td>${employee.lastAllowanceDate}</td>
+        <td>${employee.notes}</td>
+    `;
+            dataEmployee.appendChild(row);
+        });
+    }
+
+
+
+    function populateForm(index) {
+        const employee = employees[index];
+        document.getElementById('employeeId').value = employee.employeeId;
+        document.getElementById('name').value = employee.name;
+        document.getElementById('motherName').value = employee.motherName;
+        document.getElementById('dateOfBirth').value = employee.dateOfBirth;
+        document.getElementById('birthPlace').value = employee.birthPlace;
+        document.getElementById('age').value = employee.age;
+        document.getElementById('nationalId').value = employee.nationalId;
+        document.getElementById('nationalIdIssuanceAuthority').value = employee.nationalIdIssuanceAuthority;
+        document.getElementById('familyBookNumber').value = employee.familyBookNumber;
+        document.getElementById('familyBookIssuanceAuthority').value = employee.familyBookIssuanceAuthority;
+        document.getElementById('passportNumber').value = employee.passportNumber;
+        document.getElementById('passportIssuanceAuthority').value = employee.passportIssuanceAuthority;
+        document.getElementById('familySheetNumber').value = employee.familySheetNumber;
+        document.getElementById('registrationNumber').value = employee.registrationNumber;
+        document.getElementById('nationality').value = employee.nationality;
+        document.getElementById('gender').value = employee.gender;
+        document.getElementById('maritalStatus').value = employee.maritalStatus;
+        document.getElementById('childrenCount').value = employee.childrenCount;
+        document.getElementById('bloodType').value = employee.bloodType;
+        document.getElementById('email').value = employee.email;
+        document.getElementById('libyanaPhone').value = employee.libyanaPhone;
+        document.getElementById('madarPhone').value = employee.madarPhone;
+        document.getElementById('position').value = employee.position;
+        document.getElementById('department').value = employee.department;
+        document.getElementById('division').value = employee.division;
+        document.getElementById('education').value = employee.education;
+        document.getElementById('jobStatus').value = employee.jobStatus;
+        document.getElementById('joinDate').value = employee.joinDate;
+        document.getElementById('contractStartDate').value = employee.contractStartDate;
+        document.getElementById('contractDuration').value = employee.contractDuration;
+        document.getElementById('guaranteeNumber').value = employee.guaranteeNumber;
+        document.getElementById('currentAllowance').value = employee.currentAllowance;
+        document.getElementById('bankName').value = employee.bankName;
+        document.getElementById('accountNumber').value = employee.accountNumber;
+        document.getElementById('monthlySalary').value = employee.monthlySalary;
+        document.getElementById('annualLeave').value = employee.annualLeave;
+        document.getElementById('grade').value = employee.grade;
+        document.getElementById('annualIncrease').value = employee.annualIncrease;
+        document.getElementById('emergencyLeaveBalance').value = employee.emergencyLeaveBalance;
+        document.getElementById('employeeNumber').value = employee.employeeNumber;
+        document.getElementById('lastPromotionDate').value = employee.lastPromotionDate;
+        document.getElementById('lastAllowanceDate').value = employee.lastAllowanceDate;
+        document.getElementById('notes').value = employee.notes;
+        editingIndex = index; // تعيين المؤشر
+        document.querySelector('button[type="submit"]').innerText = 'تعديل موظف'; // تغيير نص الزر
+    }
+
+
+    function filterEmployees() {
+        const searchInput = document.getElementById('searchInput').value.toLowerCase();
+        const filteredEmployees = employees.filter(employee => employee.name.toLowerCase().includes(searchInput));
+
+        const list = document.getElementById('employeeList');
+        list.innerHTML = ''; // مسح القائمة الحالية
+
+        filteredEmployees.forEach((employee) => {
+            const row = document.createElement('tr');
+            /*         row.innerHTML = `<td class="employee-name" data-index="${index}">${employee.name}</td>`;
+             */
+            row.innerHTML = `<td class="employee-name" data-index="${employees.indexOf(employee)}">${employee.name}</td>`;
+            list.appendChild(row);
+        });
+
+        // إعادة إضافة أحداث النقر بعد التصفية
+        document.querySelectorAll('.employee-name').forEach(item => {
+            item.addEventListener('click', function () {
+                const employeeIndex = this.getAttribute('data-index');
+                populateForm(employeeIndex);
+                this.style.backgroundColor = '#cce5ff'; // تغيير لون الخلفية عند الضغط
+                setTimeout(() => {
+                    this.style.backgroundColor = ''; // إعادة الخلفية بعد 300 مللي ثانية
+                }, 300);
+            });
+        });
+    }
+
+
+    // دالة البحث
+    function filterEmployeesTable() {
+        const searchInput = document.getElementById('searchInputTable').value.toLowerCase();
+        const filteredEmployees = employees.filter(employee => employee.name.toLowerCase().includes(searchInput));
+
+        // تحديث الجدول بعد البحث
+        const dataEmployee = document.getElementById('employeeData');
+        dataEmployee.innerHTML = ''; // مسح القائمة الحالية
+        filteredEmployees.forEach((employee, index) => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+            <td>${index + 1}</td>
+            <td><a href="#" class="btn btn-success custom-btn-main openDialogCategories" id="dialog${index}">الملف المعني</a></td>
+            <td>${employee.employeeId}</td>
+            <td>${employee.name}</td>
+            <td>${employee.motherName}</td>
+            <td>${employee.dateOfBirth}</td>
+            <td>${employee.birthPlace}</td>
+            <td>${employee.age}</td>
+            <td>${employee.nationalId}</td>
+            <td>${employee.nationalIdIssuanceAuthority}</td>
+            <td>${employee.familyBookNumber}</td>
+            <td>${employee.familyBookIssuanceAuthority}</td>
+            <td>${employee.passportNumber}</td>
+            <td>${employee.passportIssuanceAuthority}</td>
+            <td>${employee.familySheetNumber}</td>
+            <td>${employee.registrationNumber}</td>
+            <td>${employee.nationality}</td>
+            <td>${employee.gender}</td>
+            <td>${employee.maritalStatus}</td>
+            <td>${employee.childrenCount}</td>
+            <td>${employee.bloodType}</td>
+            <td>${employee.email}</td>
+            <td>${employee.libyanaPhone}</td>
+            <td>${employee.madarPhone}</td>
+            <td>${employee.position}</td>
+            <td>${employee.department}</td>
+            <td>${employee.division}</td>
+            <td>${employee.education}</td>
+            <td>${employee.jobStatus}</td>
+            <td>${employee.joinDate}</td>
+            <td>${employee.contractStartDate}</td>
+            <td>${employee.contractDuration}</td>
+            <td>${employee.guaranteeNumber}</td>
+            <td>${employee.currentAllowance}</td>
+            <td>${employee.bankName}</td>
+            <td>${employee.accountNumber}</td>
+            <td>${employee.monthlySalary}</td>
+            <td>${employee.annualLeave}</td>
+            <td>${employee.grade}</td>
+            <td>${employee.annualIncrease}</td>
+            <td>${employee.emergencyLeaveBalance}</td>
+            <td>${employee.employeeNumber}</td>
+            <td>${employee.lastPromotionDate}</td>
+            <td>${employee.lastAllowanceDate}</td>
+            <td>${employee.notes}</td>
+        `;
+            dataEmployee.appendChild(row);
+        });
+    }
+
+    const buttons = document.querySelectorAll('.openDialogCategories');
+    buttons.forEach((button, index) => {
+        button.addEventListener('click', function () {
+            // وضع الكود لفتح الحوار هنا
+            alert(`فتح الملف المعني للموظف: ${employees[index].name}`);
+        });
+    });
+</script> -->
