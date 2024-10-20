@@ -484,3 +484,11 @@ function closeDetails() {
     document.getElementById('detailsDialog').style.display = 'none';
 }
 
+function viewTable() {
+    const table = document.querySelector('table');
+    if (table.style.display === 'none') {
+        table.style.display = 'table'; // عرض الجدول
+    } else {
+        table.style.display = 'none';  // إخفاء الجدول
+    }
+}
