@@ -958,11 +958,6 @@ body {
     flex: 3;
 }
 
-label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-}
 
 .input-employee,
 select,
