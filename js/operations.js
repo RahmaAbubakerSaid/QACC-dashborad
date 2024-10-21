@@ -484,3 +484,7 @@ function closeDetails() {
     document.getElementById('detailsDialog').style.display = 'none';
 }
 
+// ملف operations.js
+function printPage() {
+    window.print();
+}
