@@ -29,15 +29,71 @@
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
-
-    
-     <!-- SweetAlert2 CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-
-<!-- SweetAlert2 JS -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
+
+<!-- <style>
+    .table-responsive {
+        overflow-x: auto; /* إضافة تمرير أفقي */
+    }
+
+    .table {
+        width: 100%; /* جعل الجدول يأخذ عرض الحاوية بالكامل */
+        border-collapse: collapse; /* دمج الحدود */
+    }
+
+    th, td {
+        padding: 8px; /* إضافة padding للخلايا */
+        text-align: center; /* محاذاة المحتوى إلى المركز */
+        border: 1px solid #ddd; /* إضافة حدود للخلايا */
+    }
+
+    th {
+        background-color: #f8f9fa; /* لون خلفية لرؤوس الجدول */
+    }
+
+    @media (max-width: 768px) {
+        th, td {
+            font-size: 12px; /* تصغير حجم الخط في الشاشات الصغيرة */
+        }
+    }
+</style> -->
+<style>
+    .table thead th {
+        background-color: #f8f9fa;
+    }
+
+    #addEmployeeData th,
+    tr {
+        white-space: nowrap;
+        /* منع التفاف النص */
+        width: 150px;
+        /* ضبط عرض العمود */
+        text-align: center;
+        /* توسيط النص */
+    }
+
+    #resultTable th,
+    tr {
+        white-space: nowrap;
+        /* منع التفاف النص */
+        width: 150px;
+        /* ضبط عرض العمود */
+        text-align: center;
+        /* توسيط النص */
+    }
+
+    #employeeTable tr {
+        white-space: initial;
+        background: white;
+    }
+    label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+</style>
 
 <body>
     <div class="container-xxl position-relative bg-white d-flex p-0">
@@ -55,11 +111,10 @@
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-light navbar-light">
                 <a href="index.html" class="d-flex align-items-center ms-4 mb-4">
-                    <img src="img\qacc.png" alt="شعار الموقع"
-                    style="width: 100px; height: 65px; margin-bottom: 15px;">
+                    <img src="img\qacc.png" alt="شعار الموقع" style="width: 100px; height: 65px; margin-bottom: 15px;">
                     <h6 class="text-primary">مركز ضمان الجودة والمعايرة المهنية</h6>
                 </a>
-               
+
                 <div class="navbar-nav w-100">
                     <a href="index.html" class="nav-item nav-link"><i
                             class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
@@ -70,16 +125,14 @@
                         <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">
                             <i class="fas fa-solid fa-user-tie me-2"></i></i>مدير النظام</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="system-administrator.html" class="dropdown-item ">ادارة حسابات مستخدمي لوحة
+                            <a href="system-administrator.html" class="dropdown-item">ادارة حسابات مستخدمي لوحة
                                 التحكم</a>
                             <a href="permissions.html" class="dropdown-item">ادارة الصلاحيات</a>
                             <a href="administration-of-depatments.html" class="dropdown-item">ادارة الادارات</a>
-                            <a href="officeManagement.html" class="dropdown-item active">ادارة المكاتب</a>
+                            <a href="officeManagement.html" class="dropdown-item">ادارة المكاتب</a>
                             <a href="categories_admin.html" class="dropdown-item">ادارة طلبات الاصناف</a>
                             <a href="forms_requests_admin.html" class="dropdown-item">ادارة طلبات النماذج</a>
-                            <a href="manage_employees_admin.html" class="dropdown-item">ادارة الموظفين</a>
-                            <a href="attendance-and-departure-admin.html" class="dropdown-item "> الحضور والانصراف</a>
-                           
+                            <a href="manage_employees_admin.html" class="dropdown-item active">ادارة الموظفين</a>
                         </div>
                     </div>
 
@@ -91,7 +144,7 @@
                         <div class="dropdown-menu bg-transparent border-0">
                             <a href="manage_employees.html" class="dropdown-item">ادارة الموظفين</a>
                             <a href="leaveNotifications.html" class="dropdown-item">الاجازات</a>
-                            <a href="attendance-and-departure.html" class="dropdown-item">الحضور والانصراف</a>
+                            <a href="#" class="dropdown-item">الحضور والانصراف</a>
                         </div>
                     </div>
                     <!-- ------------------------------------------------------------------------- -->
@@ -247,150 +300,156 @@
                 </div>
             </nav>
             <!-- Navbar End -->
-
-
-            <div class="container-fluid pt-4 px-4">
-                <div class="bg-light rounded h-100 p-4">
-                    <h6 class="mb-4">إضافة مكتب </h6>
-                    
-                    <div class="m-n2">
-                        <button type="button" class="btn btn-primary m-2" id="openDialog"><i
-                                class="fas fa fa-plus me-2"></i>اضافة مكتب </button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="dialog-overlay" id="dialog">
-                <div class="dialog-content-main">
-                    <!-- Your dialog content goes here -->
+            <div id="employeeDialog" class="dialog-overlay">
+                <div class="dialog-content-main" style="max-height: 80vh; overflow-y: auto;width: 50%;">
+                    <h2>الملف المعني</h2>
+                    <div id="employeeDetails"></div>
+            
                     <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
-                        <div class="d-flex flex-column align-items-center mb-3">
-                            <img src="img\qacc.png" alt="شعار الموقع"
-                                style="width: 115px; height: 80px; margin-bottom: 45px;">
-                            <h5>  اضافة مكتب </h5>
+                        <div class="mb-3">
+                            <label for="category">اختر الفئة:</label>
+                            <select id="category" required>
+                                <option value="">اختر فئة</option>
+                                <option value="التكليفات">التكليفات</option>
+                                <option value="الزيارات">الزيارات</option>
+                                <option value="تشكيل لجان">تشكيل لجان</option>
+                                <option value="تقارير الكفاءة السنوية">تقارير الكفاءة السنوية</option>
+                                <option value="قرارات ترقيات">قرارات ترقيات</option>
+                                <option value="الإجازات">الإجازات</option>
+                                <option value="أخرى">أخرى</option>
+                            </select>
+                        </div>
+                        <div class="form-container">
+                            <label for="imageInput">اختر صورة (يمكن اختيار عدة صور):</label><br>
+                            <input type="file" id="imageInput" accept="image/*" multiple required><br><br>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="officeName" placeholder="مكتب ">
-                            <label for="officeName">اسم المكتب</label>
+                            <input type="date" class="form-control" id="sendDate" placeholder="تاريخ الإرسال" required>
+                            <label for="sendDate">تاريخ الإرسال</label>
                         </div>
-                        <div class="form-floating mb-3">
-                            <div class="form-floating mb-3">
-                                <div class="user-selection">
-                                    <select id="user-select">
-                                        <option value="" hidden> اختر مدير المكتب</option>
-                                        <option value="user1">  فتحي موسى الحباسي  </option>
-                                        <option value="user2">عبد الحفيظ عمر خليفة</option>
-                                        <option value="user3"> عبد الباسط فاتح نصير </option>
-                                        <option value="user4">اكرام خليفة محمد العرضاوي</option>
-                                        <option value="user5"> ايناس سالم السني قشوط</option>
-                                    </select>
-                                    
+            
+                        <div class="d-grid gap-2 d-md-flex justify-content-between">
+                            <button type="button" class="btn btn-primary py-3 w-100 mb-4" id="sendButton">إرسال</button>
+                            <button type="button" class="btn btn-secondary py-3 w-0 mb-4" id="closeDialog">إلغاء</button>
+                        </div>
+            
+                        <!-- Employee's Table -->
+                        <div class="col-sm-12">
+                            <div class="bg-light rounded h-100 p-4">
+                                <h6 class="mb-4">جدول بيانات الموظفين</h6>
+                                <div style="background-color: white;">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered text-center" id="resultTable">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">نوع الفئة</th>
+                                                    <th scope="col">تاريخ الإرسال</th>
+                                                    <th scope="col">الملفات</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- سيتم إضافة بيانات الموظفين هنا -->
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                       
-
-
-                        <div class="d-grid gap-2 d-md-flex justify-content-between">
-                            <button type="submit" class="btn btn-primary py-3 w-100 mb-4" onclick="validateFormOffice()"> اضافة مكتب 
-                                </button>
-                            <button type="button" class="btn btn-secondary py-3 w-0 mb-4"
-                                id="closeDialog">رجوع</button>
-                        </div>
                     </div>
                 </div>
             </div>
-            <!-- Table Start -->
+            <!-- Start Content-->
+            <div class="container-fluid pt-4 px-4">
+                <div class="bg-light rounded h-100 p-4">
+                    <h3 class="mb-4">إدارة الموظفين</h3>
+
+                </div>
+            </div>
+
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
-
-
-                    <div class="col-12">
+                    <!--Employee's Table -->
+                    <div class="col-sm-12 ">
                         <div class="bg-light rounded h-100 p-4">
-                            <h6 class="mb-4">جدول المكاتب</h6>
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">الرقم</th>
-                                            <th scope="col">اسم المكتب </th>
-                                            <th scope="col"> اسم مدير المكتب</th>
-                                            <th scope="col">عدد موظفي المكتب</th>
-                                            <th scope="col"> الاجراءات</th>
-                                            
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>مكتب التوثيق والمعلومات</td>
-                                            <td>اسراء التليسي</td>
-                                            <td>4</td>
-                                            <td>
-                                                <div class="btn-group">
-                                                    <a href="#" class="btn btn-success custom-btn">التفاصيل</a>
-                                                    <a href="#" class="custom-btn-icon" onclick="editOffice('مكتب التوثيق والمعلومات')">
-                                                        <i class="fas fa-pencil-alt" style="color: #007bff;"></i> <!-- لون تعديل -->
-                                                    </a>
-                                                    <a href="#" class="custom-btn-icon" onclick="deleteOffice('مكتب التوثيق والمعلومات')">
-                                                        <i class="fas fa-trash-alt" style="color: #dc3545;"></i> <!-- أيقونة حذف -->
-                                                    </a>
-                                                </div>
-                                            </td>
-                                            
-                                            
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">2</th>
-                                            <td>مكتب المدير العام </td>
-                                            <td>عبد الباسط</td>
-                                            <td>6</td>
-                                            <td>
-                                                <div class="btn-group">
-                                                <a href="#" class="btn btn-success custom-btn">التفاصيل</a>
-                                                <a href="#" class="custom-btn-icon" onclick="editOffice(' قسم  شؤون الموظفين ')">
-                                                    <i class="fas fa-pencil-alt" style="color: #007bff;"></i> <!-- لون تعديل -->
-                                                </a>
-                                                <a href="#" class="custom-btn-icon" onclick="deleteOffice('قسم شؤون الموظفين   ')">
-                                                    <i class="fas fa-trash-alt" style="color: #dc3545;"></i> <!-- أيقونة حذف -->
-                                                </a>
-                                            </div>
-                                            </td>
-                                            
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">3</th>
-                                            <td>المكتب القانوني</td>
-                                            <td>نجاح الباجقني</td>
-                                            <td>2</td>
-                                            <td>
-                                                <div class="btn-group">
-                                                <a href="#" class="btn btn-success custom-btn">التفاصيل</a>
-                                                <a href="#" class="custom-btn-icon" onclick="editOffice(' قسم  شؤون الموظفين ')">
-                                                    <i class="fas fa-pencil-alt" style="color: #007bff;"></i> <!-- لون تعديل -->
-                                                </a>
-                                                <a href="#" class="custom-btn-icon" onclick="deleteOffice('قسم شؤون الموظفين   ')">
-                                                    <i class="fas fa-trash-alt" style="color: #dc3545;"></i> <!-- أيقونة حذف -->
-                                                </a>
-                                                </div>
-                                            </td>
-                                            
-                                        </tr>
-                                    </tbody>
-                                </table>
+                            <h6 class="mb-4">جدول بيانات الموظفين</h6>
+                            <input type="text" id="searchInputTable" placeholder="ابحث عن اسم موظف..."
+                                class="form-control mb-3" oninput="filterEmployeesTable()">
+                            <div style="background-color: white;">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered text-center" id="addEmployeeData">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">رقم</th>
+                                                <th scope="col">رقم الموظف</th>
+                                                <th scope="col">اسم الموظف الكامل</th>
+                                                <th scope="col"> اسم الأم </th>
+                                                <th scope="col">تاريخ الميلاد </th>
+                                                <th scope="col">مكان الميلاد</th>
+                                                <th scope="col">العمر </th>
+                                                <th scope="col"> الرقم الوطني </th>
+                                                <th scope="col">جهة إصدار الرقم الوطني </th>
+                                                <th scope="col">رقم كتيب العائلة </th>
+                                                <th scope="col"> جهة إصدار كتيب العائلة </th>
+                                                <th scope="col">رقم جواز السفر </th>
+                                                <th scope="col">جهة إصدار جواز السفر</th>
+                                                <th scope="col">رقم ورقة العائلة </th>
+                                                <th scope="col"> رقم القيد </th>
+                                                <th scope="col">الجنسية </th>
+                                                <th scope="col">الجنس</th>
+                                                <th scope="col">الحالة الاجتماعية </th>
+                                                <th scope="col"> عدد الأبناء </th>
+                                                <th scope="col">فصيلة الدم </th>
+                                                <th scope="col">البريد الإلكتروني </th>
+                                                <th scope="col"> رقم هاتف ليبيانا </th>
+                                                <th scope="col">رقم هاتف المدار </th>
+                                                <th scope="col">الوظيفة</th>
+                                                <th scope="col">الإدارة </th>
+                                                <th scope="col"> القسم </th>
+                                                <th scope="col">المؤهل الدراسي </th>
+                                                <th scope="col">الوضع الوظيفي</th>
+                                                <th scope="col">تاريخ المباشرة </th>
+                                                <th scope="col"> تاريخ بدء العقد </th>
+                                                <th scope="col">مدة العقد بالشهر </th>
+                                                <th scope="col">رقم الضمان </th>
+                                                <th scope="col"> العلاوة الحالية </th>
+                                                <th scope="col">اسم المصرف </th>
+                                                <th scope="col"> رقم الحساب </th>
+                                                <th scope="col">الراتب الشهري </th>
+                                                <th scope="col">الإجازة السنوية </th>
+                                                <th scope="col"> الدرجة </th>
+                                                <th scope="col">العلاوة السنوية </th>
+                                                <th scope="col"> رصيد الإجازة الطارئة </th>
+                                                <th scope="col">الرقم الوظيفي </th>
+                                                <th scope="col">تاريخ آخر ترقية </th>
+                                                <th scope="col">تاريخ آخر علاوة </th>
+                                                <th scope="col"> الملاحظات </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="employeeData">
+                                            <!-- سيتم إضافة بيانات الموظفين هنا -->
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <div></div>
                 </div>
             </div>
-            <!-- Table End -->
-
         </div>
-        <!-- Content End -->
+
+    </div>
 
 
-        <!-- Back to Top -->
-        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+    </div>
+    <!-- Table End -->
+
+    </div>
+    <!-- Content End -->
+
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
     </div>
 
     <!-- JavaScript Libraries -->
@@ -406,8 +465,6 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
-    <script src="js/operations.js"></script>
-
 
 
 </body>
