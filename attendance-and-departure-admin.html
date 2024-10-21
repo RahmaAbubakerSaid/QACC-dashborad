@@ -299,15 +299,15 @@
                     </div>
                 </div>
 
-                <button id="toggleTableBtn">عرض/إخفاء الجدول</button>
-                <button id="printBtn" style="display:none;" onclick="printTable()">طباعة</button>
+                <button class="btn btn-primary attendance" id="toggleTableBtn">عرض/إخفاء الجدول</button>
+                <button class="btn btn-primary attendance" id="printBtn" style="display:none;" onclick="printTable()">طباعة</button>
                 
          
             <table id="tableContainer"  style="display:none;" >
                 <thead >
                     <tr>
                         <th>الرقم</th>
-                        <th>اسم الموظف</th>
+                        <th colspan="3">اسم الموظف</th>
                         <th>الوظيفة</th>
                         <th>التاريخ</th>
                         <th>اليوم</th>
@@ -325,7 +325,7 @@
                 <tbody>
                     <tr>
                         <td>1</td>
-                        <td>فتحي الحباسي</td>
+                        <td colspan="3">فتحي الحباسي</td>
                         <td>مدير</td>
                         <td>2024-10-15</td>
                         <td>التلاثاء</td>
@@ -340,7 +340,7 @@
                     </tr>
                     <tr>
                         <td>1</td>
-                        <td>فتحي الحباسي</td>
+                        <td colspan="3">فتحي الحباسي</td>
                         <td>مدير</td>
                         <td>2024-10-15</td>
                         <td>الاربعاء</td>
@@ -355,7 +355,7 @@
                     </tr>
                     <tr>
                         <td>1</td>
-                        <td>فتحي الحباسي</td>
+                        <td colspan="3">فتحي الحباسي</td>
                         <td>مدير</td>
                         <td>2024-10-16</td>
                         <td>الخميس</td>
@@ -423,15 +423,37 @@ function printTable() {
         <head>
             <title>طباعة الجدول</title>
             <style>
+                 body {
+                    font-family: 'Cairo', sans-serif;
+                    direction: rtl;  /* عكس اتجاه النص ليكون من اليمين إلى اليسار */
+                    text-align: right;  /* محاذاة النص لليمين */
+                    margin: 20px;
+                }
                 table {
                     width: 100%;
                     border-collapse: collapse;
                 }
+                th {
+                background-color: #CA9733;
+                }    
                 th, td {
                     border: 1px solid black ;
                     padding: 8px ;
                     text-align: center ;
                 }
+                    button {
+                    margin-top: 20px;
+                    margin-bottom: 20px;
+                    padding: 10px 20px;
+                    background-color: #CA9733;
+                    color: white;
+                    border: none;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    }
+                    button:hover{
+                    background-color: #b7842a;
+                    }
                 /* إخفاء زر الطباعة عند الطباعة */
                 @media print {
                     button {
@@ -443,7 +465,7 @@ function printTable() {
         <body>
             ${tableContent}
             <br>
-            <button onclick="window.print();">طباعة</button>  <!-- زر الطباعة في الصفحة الجديدة -->
+            <button  onclick="window.print();">طباعة</button>  <!-- زر الطباعة في الصفحة الجديدة -->
         </body>
         </html>
     `);
