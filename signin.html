@@ -3,13 +3,13 @@
 
 <head>
     <meta charset="utf-8">
-    <title>DASHMIN - Bootstrap Admin Template</title>
+    <title>تسجيل الدخول - مركز ضمان الجودة والمعايرة المهنية</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
 
     <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
+    <link href="img/qacc.png" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -29,8 +29,15 @@
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+            <!-- SweetAlert2 JS -->
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
-
+<style>
+    .no-style {
+    all: unset;
+    display: block; /* يمكنك إعادة تعيين بعض الخصائص عند الحاجة */
+}
+</style>
 <body>
     <div class="container-xxl position-relative bg-white d-flex p-0">
         <!-- Spinner Start -->
@@ -48,26 +55,29 @@
                 <div class="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4">
                     <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
                         <div class="d-flex flex-column align-items-center mb-3">
-                            <img src="img\qacc.png" alt="شعار الموقع"
+                            <img src="img/qacc.png" alt="شعار الموقع"
                                 style="width: 115px; height: 80px; margin-bottom: 45px;">
                             <h5>تسجيل الدخول</h5>
                         </div>
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingUsername" placeholder="">
-                            <label for="floatingUsername">اسم المستخدم</label>
-                        </div>
-                        <div class="form-floating mb-4">
-                            <input type="password" class="form-control" id="floatingPassword" placeholder="">
-                            <label for="floatingPassword">كلمة المرور</label>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-between mb-4">
-                            <a href="">هل نسيت كلمة المرور؟</a>
-                        </div>
-                        <button type="submit" class="btn btn-primary py-3 w-100 mb-4">تسجيل الدخول</button>
+                        <form class="no-style" id="loginForm">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="floatingUsername" name="username" placeholder="">
+                                <label for="floatingUsername">اسم المستخدم</label>
+                            </div>
+                            <div class="form-floating mb-4">
+                                <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="">
+                                <label for="floatingPassword">كلمة المرور</label>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <a href="">هل نسيت كلمة المرور؟</a>
+                            </div>
+                            <button type="submit" class="btn btn-primary py-3 w-100 mb-4">تسجيل الدخول</button>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
+
         <!-- Sign In End -->
     </div>
 
@@ -84,6 +94,90 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // منع إعادة تحميل الصفحة
+            
+            const formData = new FormData(this);
+            fetch('php/login.php', { // إرسال البيانات إلى ملف PHP
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = 'http://localhost/QACC-dashborad/index.html'; // توجيه إلى لوحة التحكم
+                } else {
+                    Swal.fire({
+                    icon: 'warning',               // أيقونة التحذير
+                    title: 'تنبيه',                 // عنوان التنبيه
+                    html: '<strong>خطأ في تسجيل الدخول : </strong>' + data.message,  // نص التنبيه
+                    confirmButtonText: 'حسنًا',     // نص زر التأكيد
+                    customClass: {
+                        confirmButton: 'btn btn-primary'  // تخصيص الزر إذا كنت تستخدم Bootstrap أو CSS
+                    },
+                    buttonsStyling: false,           // تعطيل التنسيق الافتراضي للأزرار
+                    allowOutsideClick: false,        // منع الإغلاق عند النقر على الخلفية
+                    backdrop: true                   // إضافة خلفية سوداء
+                });
+                return false;
+                }
+            });
+        });
+        </script>
+
+<!--     <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // منع إعادة تحميل الصفحة
+        
+            const username = document.getElementById('floatingUsername').value;
+            const password = document.getElementById('floatingPassword').value;
+
+            // التأكد من أن الحقول ليست فارغة
+            if (!username || !password) {
+                Swal.fire({
+                    icon: 'warning',               // أيقونة التحذير
+                    title: 'تنبيه',                 // عنوان التنبيه
+                    text: 'يرجى ملء جميع الحقول',  // نص التنبيه
+                    confirmButtonText: 'حسنًا',     // نص زر التأكيد
+                    customClass: {
+                        confirmButton: 'btn btn-primary'  // تخصيص الزر إذا كنت تستخدم Bootstrap أو CSS
+                    },
+                    buttonsStyling: false,           // تعطيل التنسيق الافتراضي للأزرار
+                    allowOutsideClick: false,        // منع الإغلاق عند النقر على الخلفية
+                    backdrop: true                   // إضافة خلفية سوداء
+                });
+                return false;
+            }
+
+            //انشاء كائن لتجميع البيانات
+            const formData = new FormData();
+            //تضمين البيانات في formData
+            formData.append('username', username);
+            formData.append('password', password);
+        
+            fetch('php/login.php', { // إرسال البيانات إلى ملف PHP
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = 'index.html'; // توجيه إلى لوحة التحكم
+                } else {
+                    alert('خطأ في تسجيل الدخول: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('خطأ في الاتصال:', error);
+                alert('حدث خطأ أثناء تسجيل الدخول.', + error.message,);
+            });
+        });
+        </script> -->
+
+
 </body>
 
 </html>
