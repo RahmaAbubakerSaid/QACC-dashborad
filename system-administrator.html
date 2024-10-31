@@ -3,13 +3,14 @@
 
 <head>
     <meta charset="utf-8">
-    <title>DASHMIN - Bootstrap Admin Template</title>
+    <title>إدارة حسابات مستخدمي لوحة التحكم</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
 
     <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
+    <link rel="icon" href="img/link-icon.png" sizes="32x32" type="image/png">
+
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -268,17 +269,17 @@
                             <h5>انشاء حساب مستخدم</h5>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingText" placeholder="jhondoe">
-                            <label for="floatingText">اسم المستخدم</label>
+                            <input type="text" class="form-control"  id="username" placeholder="jhondoe">
+                            <label for="username">اسم المستخدم</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-                            <label for="floatingInput">كلمة المرور</label>
+                            <input type="password" class="form-control" id="password" placeholder="name@example.com">
+                            <label for="password">كلمة المرور</label>
                         </div>
 
 
                         <div class="d-grid gap-2 d-md-flex justify-content-between">
-                            <button type="submit" class="btn btn-primary py-3 w-100 mb-4" onclick="validateForm()">إنشاء
+                            <button type="submit" class="btn btn-primary py-3 w-100 mb-4" onclick="createUser()">إنشاء
                                 حساب</button>
                             <button type="button" class="btn btn-secondary py-3 w-0 mb-4"
                                 id="closeDialog">إلغاء</button>
@@ -294,70 +295,8 @@
                     <div class="col-12">
                         <div class="bg-light rounded h-100 p-4">
                             <h6 class="mb-4">جدول المستخدمين</h6>
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">الرقم</th>
-                                            <th scope="col">اسم المستخدم </th>
-                                            <th scope="col"> الصلاحيات </th>
-                                            <th scope="col">الاجراءات </th>
-
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>اكرام العرضاوي </td>
-                                            <td>
-                                                <a href="#" class="btn btn-success custom-btn-main">التفاصيل</a>
-                                            </td>
-                                            <td>
-                                                <!-- زر تقييد باللون البرتقالي -->
-                                                <a href="#" class="btn btn-primary custom-btn-main">تقييد</a>
-                                                <!-- زر سجل النشاطات باللون الأزرق -->
-                                                <a href="#" class="btn btn-primary custom-btn-main">سجل النشاطات</a>
-                                                <!-- زر حذف باللون الأحمر -->
-                                                <a href="#" class="btn btn-danger custom-btn-main">حذف</a>
-
-                                            </td>
-
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">2</th>
-                                            <td>رحمة سعيد</td>
-                                            <td>
-                                                <a href="#" class="btn btn-success custom-btn-main">التفاصيل</a>
-                                            </td>
-                                            <td>
-                                                <!-- زر تقييد باللون البرتقالي -->
-                                                <a href="#" class="btn btn-primary custom-btn-main">تقييد</a>
-                                                <!-- زر سجل النشاطات باللون الأزرق -->
-                                                <a href="#" class="btn btn-primary custom-btn-main ">سجل النشاطات</a>
-                                                <!-- زر حذف باللون الأحمر -->
-                                                <a href="#" class="btn btn-danger custom-btn-main">حذف</a>
-
-                                            </td>
-
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">3</th>
-                                            <td>فتحي موسى</td>
-                                            <td>
-                                                <a href="#" class="btn btn-success custom-btn-main">التفاصيل</a>
-                                            </td>
-                                            <td>
-                                                <!-- زر تقييد باللون البرتقالي -->
-                                                <a href="#" class="btn btn-primary custom-btn-main">تقييد</a>
-                                                <!-- زر سجل النشاطات باللون الأزرق -->
-                                                <a href="#" class="btn btn-primary custom-btn-main">سجل النشاطات</a>
-                                                <!-- زر حذف باللون الأحمر -->
-                                                <a href="#" class="btn btn-danger custom-btn-main">حذف</a>
-
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                            <div class="table-responsive" id="user-table">
+                                <!-- سيظهر الجدول هنا -->
                             </div>
                         </div>
                     </div>
@@ -387,9 +326,93 @@
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
     <script src="js/operations.js"></script>
-
-
-
+    
+    <script>
+        function createUser() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+    
+            // التحقق من وجود القيم
+            if (!username || !password) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'تنبيه',
+                    html: 'يرجى ملء جميع الحقول.',
+                    confirmButtonText: 'حسنًا',
+                    customClass: {
+                        confirmButton: 'btn btn-primary'
+                    },
+                    buttonsStyling: false,
+                    allowOutsideClick: false,
+                    backdrop: true
+                });
+                return;
+            }
+    
+            const formData = new FormData();
+            formData.append('username', username);
+            formData.append('password', password);
+    
+            fetch('php/add-user.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'تم إنشاء الحساب بنجاح.',
+                        confirmButtonText: 'حسنًا',
+                        customClass: {
+                            confirmButton: 'btn btn-primary'
+                        },
+                        buttonsStyling: false,
+                        allowOutsideClick: false,
+                        backdrop: true
+                    });
+                    document.getElementById('username').value = '';
+                    document.getElementById('password').value = '';
+    
+                    // إعادة جلب بيانات المستخدمين وتحديث الجدول
+                    fetch('php/view_users.php')
+                        .then(response => response.text())
+                        .then(data => {
+                            document.getElementById('user-table').innerHTML = data;
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                } else {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'خطأ',
+                        html: '<strong>خطأ : </strong>' + data.message,
+                        confirmButtonText: 'حسنًا',
+                        customClass: {
+                            confirmButton: 'btn btn-primary'
+                        },
+                        buttonsStyling: false,
+                        allowOutsideClick: false,
+                        backdrop: true
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    
+        // استرجاع بيانات المستخدمين عند تحميل الصفحة
+        fetch('php/view_users.php')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('user-table').innerHTML = data;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    </script>
 </body>
 
 </html>

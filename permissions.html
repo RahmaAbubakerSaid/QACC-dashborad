@@ -246,10 +246,6 @@
                     <div class="user-selection">
                         <select id="user-select">
                             <option value="">اختر مستخدم</option>
-                            <option value="user1">مستخدم 1</option>
-                            <option value="user2">مستخدم 2</option>
-                            <option value="user3">مستخدم 3</option>
-                            <option value="user4">مستخدم 4</option>
                         </select>
                     </div>
                 </div>
@@ -273,61 +269,48 @@
                                     <tr>
                                         <td>مدير النظام</td>
                                         <td>
-                                            <label><input type="checkbox" class="function-checkbox" /> إدارة حسابات
-                                                مستخدمي لوحة التحكم</label><br>
-                                            <label><input type="checkbox" class="function-checkbox" /> إدارة
-                                                الصلاحيات</label><br>
-                                            <label><input type="checkbox" class="function-checkbox" /> إدارة
-                                                الإدارات</label><br>
-                                            <label><input type="checkbox" class="function-checkbox" /> إدارة
-                                                المكاتب</label><br>
-                                            <label><input type="checkbox" class="function-checkbox" /> إدارة طلبات
-                                                الأصناف - المدير</label><br>
-                                            <label><input type="checkbox" class="function-checkbox" /> إدارة طلبات
-                                                النماذج - المدير</label><br>
-                                            <label><input type="checkbox" class="function-checkbox" /> إدارة الموظفين -
-                                                المدير</label><br>
+                                            <label><input type="checkbox" class="function-checkbox" value="system-administrator.html" /> إدارة حسابات مستخدمي لوحة التحكم</label><br>
+                                            <label><input type="checkbox" class="function-checkbox" value="permissions.html" /> إدارة الصلاحيات</label><br>
+                                            <label><input type="checkbox" class="function-checkbox" value="administration-of-depatments.html" /> إدارة الإدارات</label><br>
+                                            <label><input type="checkbox" class="function-checkbox" value="officeManagement.html" /> إدارة المكاتب</label><br>
+                                            <label><input type="checkbox" class="function-checkbox" value="categories_admin.html" /> إدارة طلبات الأصناف - المدير</label><br>
+                                            <label><input type="checkbox" class="function-checkbox" value="forms_requests_admin.html" /> إدارة طلبات النماذج - المدير</label><br>
+                                            <label><input type="checkbox" class="function-checkbox" value="manage_employees_admin.html" /> إدارة الموظفين - المدير</label><br>
+                                            <label><input type="checkbox" class="function-checkbox" value="attendance-and-departure-admin.html" /> الحضور والانصراف - المدير</label><br>
+
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>رئيس شؤون الموظفين</td>
                                         <td>
-                                            <label><input type="checkbox" class="function-checkbox" /> إدارة
-                                                الموظفين</label><br>
-                                            <label><input type="checkbox" class="function-checkbox" />
-                                                الإجازات</label><br>
-                                            <label><input type="checkbox" class="function-checkbox" /> الحضور
-                                                والانصراف</label><br>
+                                            <label><input type="checkbox" class="function-checkbox" value="manage_employees.html" /> إدارة الموظفين</label><br>
+                                            <label><input type="checkbox" class="function-checkbox" value="leaveNotifications.html" /> الإجازات</label><br>
+                                            <label><input type="checkbox" class="function-checkbox" value="attendance-and-departure.html" /> الحضور والانصراف</label><br>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>مدير إدارة الشؤون الإدارية والمالية</td>
                                         <td>
-                                            <label><input type="checkbox" class="function-checkbox" /> إدارة طلبات
-                                                الأصناف</label><br>
-                                            <label><input type="checkbox" class="function-checkbox" /> إدارة طلبات
-                                                النماذج</label><br>
+                                            <label><input type="checkbox" class="function-checkbox" value="categories.html" /> إدارة طلبات الأصناف</label><br>
+                                            <label><input type="checkbox" class="function-checkbox" value="forms_requests.html" /> إدارة طلبات النماذج</label><br>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>أمين المخازن</td>
                                         <td>
-                                            <label><input type="checkbox" class="function-checkbox" /> إدارة طلبات
-                                                الأصناف</label><br>
+                                            <label><input type="checkbox" class="function-checkbox" value="receive_categories_manager.html" /> إدارة طلبات الأصناف</label><br>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>رئيس وحدة المحفوظات</td>
                                         <td>
-                                            <label><input type="checkbox" class="function-checkbox" /> إدارة
-                                                الرسائل</label><br>
+                                            <label><input type="checkbox" class="function-checkbox" value="archives.html" /> إدارة الرسائل</label><br>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>قسم الإعلانات</td>
                                         <td>
-                                            <label><input type="checkbox" class="function-checkbox" /> إدارة
-                                                الإعلانات</label><br>
+                                            <label><input type="checkbox" class="function-checkbox" value="ads.html" /> إدارة الإعلانات</label><br>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -354,6 +337,8 @@
                                     <tr>
                                         <th>المستخدم</th>
                                         <th>الصلاحيات</th>
+                                        <th>الوظائف</th>
+
                                     </tr>
                                 </thead>
                                 <tbody id="results-body">

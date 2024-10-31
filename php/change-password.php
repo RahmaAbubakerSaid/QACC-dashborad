@@ -2,7 +2,6 @@
 session_start();
 require 'database.php'; // ملف الاتصال بقاعدة البيانات
 
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $current_password = isset($_POST['current_password']) ? trim($_POST['current_password']) : '';
     $new_password = isset($_POST['new_password']) ? trim($_POST['new_password']) : '';
@@ -33,11 +32,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->fetch();
 
             // التحقق من كلمة المرور الحالية
-            if ($current_password === $stored_password) {
+            if (password_verify($current_password, $stored_password)) { // استخدام password_verify
+                // تشفير كلمة المرور الجديدة
+                $hashed_new_password = password_hash($new_password, PASSWORD_DEFAULT);
+
                 // تحديث كلمة المرور
                 $stmt = $conn->prepare("UPDATE users SET password = ? WHERE username = ?");
                 if ($stmt) {
-                    $stmt->bind_param("ss", $new_password, $username);
+                    $stmt->bind_param("ss", $hashed_new_password, $username); // استخدم كلمة المرور المشفرة
                     $stmt->execute();
                     echo json_encode(['success' => true]);
                 } else {

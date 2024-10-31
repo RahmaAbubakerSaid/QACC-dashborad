@@ -20,7 +20,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         //استعلام لاستخراج كلمة المرور من جدول المستخدمين
         //حيث يكون اسم المستخدم (username) مساوياً للقيمة التي تم تمريرها ($username). يتم تخزين هذا الاستعلام المعد مسبقًا في المتغير $stmt.
         // استخدام prepared statements لمنع هجمات SQL injection
-        $stmt = $conn->prepare("SELECT password FROM users WHERE username = ?");
+        // استعلام لاستخراج كلمة المرور وحالة الحساب من جدول المستخدمين
+        $stmt = $conn->prepare("SELECT password, restricted FROM users WHERE username = ?");
         //يتحقق من نجاح عملية الاستعلام
         if ($stmt) {
             //يربط قيمة المدخلات بالاستعلام.
@@ -33,11 +34,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // إذا كان اسم المستخدم موجوداً
             //يتحقق من وجود سجلات تطابق اسم المستخدم
             if ($stmt->num_rows > 0) {
-                $stmt->bind_result($stored_password); // الحصول على كلمة المرور المخزنة
+                $stmt->bind_result($stored_password, $restricted); // الحصول على كلمة المرور وحالة الحساب
                 $stmt->fetch();
                 
+            // التحقق من حالة الحساب
+            if ($restricted == 1) {
+            echo json_encode(['success' => false, 'message' => 'لن تتمكن من تسجيل الدخول لأن حسابك تم تقيده.']);
+            exit();
+            }
+                
+
+
                 // التحقق من كلمة المرور بدون تشفير (مقارنة مباشرة)
-                if ($password === $stored_password) { // مقارنة مباشرة
+                if (password_verify($password, $stored_password)) { // مقارنة مباشرة
                     // تسجيل الدخول ناجح
                     $_SESSION['username'] = $username;
                     echo json_encode(['success' => true]);

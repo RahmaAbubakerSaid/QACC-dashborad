@@ -2,34 +2,97 @@
 document.getElementById('select-all').addEventListener('click', () => {
     const functionCheckboxes = document.querySelectorAll('.function-checkbox');
     
-    if (document.getElementById('select-all').checked) {
-        functionCheckboxes.forEach(checkbox => {
-            checkbox.checked = true;
-        });
-    } else {
-        functionCheckboxes.forEach(checkbox => {
-            checkbox.checked = false;
-        });
-    }
+    functionCheckboxes.forEach(checkbox => {
+        checkbox.checked = document.getElementById('select-all').checked;
+    });
 });
 
-// حفظ البيانات
-document.getElementById('save-button').addEventListener('click', () => {
+// جلب المستخدمين من قاعدة البيانات
+async function fetchUsers() {
+    const response = await fetch('php/fetch_users.php');
+    const users = await response.json();
     const userSelect = document.getElementById('user-select');
-    const selectedUser = userSelect.options[userSelect.selectedIndex].text;
 
-    if (selectedUser === "اختر مستخدم") {
+    users.forEach(user => {
+        const option = document.createElement('option');
+        option.value = user.id;
+        option.textContent = user.username;
+        userSelect.appendChild(option);
+    });
+}
+
+// جلب الصلاحيات من قاعدة البيانات وعرضها في الجدول
+async function updateResultsTable() {
+    const response = await fetch('php/fetch_permissions.php');
+    const permissions = await response.json();
+    const resultsBody = document.getElementById('results-body');
+    resultsBody.innerHTML = ''; // مسح الجدول الحالي
+
+    // إضافة البيانات إلى الجدول
+    permissions.forEach(permission => {
+        const userId = permission.user_id;
+        const username = permission.username;
+        const sections = permission.permissions;
+    
+        for (const section in sections) {
+            // حلقة لكل إجراء في القسم
+            sections[section].forEach(action => {
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td>${username}</td>
+                    <td>${section}</td>
+                    <td>${action}</td>
+                `;
+                resultsBody.appendChild(newRow);
+            });
+        }
+    });
+
+
+/*     permissions.forEach(permission => {
+        const userId = permission.user_id;
+        const username = permission.username;
+        const sections = permission.permissions;
+
+        for (const section in sections) {
+            const actions = sections[section].join(', ');
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td>${username}</td>
+                <td>${section}</td>
+                <td>${actions || 'لا يوجد'}</td>
+            `;
+            resultsBody.appendChild(newRow);
+        }
+    }); */
+
+    // إظهار الجدول
+    document.getElementById('results-table').style.display = 'table';
+}
+
+// استدعاء دالة جلب المستخدمين وجلب الصلاحيات عند تحميل الصفحة
+window.onload = async function() {
+    await fetchUsers(); // جلب المستخدمين
+    await updateResultsTable(); // جلب الصلاحيات وعرضها
+};
+
+// حفظ البيانات
+document.getElementById('save-button').addEventListener('click', async () => {
+    const userSelect = document.getElementById('user-select');
+    const userId = userSelect.value; // الحصول على معرف المستخدم
+
+    if (userId === "") {
         Swal.fire({
-            icon: 'warning',               // أيقونة التحذير
-            title: 'خطأ!',                 // عنوان التنبيه
-            text: 'يرجى ادخال اسم مستخدم',  // نص التنبيه
-            confirmButtonText: 'حسنًا',     // نص زر التأكيد
+            icon: 'warning',
+            title: 'خطأ!',
+            text: 'يرجى ادخال اسم مستخدم',
+            confirmButtonText: 'حسنًا',
             customClass: {
-                confirmButton: 'btn btn-primary'  // تخصيص الزر إذا كنت تستخدم Bootstrap أو CSS
+                confirmButton: 'btn btn-primary'
             },
-            buttonsStyling: false,           // تعطيل التنسيق الافتراضي للأزرار
-            allowOutsideClick: false,        // منع الإغلاق عند النقر على الخلفية
-            backdrop: true                   // إضافة خلفية سوداء
+            buttonsStyling: false,
+            allowOutsideClick: false,
+            backdrop: true
         });
         return false;
     }
@@ -37,17 +100,6 @@ document.getElementById('save-button').addEventListener('click', () => {
     const allPermissions = []; // لإضافة جميع الصلاحيات
 
     const rows = document.querySelectorAll('tbody tr');
-    let userRow = null;
-
-    rows.forEach(row => {
-        if (row.cells[0].textContent === selectedUser) {
-            userRow = row;
-        }
-    });
-
-    if (userRow) {
-        userRow.remove(); // إزالة السطر الحالي للمستخدم إذا كان موجودًا
-    }
 
     rows.forEach(row => {
         const section = row.cells[0].textContent;
@@ -63,25 +115,49 @@ document.getElementById('save-button').addEventListener('click', () => {
         }
     });
 
-    // إضافة النتائج إلى الجدول
-    const resultsBody = document.getElementById('results-body');
-    const newRow = document.createElement('tr');
-    const permissionsHtml = allPermissions.map(p => `${p.section}: ${p.actions.join(', ') || 'لا يوجد'}`).join('<br>');
-    newRow.innerHTML = `
-        <td>${selectedUser}</td>
-        <td>${permissionsHtml || 'لا يوجد'}</td>
-    `;
-    resultsBody.appendChild(newRow);
+    // تحقق من وجود صلاحية واحدة على الأقل
+    if (allPermissions.length === 0) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'خطأ!',
+            text: 'يرجى تحديد صلاحية واحدة على الأقل',
+            confirmButtonText: 'حسنًا',
+            customClass: {
+                confirmButton: 'btn btn-primary'
+            },
+            buttonsStyling: false,
+            allowOutsideClick: false,
+            backdrop: true
+        });
+        return false;
+    }
 
-    // إظهار الجدول
-    document.getElementById('results-table').style.display = 'table';
-
-    // إفراغ جميع التحديدات
-    userSelect.selectedIndex = 0; // إفراغ اختيار المستخدم
-    document.querySelectorAll('.function-checkbox').forEach(checkbox => {
-        checkbox.checked = false; // إفراغ الوظائف
+    // إرسال البيانات إلى PHP
+    const response = await fetch('php/save_permissions.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            user_id: userId,
+            permissions: allPermissions
+        })
     });
 
-    document.getElementById('select-all').checked = false;
+    const result = await response.json();
+    if (result.status === 'success') {
+        updateResultsTable(); // تحديث الجدول بعد الحفظ
+        
+        // إعادة تعيين checkboxes
+        userSelect.selectedIndex = 0; // إفراغ اختيار المستخدم
+        console.log('User selection reset');
 
+        const functionCheckboxes = document.querySelectorAll('.function-checkbox');
+        functionCheckboxes.forEach(checkbox => {
+            checkbox.checked = false; // إعادة تعيين checkbox إلى غير محددة
+            console.log('Checkbox reset');
+        });
+        document.getElementById('select-all').checked = false; // إعادة تعيين checkbox "تحديد الكل"
+        console.log('Select all checkbox reset');
+    }
 });
