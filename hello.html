@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>إدارة طلبات النمادج</title>
+    <title>مرحباً بك</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -36,7 +36,45 @@
 
     <!-- SweetAlert2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+    <style>
+        .background-image {
+            position: relative;
+            background-image: url('img/cover.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    
+        .blur-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            backdrop-filter: blur(5px);
+        }
+    
+        .welcome-container {
+            z-index: 1;
+            text-align: center;
+            padding: 70px;
+            border-radius: 8px;
+            max-width: 650px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+    
+        .welcome-container h1 {
+            font-size: 32px;
+        }
+    
+        .welcome-container p {
+            font-size: 18px;
+        }
+    </style>
 </head>
 
 <body>
@@ -52,17 +90,17 @@
 
 
         <!-- Sidebar Start -->
-        <div id="sidebar-container"></div> 
+        <div id="sidebar-container"></div>
         <script>
             fetch('php/sidebar.php')
-            .then(response => {
-                if (!response.ok) throw new Error('Network response was not ok');
-                return response.text();
-            })
-            .then(data => {
-                document.getElementById('sidebar-container').innerHTML = data;
-            })
-            .catch(error => console.error('هناك خطأ:', error));
+                .then(response => {
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    return response.text();
+                })
+                .then(data => {
+                    document.getElementById('sidebar-container').innerHTML = data;
+                })
+                .catch(error => console.error('هناك خطأ:', error));
         </script>
         <!-- Sidebar End -->
 
@@ -175,19 +213,19 @@
                                         }
                                     });
                                 }
-                                </script>
-                                <script>
-                                    fetch('php/user_info.php')
-                                        .then(response => response.json())
-                                        .then(data => {
-                                            if (data.loggedIn) {
-                                        // تحديث اسم المستخدم والصورة
-                                        document.getElementById('userName').innerText = data.username; // عرض اسم المستخدم
-                                            } else {
-                                                window.location.href = 'http://localhost/QACC-dashborad/signin.html'; // إعادة توجيه إلى صفحة تسجيل الدخول
-                                            }
-                                        });
-                                    </script>
+                            </script>
+                            <script>
+                                fetch('php/user_info.php')
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        if (data.loggedIn) {
+                                            // تحديث اسم المستخدم والصورة
+                                            document.getElementById('userName').innerText = data.username; // عرض اسم المستخدم
+                                        } else {
+                                            window.location.href = 'http://localhost/QACC-dashborad/signin.html'; // إعادة توجيه إلى صفحة تسجيل الدخول
+                                        }
+                                    });
+                            </script>
                         </div>
                     </div>
                     <!-------------------------------------------->
@@ -198,98 +236,23 @@
             <!-- Navbar End -->
 
 
-            <div class="container-fluid pt-4 px-4">
-                <div class="bg-light rounded h-100 p-4">
-                    <h5>إدارة طلبات النماذج</h5>
-                </div>
-            </div>
-            <!-- Categories Dialog-->
-            <div class="dialog-overlay dialog" id="dialog1">
-                <div class="dialog-content-main">
-                    <!-- Your dialog content goes here -->
-                    <div class="col-sm-12">
-                        <div class="bg-light rounded h-100 p-4">
-                            <h6 class="mb-4">التفاصيل</h6>
-
-                        </div>
-                        <div class="closeDialogForms"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="dialog-overlay dialog" id="dialog2">
-                <div class="dialog-content-main">
-                    <!-- Your dialog content goes here -->
-                    <div class="col-sm-12">
-                        <div class="bg-light rounded h-100 p-4">
-                            <h6 class="mb-4">التفاصيل</h6>
-                        </div>
-                        <div class="closeDialogForms"></div>
-                    </div>
-                </div>
-            </div>
-            <!-- Table Start -->
-            <div class="container-fluid pt-4 px-4">
-                <div class="row g-4">
-
-
-                    <div class="col-12">
-                        <div class="bg-light rounded h-100 p-4">
-                            <h6 class="mb-4">جدول طلبات النماذج</h6>
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">الرقم</th>
-                                            <th scope="col">اسم الموظف </th>
-                                            <th scope="col"> الإدارة </th>
-                                            <th scope="col">القسم </th>
-                                            <th scope="col">اسم النموذج </th>
-                                            <th scope="col">الإجراءات </th>
-
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>رحمة </td>
-                                            <td>تقنية معلومات </td>
-
-                                            <td>البرمجة </td>
-                                            <td>نموذج جواز سفر </td>
-
-                                            <td>
-                                                <!-- التفاصيل -->
-                                                <a href="#" class="btn btn-success custom-btn-main openDialogForms" id="dialog1">التفاصيل</a>
-                                                <!-- قبول -->
-                                                <a href="#" class="btn btn-success custom-btn-main">قبول</a>
-                                                <!-- رفض -->
-                                                <a href="#" class="btn btn-danger custom-btn-main">رفض</a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>اكرام العرضاوي </td>
-                                            <td>تقنية معلومات </td>
-                                            <td>البرمجة </td>
-                                            <td>نموذج إفادة </td>
-
-                                            <td>
-                                                <!-- التفاصيل -->
-                                                <a href="#" class="btn btn-success custom-btn-main openDialogForms" id="dialog2">التفاصيل</a>
-                                                <!-- قبول -->
-                                                <a href="#" class="btn btn-success custom-btn-main">قبول</a>
-                                                <!-- رفض -->
-                                                <a href="#" class="btn btn-danger custom-btn-main">رفض</a>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+            <div class="container-fluid pt-0 px-4">
+                <div class="row g-5">
+                    <div class="col-sm-12 p-2">
+                        <div class="background-image">
+                            <div class="blur-overlay"></div>
+                            <div class="welcome-container">
+                                <h4>مرحباً بك!<br><br> في لوحة تحكم مركز ضمان الجودة والمعايرة المهنية</h4>
+                                <br>
+                                <p>شكرًا لك على تسجيل الدخول. ابدأ رحلتك نحو الإدارة الناجحة والفعّالة بخطوات ثابتة
+                                    واستراتيجيات مدروسة.</p>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- Table End -->
+   
+
+
 
         </div>
         <!-- Content End -->
@@ -312,7 +275,7 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
-    <script src="js/forms.js"></script>
+    <script src="js/operations.js"></script>
 
 
 

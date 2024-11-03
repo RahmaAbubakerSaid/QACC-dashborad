@@ -49,6 +49,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 if (password_verify($password, $stored_password)) { // مقارنة مباشرة
                     // تسجيل الدخول ناجح
                     $_SESSION['username'] = $username;
+
+                    // استعلام لجلب الصلاحيات من قاعدة البيانات
+                    $stmt = $conn->prepare("SELECT section, action FROM permissions WHERE user_id = (SELECT id FROM users WHERE username = ?)");
+                    if ($stmt) {
+                        $stmt->bind_param("s", $username); // ربط اسم المستخدم
+                        $stmt->execute(); // تنفيذ الاستعلام
+                        $result = $stmt->get_result(); // الحصول على النتائج
+
+                        $permissions = []; // مصفوفة لتخزين الصلاحيات
+                        while ($row = $result->fetch_assoc()) {
+                            // تخزين الإجراءات حسب القسم
+                            $permissions[$row['section']][] = $row['action'];
+                        }
+
+                        // تخزين الصلاحيات في الجلسة
+                        $_SESSION['permissions'] = $permissions; 
+                    } else {
+                        // التعامل مع الأخطاء في حال فشل الاستعلام
+                        echo "Error: " . $conn->error;
+                    }
+
+
+
+
+
+
+
+
+
+
+
+
                     echo json_encode(['success' => true]);
                     exit();
                 } else {

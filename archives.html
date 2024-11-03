@@ -54,104 +54,20 @@
 
 
         <!-- Sidebar Start -->
-        <div class="sidebar pe-4 pb-3">
-            <nav class="navbar bg-light navbar-light">
-                <a href="index.html" class="d-flex align-items-center ms-4 mb-4">
-                    <img src="img\qacc.png" alt="شعار الموقع"
-                    style="width: 100px; height: 65px; margin-bottom: 15px;">
-                    <h6 class="text-primary">مركز ضمان الجودة والمعايرة المهنية</h6>
-                </a>
-               
-                <div class="navbar-nav w-100">
-                    <a href="index.html" class="nav-item nav-link"><i
-                            class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
-
-                    <!-- ------------------------------------------------------------------------- -->
-
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <i class="fas fa-solid fa-user-tie me-2"></i></i>مدير النظام</a>
-                        <div class="dropdown-menu bg-transparent border-0">
-                            <a href="system-administrator.html" class="dropdown-item">ادارة حسابات مستخدمي لوحة
-                                التحكم</a>
-                            <a href="permissions.html" class="dropdown-item">ادارة الصلاحيات</a>
-                            <a href="administration-of-depatments.html" class="dropdown-item">ادارة الادارات</a>
-                            <a href="officeManagement.html" class="dropdown-item">ادارة المكاتب</a>
-                            <a href="categories_admin.html" class="dropdown-item">ادارة طلبات الاصناف</a>
-                            <a href="forms_requests_admin.html" class="dropdown-item">ادارة طلبات النماذج</a>
-                            <a href="manage_employees_admin.html" class="dropdown-item">ادارة الموظفين</a>
-                            <a href="attendance-and-departure-admin.html" class="dropdown-item "> الحضور والانصراف</a>
-                           
-                        </div>
-                    </div>
-
-                    <!-- ------------------------------------------------------------------------- -->
-
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
-                                class="fas fa-solid fa-users me-2"></i>رئيس وحدة شوؤن الموظفين</a>
-                        <div class="dropdown-menu bg-transparent border-0">
-                            <a href="manage_employees.html" class="dropdown-item">ادارة الموظفين</a>
-                            <a href="leaveNotifications.html" class="dropdown-item">الاجازات</a>
-                            <a href="attendance-and-departure.html" class="dropdown-item">الحضور والانصراف</a>
-                        </div>
-                    </div>
-                    <!-- ------------------------------------------------------------------------- -->
-                    <!-- ------------------------------------------------------------------------- -->
-
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
-                                class="fas fa-money-bill-wave me-2"></i>مدير ادارة الشوؤن
-                            الادارية والمالية</a>
-                        <div class="dropdown-menu bg-transparent border-0">
-                            <a href="categories.html" class="dropdown-item">ادارة طلبات الاصناف</a>
-                            <a href="forms_requests.html" class="dropdown-item">ادارة طلبات النماذج</a>
-                        </div>
-                    </div>
-                    <!-- ------------------------------------------------------------------------- -->
-
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
-                                class="fas fa-solid fa-box-open me-2"></i>امين المخازن</a>
-                        <div class="dropdown-menu bg-transparent border-0">
-                            <a href="receive_categories_manager.html" class="dropdown-item">ادارة طلبات الاصناف</a>
-                        </div>
-                    </div>
-
-                    <!-- ------------------------------------------------------------------------- -->
-
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown"><i
-                                class="fas fa-solid fa-envelope-open-text me-2"></i>رئيس وحدة المحفوظات</a>
-                        <div class="dropdown-menu bg-transparent border-0">
-                            <a href="archives.html" class="dropdown-item active">ادارة الرسائل</a>
-                        </div>
-                    </div>
-                    <!-- ------------------------------------------------------------------------- -->
-
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
-                                class="fas fa fa-bullhorn me-2"></i>قسم الاعلانات</a>
-                        <div class="dropdown-menu bg-transparent border-0">
-                            <a href="ads.html" class="dropdown-item">ادارة الاعلانات</a>
-                        </div>
-                    </div>
-                    <!-- ------------------------------------------------------------------------- -->
-
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
-                                class="far fa-file-alt me-2"></i>Pages</a>
-                        <div class="dropdown-menu bg-transparent border-0">
-                            <a href="signin.html" class="dropdown-item">Sign In</a>
-                            <a href="signup.html" class="dropdown-item">Sign Up</a>
-                            <a href="404.html" class="dropdown-item">404 Error</a>
-                            <a href="blank.html" class="dropdown-item">Blank Page</a>
-                        </div>
-                    </div>
-                </div>
-            </nav>
-        </div>
+        <div id="sidebar-container"></div> 
+        <script>
+            fetch('php/sidebar.php')
+            .then(response => {
+                if (!response.ok) throw new Error('Network response was not ok');
+                return response.text();
+            })
+            .then(data => {
+                document.getElementById('sidebar-container').innerHTML = data;
+            })
+            .catch(error => console.error('هناك خطأ:', error));
+        </script>
         <!-- Sidebar End -->
+
 
 
         <!-- Content Start -->
@@ -234,18 +150,50 @@
                             <a href="#" class="dropdown-item text-center">See all notifications</a>
                         </div>
                     </div>
+                    <!-- جلب اسم المستخدم والعمل على القائمة -->
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <img class="rounded-circle me-lg-2" src="img/user.jpg" alt=""
+                            <img id="profilePic" class="rounded-circle me-lg-2" src="img/admin.png" alt=""
                                 style="width: 40px; height: 40px;">
-                            <span class="d-none d-lg-inline-flex">John Doe</span>
+                            <span id="userName" class="d-none d-lg-inline-flex">إسم المستخدم</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                            <a href="#" class="dropdown-item">My Profile</a>
-                            <a href="#" class="dropdown-item">Settings</a>
-                            <a href="#" class="dropdown-item">Log Out</a>
+                            <a href="change-password.html" class="dropdown-item">تغيير كلمة المرور</a>
+                            <a href="#" class="dropdown-item" onclick="confirmLogout(event)">تسجيل الخروج</a>
+                            <script>
+                                function confirmLogout(event) {
+                                    event.preventDefault(); // منع تحميل الصفحة بشكل فوري
+                                    Swal.fire({
+                                        icon: 'question',
+                                        text: 'هل أنت متأكد من أنك تريد تسجيل الخروج؟',
+                                        showCancelButton: true,
+                                        confirmButtonColor: '#D1A237',
+                                        cancelButtonColor: '#6c757d',
+                                        cancelButtonText: 'إلغاء',
+                                        confirmButtonText: 'نعم'
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            window.location.href = 'php/logout.php'; // إعادة التوجيه إلى صفحة تسجيل الخروج إذا قام المستخدم بالتأكيد
+                                        }
+                                    });
+                                }
+                                </script>
+                                <script>
+                                    fetch('php/user_info.php')
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            if (data.loggedIn) {
+                                        // تحديث اسم المستخدم والصورة
+                                        document.getElementById('userName').innerText = data.username; // عرض اسم المستخدم
+                                            } else {
+                                                window.location.href = 'http://localhost/QACC-dashborad/signin.html'; // إعادة توجيه إلى صفحة تسجيل الدخول
+                                            }
+                                        });
+                                    </script>
                         </div>
                     </div>
+                    <!-------------------------------------------->
+
                
                 </div>
             </nav>
