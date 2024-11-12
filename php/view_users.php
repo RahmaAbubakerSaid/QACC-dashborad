@@ -18,12 +18,13 @@ echo '</thead>';
 echo '<tbody>';
 
 if ($result->num_rows > 0) {
+    $counter = 1; // المتغير الذي سيتم استخدامه كعداد
     // عرض كل المستخدمين
     while ($row = $result->fetch_assoc()) {
         echo "<tr>";
-        echo "<th scope='row'class='align-middle'>" . $row['id'] . "</th>";
+        echo "<th scope='row'class='align-middle'>" . $counter++ . "</th>";
         echo "<td class='align-middle'>" . htmlspecialchars($row['username']) . "</td>";
-        echo "<td><a href='#' class='btn btn-success custom-btn-main m-2'>التفاصيل</a></td>";
+        echo "<td><a href='#' class='btn btn-success custom-btn-main m-2' onclick='showPermissions(" . $row['id'] . ")'>التفاصيل</a></td>";
         echo "<td>";
 
 

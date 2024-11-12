@@ -363,26 +363,28 @@
                                                 <th scope="col">رقم هاتف المدار </th>
                                                 <th scope="col">الرقم المالي</th>
                                                 <th scope="col">الوظيفة</th>
-                                                <th scope="col">الإدارة </th>
-                                                <th scope="col"> القسم </th>
-                                                <th scope="col">المؤهل الدراسي </th>
+                                                <th scope="col">الإدارة</th>
+                                                <th scope="col">القسم</th>
+                                                <th scope="col">الوحدة</th>
+                                                <th scope="col">المكتب</th>
+                                                <th scope="col">الدرجة</th>
+                                                <th scope="col">المؤهل الدراسي</th>
                                                 <th scope="col">الوضع الوظيفي</th>
-                                                <th scope="col">تاريخ المباشرة </th>
-                                                <th scope="col"> تاريخ بدء العقد </th>
-                                                <th scope="col">مدة العقد بالشهر </th>
-                                                <th scope="col">رقم الضمان </th>
-                                                <th scope="col"> العلاوة الحالية </th>
-                                                <th scope="col">اسم المصرف </th>
-                                                <th scope="col"> رقم الحساب </th>
-                                                <th scope="col">الراتب الشهري </th>
-                                                <th scope="col">الإجازة السنوية </th>
-                                                <th scope="col"> الدرجة </th>
-                                                <th scope="col">العلاوة السنوية </th>
-                                                <th scope="col"> رصيد الإجازة الطارئة </th>
-                                                <th scope="col">الرقم الوظيفي </th>
-                                                <th scope="col">تاريخ آخر ترقية </th>
-                                                <th scope="col">تاريخ آخر علاوة </th>
-                                                <th scope="col"> الملاحظات </th>
+                                                <th scope="col">الرقم الوظيفي</th>
+                                                <th scope="col">تاريخ المباشرة</th>
+                                                <th scope="col">تاريخ بدء العقد</th>
+                                                <th scope="col">مدة العقد بالشهر</th>
+                                                <th scope="col">رقم الضمان</th>
+                                                <th scope="col">اسم المصرف</th>
+                                                <th scope="col">رقم الحساب</th>
+                                                <th scope="col">الراتب الشهري</th>
+                                                <th scope="col">الإجازة السنوية</th>
+                                                <th scope="col">العلاوة السنوية</th>
+                                                <th scope="col">العلاوة الحالية</th>
+                                                <th scope="col">رصيد الإجازة الطارئة</th>
+                                                <th scope="col">تاريخ آخر ترقية</th>
+                                                <th scope="col">تاريخ آخر علاوة</th>
+                                                <th scope="col">الملاحظات</th>
                                             </tr>
                                         </thead>
                                         <tbody id="employeeData">
@@ -487,25 +489,27 @@
                     <td>${employee.email}</td>
                     <td>${employee.libyana_phone}</td>
                     <td>${employee.madar_phone}</td>
-                    <td>${employee.financial_number}</td> 
+                    <td>${employee.financial_number}</td>
                     <td>${employee.position}</td>
                     <td>${employee.department}</td>
                     <td>${employee.division}</td>
+                    <td>${employee.unit}</td> <!-- تم إضافة الوحدة هنا -->
+                    <td>${employee.office}</td> <!-- تم إضافة المكتب هنا -->
+                    <td>${employee.grade}</td>
                     <td>${employee.education}</td>
                     <td>${employee.job_status}</td>
+                    <td>${employee.job_number}</td> <!-- تم تعديل الرقم الوظيفي هنا -->
                     <td>${employee.join_date}</td>
                     <td>${employee.contract_start_date}</td>
                     <td>${employee.contract_duration}</td>
                     <td>${employee.guarantee_number}</td>
-                    <td>${employee.current_allowance}</td>
                     <td>${employee.bank_name}</td>
                     <td>${employee.account_number}</td>
                     <td>${employee.monthly_salary}</td>
                     <td>${employee.annual_leave}</td>
-                    <td>${employee.grade}</td>
                     <td>${employee.annual_increase}</td>
+                    <td>${employee.current_allowance}</td>
                     <td>${employee.emergency_leave_balance}</td>
-                    <td>${employee.job_number}</td>
                     <td>${employee.last_promotion_date}</td>
                     <td>${employee.last_allowance_date}</td>
                     <td>${employee.notes}</td>
@@ -524,68 +528,131 @@
     </script>
 
     <script>
-        function printTable() {
-            const tableContent = document.getElementById('addEmployeeData').outerHTML;
-            const newWindow = window.open('', '', 'width=800, height=600');
+    //هذا الكود يحتوي على دالة printTable()
+    //تمكن المسنخدم من طباعة بيانات الموظفين مع صناديق للتحكم في ظهور الأعمدة في الطباعة
+    function printTable() {
+        //استخراج محتوى الجدول
+        const tableContent = document.getElementById('addEmployeeData').outerHTML;
+        //فتح نافذة جديدة وتحديد عرض طول لها
+        const newWindow = window.open('', '', 'width=800, height=600');
 
-            newWindow.document.write(`
-        <html>
-        <head>
-            <title>طباعة الجدول</title>
-            <style>
-                body {
-                    font-family: 'Cairo', sans-serif;
-                    direction: rtl;
-                    text-align: right;
-                    margin: 20px;
-                }
-                table {
-                    width: 100%;
-                    border-collapse: collapse;
-                }
-                th {
-                    background-color: #CA9733;
-                    color: white;
-                }    
-                th, td {
-                    border: 1px solid black;
-                    padding: 8px;
-                    text-align: center;
-                }
-            button#printBtn {
-                display: block; /* عرض زر الطباعة في النافذة الجديدة */
-                margin-bottom:20px; /* تموضع الزر في الوسط */
-                color: #fff;
-                background-color: #198754;
-                border-color: #198754;
-                width: 10%;
-                padding: 10px;
-
-            }
-            @media print {
-                button#printBtn {
-                    display: none; /* إخفاء زر الطباعة عند الطباعة */
-                }
-                }
-            </style>
-        </head>
-        <body>
-            <h1 style="text-align:center;">جدول بيانات الموظفين</h1>
-                        <button  id="printBtn" onclick="window.print()">طباعة</button> <!-- زر الطباعة -->
-
-            <div class="table-responsive">
-                ${tableContent}
-            </div>
+        // بدء كتابة محتوى النافذة الجديدة
+        newWindow.document.write(`
+            <html>
+            <head>
+                <title>طباعة الجدول</title>
+                <style>
+                    body {
+                        font-family: 'Cairo', sans-serif;
+                        direction: rtl;
+                        text-align: right;
+                        margin: 20px;
+                    }
+                    table {
+                        width: 100%;
+                        border-collapse: collapse;
+                    }
+                    th {
+                        background-color: #CA9733;
+                        color: white;
+                    }    
+                    th, td {
+                        border: 1px solid black;
+                        padding: 8px;
+                        text-align: center;
+                    }
+                    button#printBtn {
+                        display: block; 
+                        margin-bottom: 20px; 
+                        color: #fff;
+                        background-color: #198754;
+                        border-color: #198754;
+                        width: 10%;
+                        padding: 10px;
+                    }
+                    @media print {
+                        button#printBtn {
+                            display: none; 
+                        }
+                        .hidden {
+                            display: none; /* إخفاء الأعمدة المخفية */
+                        }
+                    input[type="checkbox"] {
+                        display: none; /* إخفاء صناديق الاختيار في الطباعة */
+                    }
+                    }
+                </style>
+            </head>
+            <body>
+                <h1 style="text-align:center;">جدول بيانات الموظفين</h1>
+                <button id="printBtn" onclick="window.print()">طباعة</button>
+                <div class="table-responsive">
+                    ${tableContent}
+                </div>
             </body>
-        </html>
-    `);
+            </html>
+        `);
+        //هذه الوظيفة تُغلق مستند
+        //html
+        //الذي تم كتابته في النافذة الجديدة، مما يعني أن المحتوى قد اكتمل ويمكن للنافذة أن تظهر
+        newWindow.document.close();
 
-            newWindow.document.close();
-            newWindow.onload = function () {
-                newWindow.print();
-            };
-        }
+    
+        //بعدما تحميل المحتوى وجلب البيانات نفذ الكود
+        newWindow.onload = function () {
+            //يحدد جميع رؤوس الأعمدة في الجدول داخل النافذة الجديدة
+            //هو مصفوفة تحتوي على جميع العناصر من نوع <th> في الجدول في النافذة الجديدة.
+            const columns = newWindow.document.querySelectorAll('#addEmployeeData th');
+            //إنشاء مصفوفة لتخزين صناديق الاختيار (Checkboxes) التي سيتم إنشاؤها لكل عمود.
+            const checkboxes = [];
 
+            //الهدف: تكرار كل رأس عمود في المصفوفة columns، وتنفيذ الكود داخل الدالة على كل عمود.
+            //يشير إلى العنصر الحالي (رأس العمود <th>) في الدورة الحالية.
+            //هو فهرس (رقم) العنصر الحالي في المصفوفة (أي رقم العمود).
+            columns.forEach((col, index) => {
+                //يتم إنشاء عنصر HTML جديد من النوع <input>. هذا العنصر سيكون صندوق اختيار (Checkbox).
+                const checkbox = newWindow.document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.checked = true; // افتراضياً يتم تحديدها
+                //يتم إنشاء معرّف فريد لكل صندوق اختيار باستخدام index، مثل 'col0', 'col1', وهكذا. هذا يساعد في التمييز بين صناديق الاختيار المختلفة.
+                checkbox.id = 'col' + index;
+
+                checkbox.onchange = function() {
+                    //التغيير سيتم داخل الجدول addEmployeeData
+                    //td:nth-child(' + (index + 1) + ')
+                    //nth-child(n): هي طريقة لاختيار العنصر بناءً على ترتيبه داخل عنصر آخر.
+                    //هذا الجزء من المحدد يبحث عن جميع الخلايا (<td>) في العمود الحالي.
+                    //على سبيل المثال، إذا كان index = 0 (العمود الأول):
+                    //#addEmployeeData tr td:nth-child(1): ستختار جميع الخلايا في العمود الأول.
+                    //#addEmployeeData tr th:nth-child(1): ستختار رأس العمود الأول.
+                    //cells: هو متغير يحتوي على جميع الخلايا في العمود المقابل لصندوق الاختيار الذي تم تغييره.
+                    const cells = newWindow.document.querySelectorAll(
+                        '#addEmployeeData tr td:nth-child(' + (index + 1) + '), #addEmployeeData tr th:nth-child(' + (index + 1) + ')'
+                    );
+                    //الهدف: إظهار أو إخفاء الخلايا في العمود بناءً على حالة صندوق الاختيار.
+                    cells.forEach(cell => {
+                        if (this.checked) {
+                            cell.classList.remove('hidden');
+                        } else {
+                            cell.classList.add('hidden');
+                        }
+                    });
+                };
+
+                // إضافة صندوق الاختيار إلى رأس العمود
+                const label = newWindow.document.createElement('label');
+                label.htmlFor = 'col' + index;
+                label.textContent = col.textContent;
+
+                col.innerHTML = ''; // مسح محتوى الرأس الحالي
+                col.appendChild(checkbox); // إضافة صندوق الاختيار
+                col.appendChild(label); // إضافة التسمية
+                checkboxes.push(checkbox);
+            });
+
+            newWindow.print(); // بدء الطباعة تلقائيًا عند تحميل النافذة
+        };
+    }
 
 
         // Function to filter employees table based on input

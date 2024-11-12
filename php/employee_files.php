@@ -10,10 +10,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $send_date = $_POST['sendDate'];
     $created_by = $_POST['created_by'];
 
-
     // التعامل مع الملفات
     $upload_dir = 'uploads/';  // المجلد الذي سيتم تخزين الصور فيه
     $uploaded_files = [];  // مصفوفة لحفظ الملفات المحملة
+
+    // عنوان URL للوصول إلى المجلد عبر الإنترنت
+    //$base_url = 'http://example.com/php/uploads/'; // استبدل هذا بعنوان موقعك الفعلي
+    $base_url = 'php/uploads/'; // استبدل هذا بعنوان موقعك الفعلي
+
 
     // التحقق من الملفات المحملة
     if (isset($_FILES['images']) && is_array($_FILES['images']['name'])) {
@@ -22,6 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $file_tmp_name = $_FILES['images']['tmp_name'][$i];
             $file_name = $_FILES['images']['name'][$i];
             $file_path = $upload_dir . basename($file_name);
+            $file_url = $base_url . basename($file_name); // إنشاء الرابط الكامل للصورة
 
             // التأكد من وجود المجلد ورفع الصورة
             if (!file_exists($upload_dir)) {
@@ -32,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (move_uploaded_file($file_tmp_name, $file_path)) {
                 // إدخال البيانات في جدول employee_files لكل صورة
                 $stmt = $conn->prepare("INSERT INTO employee_files (employee_id, category, send_date, file_name, file_path, created_by) VALUES (?, ?, ?, ?, ?, ?)");
-                $stmt->bind_param("isssss", $employee_id, $category, $send_date, $file_name, $file_path, $created_by);
+                $stmt->bind_param("isssss", $employee_id, $category, $send_date, $file_name, $file_url, $created_by);
 
                 // تنفيذ العبارة
                 if (!$stmt->execute()) {

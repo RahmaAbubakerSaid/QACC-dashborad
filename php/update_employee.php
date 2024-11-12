@@ -29,8 +29,12 @@ $financial_number = $_POST['financialNumber'];
 $position = $_POST['position'];
 $department = $_POST['department'];
 $division = $_POST['division'];
+$unit = $_POST['unit'];  // استلام الوحدة
+$office = $_POST['office'];  // استلام المكتب
+$grade = $_POST['grade']; // الدرجة
 $education = $_POST['education'];
 $job_status = $_POST['jobStatus'];
+$job_number = $_POST['jobNumber'];  // الرقم الوظيفي
 $join_date = $_POST['joinDate'];
 $contract_start_date = $_POST['contractStartDate'];
 $contract_duration = $_POST['contractDuration'];
@@ -40,15 +44,14 @@ $bank_name = $_POST['bankName'];
 $account_number = $_POST['accountNumber'];
 $monthly_salary = $_POST['monthlySalary'];
 $annual_leave = $_POST['annualLeave'];
-$grade = $_POST['grade'];
 $annual_increase = $_POST['annualIncrease'];
 $emergency_leave_balance = $_POST['emergencyLeaveBalance'];
-$job_number = $_POST['jobNumber'];
 $last_promotion_date = $_POST['lastPromotionDate'];
 $last_allowance_date = $_POST['lastAllowanceDate'];
 $notes = $_POST['notes'];
 $updated_by = $_POST['updated_by']; // اسم المستخدم الذي قام بالتعديل
 $updated_at = $_POST['updated_at']; // وقت التعديل
+
 
 // التحقق من وجود المعامل 'id' في الطلب
 if (isset($_GET['id'])) {
@@ -82,8 +85,12 @@ if (isset($_GET['id'])) {
         position = '$position', 
         department = '$department', 
         division = '$division', 
+        unit = '$unit',  -- إضافة الوحدة هنا
+        office = '$office',  -- إضافة المكتب هنا
+        grade = '$grade',  -- إضافة الدرجة هنا
         education = '$education', 
         job_status = '$job_status', 
+        job_number = '$job_number',  -- إضافة الرقم الوظيفي هنا
         join_date = '$join_date', 
         contract_start_date = '$contract_start_date', 
         contract_duration = '$contract_duration', 
@@ -93,16 +100,14 @@ if (isset($_GET['id'])) {
         account_number = '$account_number', 
         monthly_salary = '$monthly_salary', 
         annual_leave = '$annual_leave', 
-        grade = '$grade', 
         annual_increase = '$annual_increase', 
         emergency_leave_balance = '$emergency_leave_balance', 
-        job_number = '$job_number', 
         last_promotion_date = '$last_promotion_date', 
         last_allowance_date = '$last_allowance_date', 
         notes = '$notes',
         updated_by = '$updated_by',
         updated_at = '$updated_at'
-        
+                
     WHERE id = '$employeeId'";
 
     // تنفيذ الاستعلام

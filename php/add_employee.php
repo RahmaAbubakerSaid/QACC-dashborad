@@ -29,8 +29,12 @@ $financial_number = $_POST['financialNumber'];
 $position = $_POST['position'];
 $department = $_POST['department'];
 $division = $_POST['division'];
+$unit = $_POST['unit'];  // استلام الوحدة
+$office = $_POST['office'];  // استلام المكتب
+$grade = $_POST['grade'];
 $education = $_POST['education'];
 $job_status = $_POST['jobStatus'];
+$job_number = $_POST['jobNumber'];
 $join_date = $_POST['joinDate'];
 $contract_start_date = $_POST['contractStartDate'];
 $contract_duration = $_POST['contractDuration'];
@@ -40,10 +44,8 @@ $bank_name = $_POST['bankName'];
 $account_number = $_POST['accountNumber'];
 $monthly_salary = $_POST['monthlySalary'];
 $annual_leave = $_POST['annualLeave'];
-$grade = $_POST['grade'];
 $annual_increase = $_POST['annualIncrease'];
 $emergency_leave_balance = $_POST['emergencyLeaveBalance'];
-$job_number = $_POST['jobNumber'];
 $last_promotion_date = $_POST['lastPromotionDate'];
 $last_allowance_date = $_POST['lastAllowanceDate'];
 $notes = $_POST['notes'];
@@ -51,22 +53,24 @@ $created_by = $_POST['created_by'];
 
 // تحضير استعلام SQL لإدخال البيانات في الجدول
 $sql = "INSERT INTO employees (
-    employee_number, name, mother_name, date_of_birth, birth_place, age, national_id,
+     employee_number, name, mother_name, date_of_birth, birth_place, age, national_id,
     national_id_issuance_authority, family_book_number, family_book_issuance_authority, passport_number,
     passport_issuance_authority, family_sheet_number, registration_number, nationality, gender, marital_status,
     children_count, blood_type, email, libyana_phone, madar_phone, financial_number, position, department,
-    division, education, job_status, join_date, contract_start_date, contract_duration, guarantee_number,
-    current_allowance, bank_name, account_number, monthly_salary, annual_leave, grade, annual_increase,
-    emergency_leave_balance,job_number, last_promotion_date, last_allowance_date, notes,created_by
+    division, unit, office, grade, education, job_status, job_number, join_date, contract_start_date, contract_duration, 
+    guarantee_number, current_allowance, bank_name, account_number, monthly_salary, annual_leave, annual_increase,
+    emergency_leave_balance, last_promotion_date, last_allowance_date, notes, created_by
 ) VALUES (
     '$employee_number', '$name', '$mother_name', '$date_of_birth', '$birth_place', '$age', '$national_id',
     '$national_id_issuance_authority', '$family_book_number', '$family_book_issuance_authority', '$passport_number',
     '$passport_issuance_authority', '$family_sheet_number', '$registration_number', '$nationality', '$gender', '$marital_status',
     '$children_count', '$blood_type', '$email', '$libyana_phone', '$madar_phone', '$financial_number', '$position', '$department',
-    '$division', '$education', '$job_status', '$join_date', '$contract_start_date', '$contract_duration', '$guarantee_number',
-    '$current_allowance', '$bank_name', '$account_number', '$monthly_salary', '$annual_leave', '$grade', '$annual_increase',
-    '$emergency_leave_balance','$job_number', '$last_promotion_date', '$last_allowance_date', '$notes','$created_by'
+    '$division', '$unit', '$office', '$grade', '$education', '$job_status', '$job_number', '$join_date', '$contract_start_date', 
+    '$contract_duration', '$guarantee_number', '$current_allowance', '$bank_name', '$account_number', '$monthly_salary', 
+    '$annual_leave', '$annual_increase', '$emergency_leave_balance', '$last_promotion_date', '$last_allowance_date', '$notes', 
+    '$created_by'
 )";
+
 
 // تنفيذ الاستعلام
 if ($conn->query($sql) === TRUE) {

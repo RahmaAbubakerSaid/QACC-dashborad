@@ -185,6 +185,19 @@ document.getElementById('save-button').addEventListener('click', async () => {
     if (result.status === 'success') {
         updateResultsTable(); // تحديث الجدول بعد الحفظ
         
+        Swal.fire({
+            icon: 'success',
+            text: 'تم حفظ الصلاحيات بنجاح.',
+            confirmButtonText: 'حسنًا',
+            customClass: {
+                confirmButton: 'btn btn-primary'
+            },
+            buttonsStyling: false,
+            allowOutsideClick: false,
+            backdrop: true
+        });
+        console.log('تم حفظ الصلاحيات بنجاح');
+
         // إعادة تعيين checkboxes
         userSelect.selectedIndex = 0; // إفراغ اختيار المستخدم
         console.log('User selection reset');
