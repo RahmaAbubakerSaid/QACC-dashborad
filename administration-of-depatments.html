@@ -34,6 +34,8 @@
     
      <!-- SweetAlert2 CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+<!-- تضمين مكتبة SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <!-- SweetAlert2 JS -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -438,7 +440,6 @@
     function createOrUpdateDepartment() {
     const departmentName = document.getElementById('departementName').value.trim();
     const managerName = document.getElementById('managerName').value;
-    const userName = document.getElementById('userName').value; // استبدل باسم المستخدم الحالي من الجلسة
 
     if (!departmentName) {
         Swal.fire({
@@ -454,7 +455,6 @@
         return;
     }
 
-    // اختيار الملف بناءً على الوضع (إضافة أو تعديل)
     const url = isEditMode ? 'php/update_department.php' : 'php/add_department.php';
     const formData = new FormData();
 
@@ -463,63 +463,55 @@
     }
     formData.append('department_name', departmentName);
     formData.append('manager_name', managerName);
-    formData.append('userName', userName);
 
-    // إرسال الطلب
     fetch(url, {
         method: 'POST',
-        body: formData
+        body: formData,
     })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            Swal.fire({
-                icon: 'success',
-                title: 'تمت العملية بنجاح!',
-                text: isEditMode ? 'تم تعديل الإدارة بنجاح.' : 'تم إضافة الإدارة بنجاح.',
-                confirmButtonText: 'حسنًا',
-                customClass: {
-                    confirmButton: 'btn btn-primary'
-                },
-                buttonsStyling: false,
-            }).then(() => {
-                // إعادة تعيين الحقول بعد الإضافة أو التعديل بدون إغلاق الـ dialog
-                document.getElementById('departementName').value = '';
-                document.getElementById('managerName').value = '';
-
-                // إعادة الزر إلى وضع الإضافة
-                document.querySelector('.add-btn').textContent = 'إضافة إدارة';
-                isEditMode = false; // إعادة تعيين وضع التحرير إلى إضافة
-                currentDepartmentId = null; // إعادة تعيين المعرف الحالي
-
-                loadDepartments(); // استدعاء دالة لتحميل الإدارات مرة أخرى
-            });
-        } else {
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'تمت العملية بنجاح!',
+                    text: 'تمت إضافة الإدارة بنجاح.',
+                    confirmButtonText: 'حسنًا',
+                    customClass: {
+                        confirmButton: 'btn btn-primary'
+                    },
+                    buttonsStyling: false,
+                }).then(() => {
+                    // إعادة تعيين الحقول بعد الإضافة
+                    document.getElementById('departementName').value = '';
+                    document.getElementById('managerName').value = '';
+                    loadDepartments(); // استدعاء دالة لتحميل البيانات الجديدة في الجدول
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'خطأ!',
+                    text: data.message,
+                    confirmButtonText: 'حسنًا',
+                    customClass: {
+                        confirmButton: 'btn btn-primary'
+                    },
+                    buttonsStyling: false,
+                });
+            }
+        })
+        .catch(error => {
+            console.error('حدث خطأ:', error);
             Swal.fire({
                 icon: 'error',
-                title: 'خطأ!',
-                text: data.message,
+                title: 'خطأ في الاتصال!',
+                text: 'حدث خطأ أثناء محاولة الاتصال بالخادم.',
                 confirmButtonText: 'حسنًا',
                 customClass: {
                     confirmButton: 'btn btn-primary'
                 },
                 buttonsStyling: false,
             });
-        }
-    })
-    .catch(error => {
-        console.error('حدث خطأ:', error);
-        Swal.fire({
-            icon: 'error',
-            title: 'خطأ في الاتصال!',
-            text: 'حدث خطأ أثناء محاولة الاتصال بالخادم.',
-            confirmButtonText: 'حسنًا',
-            customClass: {
-                confirmButton: 'btn btn-primary'
-            },
-            buttonsStyling: false,
         });
-    });
 }
 
     // دالة لتحميل الإدارات وعرضها في الجدول
@@ -534,13 +526,20 @@
 
     // استدعاء دالة التحميل عند فتح الصفحة
     document.addEventListener('DOMContentLoaded', loadDepartments);
+    
     function createOrUpdateDepartment() {
     const departmentName = document.getElementById('departementName').value.trim();
     const managerName = document.getElementById('managerName').value;
-    const userName = 'اسم_المستخدم'; // استبدل باسم المستخدم الحالي من الجلسة
+    const userName = document.getElementById('userName').value; // استبدل باسم المستخدم الحالي من الجلسة
 
     if (!departmentName) {
-        alert('يرجى إدخال اسم الإدارة');
+        Swal.fire({
+            icon: 'warning',
+            title: 'تحذير',
+            text: 'يرجى إدخال اسم الإدارة',
+            confirmButtonText: 'موافق',
+            confirmButtonColor: '#3085d6',
+        });
         return;
     }
 
@@ -553,7 +552,7 @@
     }
     formData.append('department_name', departmentName);
     formData.append('manager_name', managerName);
-    formData.append('userName', userName);
+    formData.append('created_by', userName);
 
     // إرسال الطلب
     fetch(url, {
@@ -563,7 +562,13 @@
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            alert(data.message);
+            Swal.fire({
+                icon: 'success',
+                title: 'تم بنجاح',
+                text: data.message,
+                confirmButtonText: 'موافق',
+                confirmButtonColor: '#3085d6',
+            });
 
             // إعادة تعيين الحقول بعد الإضافة أو التعديل بدون إغلاق الـ dialog
             document.getElementById('departementName').value = '';
@@ -576,10 +581,25 @@
 
             loadDepartments(); // استدعاء دالة لتحميل الإدارات مرة أخرى
         } else {
-            alert(data.message);
+            Swal.fire({
+                icon: 'error',
+                title: 'خطأ',
+                text: data.message,
+                confirmButtonText: 'موافق',
+                confirmButtonColor: '#d33',
+            });
         }
     })
-    .catch(error => console.error('حدث خطأ:', error));
+    .catch(error => {
+        Swal.fire({
+            icon: 'error',
+            title: 'حدث خطأ',
+            text: 'حدث خطأ أثناء الاتصال بالخادم.',
+            confirmButtonText: 'موافق',
+            confirmButtonColor: '#d33',
+        });
+        console.error('حدث خطأ:', error);
+    });
 }
 
 document.addEventListener('DOMContentLoaded', function () {

@@ -2,10 +2,13 @@
 session_start();
 require 'database.php'; // الاتصال بقاعدة البيانات
 
+// إعداد الهيدر لإرجاع JSON
+header('Content-Type: application/json');
+
 // قراءة البيانات المرسلة من الطلب
 $departmentName = isset($_POST['department_name']) ? trim($_POST['department_name']) : '';
 $managerName = isset($_POST['manager_name']) ? trim($_POST['manager_name']) : null;
-$createdBy = isset($_POST['userName']) ? trim($_POST['userName']) : '';
+$createdBy = isset($_SESSION['username']) ? $_SESSION['username'] : ''; // اسم المستخدم من الجلسة
 $createdAt = date("Y-m-d H:i:s"); // تاريخ الإضافة
 
 // التحقق من اسم الإدارة فقط
