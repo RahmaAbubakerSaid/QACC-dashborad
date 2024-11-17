@@ -87,12 +87,12 @@
         white-space: initial;
         background: white;
     }
-    label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-}
 
+    label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
 </style>
 
 <body>
@@ -108,17 +108,17 @@
 
 
         <!-- Sidebar Start -->
-        <div id="sidebar-container"></div> 
+        <div id="sidebar-container"></div>
         <script>
             fetch('php/sidebar.php')
-            .then(response => {
-                if (!response.ok) throw new Error('Network response was not ok');
-                return response.text();
-            })
-            .then(data => {
-                document.getElementById('sidebar-container').innerHTML = data;
-            })
-            .catch(error => console.error('هناك خطأ:', error));
+                .then(response => {
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    return response.text();
+                })
+                .then(data => {
+                    document.getElementById('sidebar-container').innerHTML = data;
+                })
+                .catch(error => console.error('هناك خطأ:', error));
         </script>
         <!-- Sidebar End -->
 
@@ -231,19 +231,19 @@
                                         }
                                     });
                                 }
-                                </script>
-                                <script>
-                                    fetch('php/user_info.php')
-                                        .then(response => response.json())
-                                        .then(data => {
-                                            if (data.loggedIn) {
-                                        // تحديث اسم المستخدم والصورة
-                                        document.getElementById('userName').innerText = data.username; // عرض اسم المستخدم
-                                            } else {
-                                                window.location.href = 'http://localhost/QACC-dashborad/signin.html'; // إعادة توجيه إلى صفحة تسجيل الدخول
-                                            }
-                                        });
-                                    </script>
+                            </script>
+                            <script>
+                                fetch('php/user_info.php')
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        if (data.loggedIn) {
+                                            // تحديث اسم المستخدم والصورة
+                                            document.getElementById('userName').innerText = data.username; // عرض اسم المستخدم
+                                        } else {
+                                            window.location.href = 'http://localhost/QACC-dashborad/signin.html'; // إعادة توجيه إلى صفحة تسجيل الدخول
+                                        }
+                                    });
+                            </script>
                         </div>
                     </div>
                     <!-------------------------------------------->
@@ -255,7 +255,7 @@
                 <div class="dialog-content-main" style="max-height: 80vh; overflow-y: auto;width: 50%;">
                     <h2>الملف المعني</h2>
                     <div id="employeeDetails"></div>
-            
+
                     <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
                         <div class="mb-3">
                             <label for="category">اختر الفئة:</label>
@@ -278,12 +278,13 @@
                             <input type="date" class="form-control" id="sendDate" placeholder="تاريخ الإرسال" required>
                             <label for="sendDate">تاريخ الإرسال</label>
                         </div>
-            
+
                         <div class="d-grid gap-2 d-md-flex justify-content-between">
                             <button type="button" class="btn btn-primary py-3 w-100 mb-4" id="sendButton">إرسال</button>
-                            <button type="button" class="btn btn-secondary py-3 w-0 mb-4" id="closeDialog">إلغاء</button>
+                            <button type="button" class="btn btn-secondary py-3 w-0 mb-4"
+                                id="closeDialog">إلغاء</button>
                         </div>
-            
+
                         <!-- Employee's Table -->
                         <div class="col-sm-12">
                             <div class="bg-light rounded h-100 p-4">
@@ -325,11 +326,13 @@
                             <h6 class="mb-4">جدول بيانات الموظفين</h6>
                             <div style="display: flex;">
                                 <input type="text" id="searchInputTable" placeholder="ابحث عن اسم موظف..."
-                                    class="form-control mb-3"  oninput="filterEmployeesTable()" style="margin-left: 10px;">
-                                    <button class="btn btn-success custom-btn-main " id="printBtn" onclick="printTable()">طباعة</button>
-                                </div>
+                                    class="form-control mb-3" oninput="filterEmployeesTable()"
+                                    style="margin-left: 10px;">
+                                <button class="btn btn-success custom-btn-main " id="printBtn"
+                                    onclick="printTable()">طباعة</button>
+                            </div>
 
-                                
+
                             <div style="background-color: white;">
                                 <div class="table-responsive">
                                     <table class="table table-bordered text-center" id="addEmployeeData">
@@ -358,77 +361,34 @@
                                                 <th scope="col">البريد الإلكتروني </th>
                                                 <th scope="col"> رقم هاتف ليبيانا </th>
                                                 <th scope="col">رقم هاتف المدار </th>
+                                                <th scope="col">الرقم المالي</th>
                                                 <th scope="col">الوظيفة</th>
-                                                <th scope="col">الإدارة </th>
-                                                <th scope="col"> القسم </th>
-                                                <th scope="col">المؤهل الدراسي </th>
+                                                <th scope="col">الإدارة</th>
+                                                <th scope="col">القسم</th>
+                                                <th scope="col">الوحدة</th>
+                                                <th scope="col">المكتب</th>
+                                                <th scope="col">الدرجة</th>
+                                                <th scope="col">المؤهل الدراسي</th>
                                                 <th scope="col">الوضع الوظيفي</th>
-                                                <th scope="col">تاريخ المباشرة </th>
-                                                <th scope="col"> تاريخ بدء العقد </th>
-                                                <th scope="col">مدة العقد بالشهر </th>
-                                                <th scope="col">رقم الضمان </th>
-                                                <th scope="col"> العلاوة الحالية </th>
-                                                <th scope="col">اسم المصرف </th>
-                                                <th scope="col"> رقم الحساب </th>
-                                                <th scope="col">الراتب الشهري </th>
-                                                <th scope="col">الإجازة السنوية </th>
-                                                <th scope="col"> الدرجة </th>
-                                                <th scope="col">العلاوة السنوية </th>
-                                                <th scope="col"> رصيد الإجازة الطارئة </th>
-                                                <th scope="col">الرقم الوظيفي </th>
-                                                <th scope="col">تاريخ آخر ترقية </th>
-                                                <th scope="col">تاريخ آخر علاوة </th>
-                                                <th scope="col"> الملاحظات </th>
+                                                <th scope="col">الرقم الوظيفي</th>
+                                                <th scope="col">تاريخ المباشرة</th>
+                                                <th scope="col">تاريخ بدء العقد</th>
+                                                <th scope="col">مدة العقد بالشهر</th>
+                                                <th scope="col">رقم الضمان</th>
+                                                <th scope="col">اسم المصرف</th>
+                                                <th scope="col">رقم الحساب</th>
+                                                <th scope="col">الراتب الشهري</th>
+                                                <th scope="col">الإجازة السنوية</th>
+                                                <th scope="col">العلاوة السنوية</th>
+                                                <th scope="col">العلاوة الحالية</th>
+                                                <th scope="col">رصيد الإجازة الطارئة</th>
+                                                <th scope="col">تاريخ آخر ترقية</th>
+                                                <th scope="col">تاريخ آخر علاوة</th>
+                                                <th scope="col">الملاحظات</th>
                                             </tr>
                                         </thead>
                                         <tbody id="employeeData">
                                             <!-- سيتم إضافة بيانات الموظفين هنا -->
-                                            <tr>
-                                                <td>1</td>
-                                                <td>1001</td>
-                                                <td>أحمد علي محمد</td>
-                                                <td>فاطمة علي</td>
-                                                <td>1990-05-15</td>
-                                                <td>طرابلس</td>
-                                                <td>32 سنة</td>
-                                                <td>123456789</td>
-                                                <td>طرابلس</td>
-                                                <td>987654321</td>
-                                                <td>بنغازي</td>
-                                                <td>654321987</td>
-                                                <td>مصر</td>
-                                                <td>12345</td>
-                                                <td>54321</td>
-                                                <td>ليبي</td>
-                                                <td>ذكر</td>
-                                                <td>متزوج</td>
-                                                <td>2</td>
-                                                <td>A+</td>
-                                                <td>ahmed@example.com</td>
-                                                <td>0912345678</td>
-                                                <td>0210987654</td>
-                                                <td>مدير</td>
-                                                <td>الإدارة العامة</td>
-                                                <td>الموارد البشرية</td>
-                                                <td>بكالوريوس</td>
-                                                <td>نشط</td>
-                                                <td>2022-01-15</td>
-                                                <td>2022-01-01</td>
-                                                <td>12 شهر</td>
-                                                <td>123456</td>
-                                                <td>500 دينار</td>
-                                                <td>بنك الوفاء</td>
-                                                <td>9876543210</td>
-                                                <td>2000 دينار</td>
-                                                <td>30 يوم</td>
-                                                <td>مدير</td>
-                                                <td>1001</td>
-                                                <td>12</td>
-                                                <td>102555</td>
-                                                <td>2023-03-10</td>
-                                                <td>2023-01-02</td>
-                                                <td>لا توجد ملاحظات</td>
-                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -468,68 +428,231 @@
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
 
+
     <script>
-        function printTable() {
-            const tableContent = document.getElementById('addEmployeeData').outerHTML;
-            const newWindow = window.open('', '', 'width=800, height=600');
-
-            newWindow.document.write(`
-        <html>
-        <head>
-            <title>طباعة الجدول</title>
-            <style>
-                body {
-                    font-family: 'Cairo', sans-serif;
-                    direction: rtl;
-                    text-align: right;
-                    margin: 20px;
-                }
-                table {
-                    width: 100%;
-                    border-collapse: collapse;
-                }
-                th {
-                    background-color: #CA9733;
-                    color: white;
-                }    
-                th, td {
-                    border: 1px solid black;
-                    padding: 8px;
-                    text-align: center;
-                }
-            button#printBtn {
-                display: block; /* عرض زر الطباعة في النافذة الجديدة */
-                margin-bottom:20px; /* تموضع الزر في الوسط */
-                color: #fff;
-                background-color: #198754;
-                border-color: #198754;
-                width: 10%;
-                padding: 10px;
-
-            }
-            @media print {
-                button#printBtn {
-                    display: none; /* إخفاء زر الطباعة عند الطباعة */
-                }
-                }
-            </style>
-        </head>
-        <body>
-            <h1 style="text-align:center;">جدول بيانات الموظفين</h1>
-                        <button  id="printBtn" onclick="window.print()">طباعة</button> <!-- زر الطباعة -->
-
-            <div class="table-responsive">
-                ${tableContent}
-            </div>
-            </body>
-        </html>
-    `);
-
-            newWindow.document.close();
-            newWindow.onload = function () {
-                newWindow.print();
-            };
+        // وظيفة لتحميل بيانات الموظفين من الخادم
+        function loadEmployees() {
+            fetch('php/view_employees.php')  // الاتصال بملف PHP لاسترجاع البيانات
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        displayEmployees(data.employees);
+                    } else {
+                        //alert('لم يتم العثور على بيانات الموظفين.');
+                        Swal.fire({
+                            icon: 'warning',
+                            title: '<strong style="font-size: 20px;">بالنظر إلى السجلات، </strong>',   // أيقونة التحذير
+                            text: 'لم يتم إضافة أي موظف إلى الأن.',  // نص التنبيه
+                            confirmButtonText: 'حسنًا',     // نص زر التأكيد
+                            confirmButtonColor: '#D1A237',
+                            allowOutsideClick: false,        // منع الإغلاق عند النقر على الخلفية
+                            backdrop: true                   // إضافة خلفية سوداء
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('حدث خطأ أثناء تحميل البيانات.');
+                });
         }
+
+        // وظيفة لعرض بيانات الموظفين في الجدول
+        function displayEmployees(employees) {
+            const tableBody = document.getElementById('employeeData');
+            tableBody.innerHTML = '';  // مسح أي محتوى قديم في الجدول
+
+            employees.forEach(employee => {
+                const row = document.createElement('tr');
+
+                // إضافة خلايا البيانات إلى الصف
+                row.innerHTML = `
+                    <td>${employee.id}</td>
+                    <td>${employee.employee_number}</td>
+                    <td>${employee.name}</td>
+                    <td>${employee.mother_name}</td>
+                    <td>${employee.date_of_birth}</td>
+                    <td>${employee.birth_place}</td>
+                    <td>${employee.age}</td>
+                    <td>${employee.national_id}</td>
+                    <td>${employee.national_id_issuance_authority}</td>
+                    <td>${employee.family_book_number}</td>
+                    <td>${employee.family_book_issuance_authority}</td>
+                    <td>${employee.passport_number}</td>
+                    <td>${employee.passport_issuance_authority}</td>
+                    <td>${employee.family_sheet_number}</td>
+                    <td>${employee.registration_number}</td>
+                    <td>${employee.nationality}</td>
+                    <td>${employee.gender}</td>
+                    <td>${employee.marital_status}</td>
+                    <td>${employee.children_count}</td>
+                    <td>${employee.blood_type}</td>
+                    <td>${employee.email}</td>
+                    <td>${employee.libyana_phone}</td>
+                    <td>${employee.madar_phone}</td>
+                    <td>${employee.financial_number}</td>
+                    <td>${employee.position}</td>
+                    <td>${employee.department}</td>
+                    <td>${employee.division}</td>
+                    <td>${employee.unit}</td> <!-- تم إضافة الوحدة هنا -->
+                    <td>${employee.office}</td> <!-- تم إضافة المكتب هنا -->
+                    <td>${employee.grade}</td>
+                    <td>${employee.education}</td>
+                    <td>${employee.job_status}</td>
+                    <td>${employee.job_number}</td> <!-- تم تعديل الرقم الوظيفي هنا -->
+                    <td>${employee.join_date}</td>
+                    <td>${employee.contract_start_date}</td>
+                    <td>${employee.contract_duration}</td>
+                    <td>${employee.guarantee_number}</td>
+                    <td>${employee.bank_name}</td>
+                    <td>${employee.account_number}</td>
+                    <td>${employee.monthly_salary}</td>
+                    <td>${employee.annual_leave}</td>
+                    <td>${employee.annual_increase}</td>
+                    <td>${employee.current_allowance}</td>
+                    <td>${employee.emergency_leave_balance}</td>
+                    <td>${employee.last_promotion_date}</td>
+                    <td>${employee.last_allowance_date}</td>
+                    <td>${employee.notes}</td>
+                `;
+
+                // إضافة الصف إلى الجدول
+                tableBody.appendChild(row);
+            });
+        }
+
+        // استدعاء وظيفة تحميل البيانات عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', function () {
+            loadEmployees();  // تحميل البيانات عند فتح الصفحة
+        });
+
+    </script>
+
+    <script>
+    //هذا الكود يحتوي على دالة printTable()
+    //تمكن المسنخدم من طباعة بيانات الموظفين مع صناديق للتحكم في ظهور الأعمدة في الطباعة
+    function printTable() {
+        //استخراج محتوى الجدول
+        const tableContent = document.getElementById('addEmployeeData').outerHTML;
+        //فتح نافذة جديدة وتحديد عرض طول لها
+        const newWindow = window.open('', '', 'width=800, height=600');
+
+        // بدء كتابة محتوى النافذة الجديدة
+        newWindow.document.write(`
+            <html>
+            <head>
+                <title>طباعة الجدول</title>
+                <style>
+                    body {
+                        font-family: 'Cairo', sans-serif;
+                        direction: rtl;
+                        text-align: right;
+                        margin: 20px;
+                    }
+                    table {
+                        width: 100%;
+                        border-collapse: collapse;
+                    }
+                    th {
+                        background-color: #CA9733;
+                        color: white;
+                    }    
+                    th, td {
+                        border: 1px solid black;
+                        padding: 8px;
+                        text-align: center;
+                    }
+                    button#printBtn {
+                        display: block; 
+                        margin-bottom: 20px; 
+                        color: #fff;
+                        background-color: #198754;
+                        border-color: #198754;
+                        width: 10%;
+                        padding: 10px;
+                    }
+                    @media print {
+                        button#printBtn {
+                            display: none; 
+                        }
+                        .hidden {
+                            display: none; /* إخفاء الأعمدة المخفية */
+                        }
+                    input[type="checkbox"] {
+                        display: none; /* إخفاء صناديق الاختيار في الطباعة */
+                    }
+                    }
+                </style>
+            </head>
+            <body>
+                <h1 style="text-align:center;">جدول بيانات الموظفين</h1>
+                <button id="printBtn" onclick="window.print()">طباعة</button>
+                <div class="table-responsive">
+                    ${tableContent}
+                </div>
+            </body>
+            </html>
+        `);
+        //هذه الوظيفة تُغلق مستند
+        //html
+        //الذي تم كتابته في النافذة الجديدة، مما يعني أن المحتوى قد اكتمل ويمكن للنافذة أن تظهر
+        newWindow.document.close();
+
+    
+        //بعدما تحميل المحتوى وجلب البيانات نفذ الكود
+        newWindow.onload = function () {
+            //يحدد جميع رؤوس الأعمدة في الجدول داخل النافذة الجديدة
+            //هو مصفوفة تحتوي على جميع العناصر من نوع <th> في الجدول في النافذة الجديدة.
+            const columns = newWindow.document.querySelectorAll('#addEmployeeData th');
+            //إنشاء مصفوفة لتخزين صناديق الاختيار (Checkboxes) التي سيتم إنشاؤها لكل عمود.
+            const checkboxes = [];
+
+            //الهدف: تكرار كل رأس عمود في المصفوفة columns، وتنفيذ الكود داخل الدالة على كل عمود.
+            //يشير إلى العنصر الحالي (رأس العمود <th>) في الدورة الحالية.
+            //هو فهرس (رقم) العنصر الحالي في المصفوفة (أي رقم العمود).
+            columns.forEach((col, index) => {
+                //يتم إنشاء عنصر HTML جديد من النوع <input>. هذا العنصر سيكون صندوق اختيار (Checkbox).
+                const checkbox = newWindow.document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.checked = true; // افتراضياً يتم تحديدها
+                //يتم إنشاء معرّف فريد لكل صندوق اختيار باستخدام index، مثل 'col0', 'col1', وهكذا. هذا يساعد في التمييز بين صناديق الاختيار المختلفة.
+                checkbox.id = 'col' + index;
+
+                checkbox.onchange = function() {
+                    //التغيير سيتم داخل الجدول addEmployeeData
+                    //td:nth-child(' + (index + 1) + ')
+                    //nth-child(n): هي طريقة لاختيار العنصر بناءً على ترتيبه داخل عنصر آخر.
+                    //هذا الجزء من المحدد يبحث عن جميع الخلايا (<td>) في العمود الحالي.
+                    //على سبيل المثال، إذا كان index = 0 (العمود الأول):
+                    //#addEmployeeData tr td:nth-child(1): ستختار جميع الخلايا في العمود الأول.
+                    //#addEmployeeData tr th:nth-child(1): ستختار رأس العمود الأول.
+                    //cells: هو متغير يحتوي على جميع الخلايا في العمود المقابل لصندوق الاختيار الذي تم تغييره.
+                    const cells = newWindow.document.querySelectorAll(
+                        '#addEmployeeData tr td:nth-child(' + (index + 1) + '), #addEmployeeData tr th:nth-child(' + (index + 1) + ')'
+                    );
+                    //الهدف: إظهار أو إخفاء الخلايا في العمود بناءً على حالة صندوق الاختيار.
+                    cells.forEach(cell => {
+                        if (this.checked) {
+                            cell.classList.remove('hidden');
+                        } else {
+                            cell.classList.add('hidden');
+                        }
+                    });
+                };
+
+                // إضافة صندوق الاختيار إلى رأس العمود
+                const label = newWindow.document.createElement('label');
+                label.htmlFor = 'col' + index;
+                label.textContent = col.textContent;
+
+                col.innerHTML = ''; // مسح محتوى الرأس الحالي
+                col.appendChild(checkbox); // إضافة صندوق الاختيار
+                col.appendChild(label); // إضافة التسمية
+                checkboxes.push(checkbox);
+            });
+
+            newWindow.print(); // بدء الطباعة تلقائيًا عند تحميل النافذة
+        };
+    }
 
 
         // Function to filter employees table based on input
