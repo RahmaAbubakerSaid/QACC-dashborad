@@ -1,30 +1,3 @@
-    // وظيفة البحث عن الموظفين داخل قائمةالموظفين 
-    function filterEmployees() {
-        //تعين متغير ليكون مرجع لعنصر الادخال بالصفحة
-        const input = document.getElementById('searchInput');
-        //حفظ النص المدخل بالحروف الصغيرة
-        const filter = input.value.toLowerCase();
-        // تعيين متغير ليكون مرجع للقائمة التي تحتوي على جميع الموظفين
-        const employeeList = document.getElementById('employeeList');
-        //getElementsByClassName
-        //يأخد جميع العناصر في 
-        //employee-box
-        //ويخزنها في
-        //employees
-        const employees = employeeList.getElementsByClassName('employee-box');
-  
-        for (let i = 0; i < employees.length; i++) {
-          const p = employees[i].getElementsByTagName('p')[0];
-          if (p) {
-            //تخزين قيمة الموجودة في p 
-            //تتم عملية المقارنة واذا وجدنا القيمة المراد البحث عنها يتم عرضها والا لا يتم عرض شئ
-            const txtValue = p.textContent || p.innerText;
-            employees[i].style.display = txtValue.toLowerCase().indexOf(filter) > -1 ? "" : "none";
-          }
-        }
-      }
-
-
           // وظيفة إرسال الرسائل
           //تحديد الزر المحدد الذي عند النقر عليه يتم تنفيذ العملية
     document.getElementById('sendButton').addEventListener('click', function() {
