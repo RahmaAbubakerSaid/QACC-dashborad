@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -33,9 +34,15 @@
     
      <!-- SweetAlert2 CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+<!-- تضمين مكتبة SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <!-- SweetAlert2 JS -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0/select2.min.js"></script>
 
 </head>
 
@@ -214,112 +221,58 @@
                    
                 </div>
             </div>
+            
             <div class="dialog-overlay" id="dialog">
-                <div class="dialog-content">
-                    <!-- Your dialog content goes here -->
-                    <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
+                <div class="dialog-content" style="max-width: 800px; max-height: 100vh;"> <!-- ضبط الارتفاع الأقصى -->
+                    <div class="bg-light rounded p-3 p-sm-4 my-3 mx-3"> <!-- تقليل المسافة الداخلية -->
                         <div class="d-flex flex-column align-items-center mb-3">
-                            <img src="img\qacc.png" alt="شعار الموقع"
-                                style="width: 115px; height: 80px; margin-bottom: 45px;">
-                            <h5>  اضافة إدارة</h5>
+                            <img src="img/qacc.png" alt="شعار الموقع" style="width: 115px; height: 80px; margin-bottom: 20px;">
+                            <h5>إضافة إدارة</h5>
                         </div>
+            
+                        <div class="form-floating mb-2">
+                            <input type="text" class="form-control" id="departementName" placeholder="مكتب">
+                            <label for="departementName">اسم الإدارة</label>
+                        </div>
+
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="departementName" placeholder="مكتب ">
-                            <label for="departementName">اسم الادارة </label>
+                            <div class="user-selection">
+                                <select id="managerName" class="form-select" style="width: 100%;">
+                                    <option value="">جاري تحميل الأسماء...</option>
+                                </select>
+                                
+                            </div>
+                        </div>
+                        
+                        <div class="col-12">
+                            <h6 class="mb-3">جدول الإدارات</h6>
+                            <div class="table-responsive" style="max-height: 200px; overflow-y: auto;">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">الرقم</th>
+                                            <th scope="col">الإدارة</th>
+                                            <th scope="col">اسم المدير</th>
+                                            <th scope="col">الإجراءات</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="departmentTableBody">
+                                        <!-- سيتم تحميل البيانات هنا باستخدام AJAX -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        <div class="d-grid gap-2 d-md-flex justify-content-between">
+                            <button type="submit" class="btn btn-primary py-3 w-100 mb-4 add-btn" onclick="createOrUpdateDepartment()">إضافة إدارة</button>
+                            <button type="button" class="btn btn-secondary py-3 w-0 mb-4" id="closeDialog">رجوع</button>
                         </div>
                        
-                        <div class="form-floating mb-3">
-                            <div class="form-floating mb-3">
-                                <div class="user-selection">
-                                    <select id="user-select">
-                                        <option value="">اختر مدير ادارة</option>
-                                        <option value="user1">  فتحي موسى الحباسي  </option>
-                                        <option value="user2">عبد الحفيظ عمر خليفة</option>
-                                        <option value="user3"> عبد الباسط فاتح نصير </option>
-                                        <option value="user4">اكرام خليفة محمد العرضاوي</option>
-                                        <option value="user5"> ايناس سالم السني قشوط</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="">
-                            <div class="row g-4">
-            
-            
-                                <div class="col-12">
-                                    <div class="">
-                                        <h6 class="mb-4">جدول الادارات </h6>
-                                        <div class="table-responsive">
-                                            <table class="table">
-                                                <thead>
-                                                    <tr>
-                                                        <th scope="col">الرقم </th>
-                                                        <th scope="col">الادارة</th>
-                                                        <th scope="col">الاجراءات</th>        
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <th scope="row">1</th>
-                                                        <td>ادارة الشؤون الادارية والمالية</td>
-                                                        <td class="d-flex align-items-center">    
-                                                            <div class="btn-group">
-                                                            <a href="#" class="btn btn-success custom-btn" onclick="openSectionsDialog('ادارة الشؤون الادارية والمالية')">الأقسام</a>
-                                                            <a href="#" class="custom-btn-icon" onclick="editUnit('    ادارة الشؤون الادارية والمالية  ')">
-                                                                <i class="fas fa-pencil-alt" style="color: #007bff;"></i> <!-- لون تعديل -->
-                                                            </a>
-                                                            <a href="#" class="custom-btn-icon" onclick="deleteUnit('ادارة الشؤون الادارية والمالية      ')">
-                                                                <i class="fas fa-trash-alt" style="color: #dc3545;"></i> <!-- أيقونة حذف -->
-                                                          </a>
-                                                        </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">2</th>
-                                                        <td>ادارة التفتيش والمعايرة</td>
-                                                        <td class="d-flex align-items-center">
-                                                            <div class="btn-group"> 
-                                                            <a href="#" class="btn btn-success custom-btn" onclick="openSectionsDialog('ادارة التفتيش والمعايرة')">الأقسام</a>
-                                                            <a href="#" class="custom-btn-icon" onclick="editUnit('    ادارة التفتيش والمعايرة  ')">
-                                                                <i class="fas fa-pencil-alt" style="color: #007bff;"></i> <!-- لون تعديل -->
-                                                            </a>
-                                                            <a href="#" class="custom-btn-icon" onclick="deleteUnit('ادارة التفتيش والمعايرة      ')">
-                                                                <i class="fas fa-trash-alt" style="color: #dc3545;"></i> <!-- أيقونة حذف -->
-                                                          </a></div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">3</th>
-                                                        <td> ادارة الاعتماد المؤسسي </td>
-                                                        
-                                                            <td class="d-flex align-items-center">   
-                                                                <div class="btn-group">
-                                                            <a href="#" class="btn btn-success custom-btn" onclick="openSectionsDialog('ادارة الاعتماد المؤسسي  ')">الأقسام</a>
-                                                            <a href="#" class="custom-btn-icon" onclick="editUnit('    ادارة الاعتماد المؤسسي ')">
-                                                                <i class="fas fa-pencil-alt" style="color: #007bff;"></i> <!-- لون تعديل -->
-                                                            </a>
-                                                            <a href="#" class="custom-btn-icon" onclick="deleteUnit('ادارة الاعتماد المؤسسي     ')">
-                                                                <i class="fas fa-trash-alt" style="color: #dc3545;"></i> <!-- أيقونة حذف -->
-                                                           </a>
-                                                            </div> 
-                                                        </td>
-                                                    </tr>          
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="d-grid gap-2 d-md-flex justify-content-between">
-                            <button type="submit" class="btn btn-primary py-3 w-100 mb-4" onclick="validateFormdepartement()"> اضافة ادارة 
-                                </button>
-                            <button type="button" class="btn btn-secondary py-3 w-0 mb-4"
-                                id="closeDialog">رجوع</button>
-                        </div>
                     </div>
                 </div>
             </div>
+            
+            
             <!-- Table Start -->
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
@@ -402,7 +355,304 @@
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
     <script src="js/operations.js"></script>
+   <!-- HTML Button for Add/Edit -->
 
+<!-- JavaScript for Open Add/Edit Dialog -->
+<script>
+    let isEditMode = false;
+    let currentDepartmentId = null; // لحفظ معرف الإدارة عند التعديل
+  
+    // دالة التأكيد وحذف الإدارة
+    function deleteDepartment(departmentId) {
+        Swal.fire({
+            title: 'هل أنت متأكد؟',
+            text: "لن تتمكن من استرجاع هذه البيانات بعد الحذف!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'نعم، حذف!',
+            cancelButtonText: 'إلغاء'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // طلب حذف الإدارة
+                fetch('php/delete_department.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: `department_id=${departmentId}`
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        Swal.fire(
+                            'تم الحذف!',
+                            data.message,
+                            'success'
+                        );
+                        // إعادة تحميل الجدول بعد الحذف بنجاح
+                        loadDepartments();
+                    } else {
+                        Swal.fire(
+                            'خطأ!',
+                            data.message,
+                            'error'
+                        );
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    Swal.fire(
+                        'خطأ!',
+                        'حدث خطأ أثناء محاولة الحذف.',
+                        'error'
+                    );
+                });
+            }
+        });
+    }
+
+
+    // دالة لفتح النموذج للإضافة
+    function openDialogForAdd() {
+        isEditMode = false;
+        currentDepartmentId = null;
+        document.getElementById('departementName').value = '';
+        document.getElementById('managerName').value = '';
+        document.getElementById('dialog').style.display = 'block';
+        document.querySelector('.add-btn').textContent = 'إضافة إدارة';
+    }
+
+    // دالة لفتح النموذج للتعديل
+    function editUnit(departmentId, departmentName, managerName) {
+        isEditMode = true;
+        currentDepartmentId = departmentId;
+        document.getElementById('departementName').value = departmentName;
+        document.getElementById('managerName').value = managerName;
+        document.getElementById('dialog').style.display = 'block';
+        document.querySelector('.add-btn').textContent = 'تعديل الإدارة';
+    }
+
+    // دالة لإغلاق النموذج
+    document.getElementById('closeDialog').addEventListener('click', () => {
+        document.getElementById('dialog').style.display = 'none';
+    });
+
+    function createOrUpdateDepartment() {
+    const departmentName = document.getElementById('departementName').value.trim();
+    const managerName = document.getElementById('managerName').value;
+
+    if (!departmentName) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'تنبيه',
+            text: 'يرجى إدخال اسم الإدارة.',
+            confirmButtonText: 'حسنًا',
+            customClass: {
+                confirmButton: 'btn btn-primary'
+            },
+            buttonsStyling: false,
+        });
+        return;
+    }
+
+    const url = isEditMode ? 'php/update_department.php' : 'php/add_department.php';
+    const formData = new FormData();
+
+    if (isEditMode) {
+        formData.append('department_id', currentDepartmentId);
+    }
+    formData.append('department_name', departmentName);
+    formData.append('manager_name', managerName);
+
+    fetch(url, {
+        method: 'POST',
+        body: formData,
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'تمت العملية بنجاح!',
+                    text: 'تمت إضافة الإدارة بنجاح.',
+                    confirmButtonText: 'حسنًا',
+                    customClass: {
+                        confirmButton: 'btn btn-primary'
+                    },
+                    buttonsStyling: false,
+                }).then(() => {
+                    // إعادة تعيين الحقول بعد الإضافة
+                    document.getElementById('departementName').value = '';
+                    document.getElementById('managerName').value = '';
+                    loadDepartments(); // استدعاء دالة لتحميل البيانات الجديدة في الجدول
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'خطأ!',
+                    text: data.message,
+                    confirmButtonText: 'حسنًا',
+                    customClass: {
+                        confirmButton: 'btn btn-primary'
+                    },
+                    buttonsStyling: false,
+                });
+            }
+        })
+        .catch(error => {
+            console.error('حدث خطأ:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'خطأ في الاتصال!',
+                text: 'حدث خطأ أثناء محاولة الاتصال بالخادم.',
+                confirmButtonText: 'حسنًا',
+                customClass: {
+                    confirmButton: 'btn btn-primary'
+                },
+                buttonsStyling: false,
+            });
+        });
+}
+
+    // دالة لتحميل الإدارات وعرضها في الجدول
+    function loadDepartments() {
+        fetch('php/fetch_departments.php')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('departmentTableBody').innerHTML = data;
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    // استدعاء دالة التحميل عند فتح الصفحة
+    document.addEventListener('DOMContentLoaded', loadDepartments);
+    
+    function createOrUpdateDepartment() {
+    const departmentName = document.getElementById('departementName').value.trim();
+    const managerName = document.getElementById('managerName').value;
+    const userName = document.getElementById('userName').value; // استبدل باسم المستخدم الحالي من الجلسة
+
+    if (!departmentName) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'تحذير',
+            text: 'يرجى إدخال اسم الإدارة',
+            confirmButtonText: 'موافق',
+            confirmButtonColor: '#3085d6',
+        });
+        return;
+    }
+
+    // اختيار الملف بناءً على الوضع (إضافة أو تعديل)
+    const url = isEditMode ? 'php/update_department.php' : 'php/add_department.php';
+    const formData = new FormData();
+
+    if (isEditMode) {
+        formData.append('department_id', currentDepartmentId);
+    }
+    formData.append('department_name', departmentName);
+    formData.append('manager_name', managerName);
+    formData.append('created_by', userName);
+
+    // إرسال الطلب
+    fetch(url, {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            Swal.fire({
+                icon: 'success',
+                title: 'تم بنجاح',
+                text: data.message,
+                confirmButtonText: 'موافق',
+                confirmButtonColor: '#3085d6',
+            });
+
+            // إعادة تعيين الحقول بعد الإضافة أو التعديل بدون إغلاق الـ dialog
+            document.getElementById('departementName').value = '';
+            document.getElementById('managerName').value = '';
+
+            // إعادة الزر إلى وضع الإضافة
+            document.querySelector('.add-btn').textContent = 'إضافة إدارة';
+            isEditMode = false; // إعادة تعيين وضع التحرير إلى إضافة
+            currentDepartmentId = null; // إعادة تعيين المعرف الحالي
+
+            loadDepartments(); // استدعاء دالة لتحميل الإدارات مرة أخرى
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'خطأ',
+                text: data.message,
+                confirmButtonText: 'موافق',
+                confirmButtonColor: '#d33',
+            });
+        }
+    })
+    .catch(error => {
+        Swal.fire({
+            icon: 'error',
+            title: 'حدث خطأ',
+            text: 'حدث خطأ أثناء الاتصال بالخادم.',
+            confirmButtonText: 'موافق',
+            confirmButtonColor: '#d33',
+        });
+        console.error('حدث خطأ:', error);
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    loadEmployees();
+
+    // تفعيل Select2 بعد التحميل
+    $('#managerName').select2({
+        placeholder: 'اختر مدير إدارة',
+        allowClear: true
+    });
+});
+
+function loadEmployees() {
+    fetch('php/fetch_employees.php') // اسم ملف PHP
+        .then(response => response.text())
+        .then(data => {
+            // إضافة الخيارات إلى القائمة
+            const managerSelect = document.getElementById('managerName');
+            managerSelect.innerHTML = data;
+
+            // إعادة تهيئة Select2
+            $('#managerName').trigger('change');
+        })
+        .catch(error => {
+            console.error('Error fetching employee names:', error);
+            const managerSelect = document.getElementById('managerName');
+            managerSelect.innerHTML = '<option value="">خطأ في تحميل الأسماء</option>';
+        });
+}
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    loadDepartments();
+});
+
+function loadDepartments() {
+    // استدعاء fetch لجلب البيانات من PHP
+    fetch('php/fetch_departments.php') // استبدل باسم ملف PHP الخاص بك
+        .then(response => response.text())
+        .then(data => {
+            // تحديث محتوى الجدول
+            document.getElementById('departmentTableBody').innerHTML = data;
+        })
+        .catch(error => {
+            console.error('Error fetching departments:', error);
+            document.getElementById('departmentTableBody').innerHTML = "<tr><td colspan='4'>خطأ في تحميل البيانات</td></tr>";
+        });
+}
+
+
+</script>
+
+        
     <!-- Dialog للأقسام -->
 <div class="dialog-overlay" id="sectionsDialog" style="display: none;">
     <div class="dialog-content">
@@ -549,51 +799,6 @@
         </div>
     </div>
 </div>
-
-<!-- dialog for detiles -->
-    
-
-    <!-- <div id="detailsDialog">
-        <div class="dialog-content">
-            <div class="dialog-header">
-                <img src="img/logo.jpg" alt="شعار">
-                <button onclick="closeDetails()">X</button>
-            </div>
-            <div class="dialog-body">
-                <h3>مركز ضمان الجودة والمعايرة المهنية</h3>
-                <h4>إدارة الشؤون الإدارية والمالية</h4>
-                <h5>قائمة بأسماء موظفي الوحدة/القسم:</h5>
-                <table class="employee-table">
-                    <thead>
-                        <tr>
-                            <th>ر.م</th>
-                            <th>اسم الموظف</th>
-                            <th>الوظيفة</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>محمد أحمد</td>
-                            <td>مدير</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>سارة علي</td>
-                            <td>محاسب</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>أحمد خالد</td>
-                            <td>موظف إداري</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <button class="print-btn" onclick="printDetails()">طباعة</button>
-            </div>
-        </div>
-    </div> -->
 
     
 

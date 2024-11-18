@@ -210,44 +210,89 @@
 
             <div class="dialog-overlay" id="dialog">
                 <div class="dialog-content-main">
-                    <!-- Your dialog content goes here -->
                     <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
                         <div class="d-flex flex-column align-items-center mb-3">
-                            <img src="img\qacc.png" alt="شعار الموقع"
-                                style="width: 115px; height: 80px; margin-bottom: 45px;">
-                            <h5>  اضافة مكتب </h5>
+                            <img src="img/qacc.png" alt="شعار الموقع" style="width: 115px; height: 80px; margin-bottom: 45px;">
+                            <h5>إضافة مكتب</h5>
                         </div>
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="officeName" placeholder="مكتب ">
                             <label for="officeName">اسم المكتب</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <div class="form-floating mb-3">
-                                <div class="user-selection">
-                                    <select id="user-select">
-                                        <option value="" hidden> اختر مدير المكتب</option>
-                                        <option value="user1">  فتحي موسى الحباسي  </option>
-                                        <option value="user2">عبد الحفيظ عمر خليفة</option>
-                                        <option value="user3"> عبد الباسط فاتح نصير </option>
-                                        <option value="user4">اكرام خليفة محمد العرضاوي</option>
-                                        <option value="user5"> ايناس سالم السني قشوط</option>
-                                    </select>
-                                    
-                                </div>
+                            <div class="user-selection">
+                                <select id="user-select">
+                                    <option value="" hidden>اختر مدير المكتب</option>
+                                    <option value="user1">فتحي موسى الحباسي</option>
+                                    <option value="user2">عبد الحفيظ عمر خليفة</option>
+                                    <option value="user3">عبد الباسط فاتح نصير</option>
+                                    <option value="user4">اكرام خليفة محمد العرضاوي</option>
+                                    <option value="user5">ايناس سالم السني قشوط</option>
+                                </select>
                             </div>
                         </div>
-                       
-
-
                         <div class="d-grid gap-2 d-md-flex justify-content-between">
-                            <button type="submit" class="btn btn-primary py-3 w-100 mb-4" onclick="validateFormOffice()"> اضافة مكتب 
-                                </button>
-                            <button type="button" class="btn btn-secondary py-3 w-0 mb-4"
-                                id="closeDialog">رجوع</button>
+                            <button type="submit" class="btn btn-primary py-3 w-100 mb-4" onclick="createOffice()">إضافة مكتب</button>
+                            <button type="button" class="btn btn-secondary py-3 w-0 mb-4" id="closeDialog">رجوع</button>
                         </div>
                     </div>
                 </div>
             </div>
+            
+            <script>
+            function createOffice() {
+                const officeName = document.getElementById('officeName').value;
+                const managerName = document.getElementById('user-select').value;
+                const userId = document.getElementById('userName').value;
+            
+                if (!officeName) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'تنبيه',
+                        text: 'يرجى ملء اسم المكتب.',
+                        confirmButtonText: 'حسنًا',
+                        customClass: { confirmButton: 'btn btn-primary' },
+                        buttonsStyling: false
+                    });
+                    return;
+                }
+            
+                const formData = new FormData();
+                formData.append('officeName', officeName);
+                formData.append('managerName', managerName);
+                formData.append('createdBy', userId);
+            
+                fetch('php/add_office.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'تم إضافة المكتب بنجاح.',
+                            confirmButtonText: 'حسنًا',
+                            customClass: { confirmButton: 'btn btn-primary' },
+                            buttonsStyling: false
+                        });
+                        document.getElementById('officeName').value = '';
+                        document.getElementById('user-select').value = '';
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'خطأ',
+                            text: data.message,
+                            confirmButtonText: 'حسنًا',
+                            customClass: { confirmButton: 'btn btn-primary' },
+                            buttonsStyling: false
+                        });
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            }
+            </script>
+            
             <!-- Table Start -->
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
