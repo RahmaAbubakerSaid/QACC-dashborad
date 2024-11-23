@@ -31,61 +31,61 @@
 
     <!-- تنسيقات خاصة -->
     <style>
-        /* تقليل هوامش الصفحة */
         body {
             font-family: 'Amiri', serif;
             margin: 0;
-            padding: 0px;
-            /* تقليل الهوامش العامة */
+            padding: 0;
+            background-color: #f4f4f9;
+            /* خلفية خفيفة */
         }
 
-        /* إخفاء زر الطباعة عند الطباعة */
-        @media print {
-            .print-btn {
-                display: none;
-            }
-
-            /* إخفاء حقل البحث عند الطباعة */
-            #messageSearchTable {
-                display: none;
-            }
+        .container {
+            padding: 20px;
         }
 
-        /* تنسيق الشعار ليكون في أعلى اليسار */
+        /* تحسين تنسيق الشعار */
         .header img {
             float: right;
             margin-left: 20px;
             width: 80px;
-            /* التحكم بحجم الشعار */
         }
 
-        /* تنسيق النصوص لتكون في المنتصف وتحت الشعار */
         .header-text {
             text-align: center;
             margin-top: 30px;
         }
 
         .header h3 {
-            font-size: 24px;
+            font-size: 28px;
+            /* اللون الذهبي */
             margin-bottom: 5px;
         }
 
         .header h4 {
-            font-size: 20px;
+            font-size: 22px;
+            color: #444;
             margin-bottom: 5px;
         }
 
         .header h5 {
-            font-size: 16px;
+            font-size: 18px;
             margin-bottom: 10px;
         }
 
-        /* تنسيق الحاوية */
         .header {
             overflow: hidden;
         }
 
-        /* تنسيق الجدول */
+        /* تنسيق الحقول التفاعلية */
+        .chat-search-container input {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        /* تحسين تنسيق الجدول */
         .employee-table {
             width: 100%;
             border-collapse: collapse;
@@ -94,21 +94,63 @@
 
         .employee-table th,
         .employee-table td {
-            border: 1px solid #000;
-            padding: 6px;
-            /* تقليل الهوامش الداخلية */
+            padding: 12px;
             text-align: center;
         }
 
-        /* تلوين الصف العلوي */
-        .employee-table thead tr {
+        .employee-table th {
             background-color: #CA9733;
-            /* لون ذهبي مخصص للصف العلوي */
             color: white;
+            font-size: 16px;
         }
 
-        /* التأكد من أن لون الصف العلوي والشعار يظهران عند الطباعة */
+        .employee-table td {
+            background-color: #fff;
+            color: #555;
+            font-size: 14px;
+            max-width: 200px;
+            /* تحديد أقصى عرض للخلية */
+            text-overflow: ellipsis;
+            /* إضافة ثلاث نقاط ... إذا كان النص طويل */
+            overflow: hidden;
+            /* إخفاء النص الذي يتجاوز الحد */
+            white-space: nowrap;
+            /* منع النص من الانتقال إلى السطر التالي */
+            padding: 10px;
+            /* لضبط المسافة داخل الخلايا */
+
+        }
+
+        .employee-table tr:nth-child(even) td {
+            background-color: #f9f9f9;
+        }
+
+        .employee-table td:hover {
+            background-color: #f1f1f1;
+            cursor: pointer;
+        }
+
+        /* زر الطباعة */
+        .print-btn {
+            background-color: #198754;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .print-btn:hover {
+            background-color: #218838;
+        }
+
+        /* تحسين التفاعل مع الطباعة */
         @media print {
+            .print-btn {
+                display: none;
+            }
 
             .employee-table thead tr,
             .header img {
@@ -117,16 +159,39 @@
                 /* لتثبيت اللون عند الطباعة */
             }
 
+            .employee-table tr:nth-child(even) td {
+                -webkit-print-color-adjust: exact;
+            }
+
             .header img {
                 -webkit-print-color-adjust: exact;
                 /* لجعل الشعار يظهر بالألوان */
             }
-        }
 
-        /* إطار الجدول */
-        .employee-table td,
-        .employee-table th {
-            border: 1px solid black;
+            .employee-table th,
+            .employee-table td {
+                border-color: #000;
+            }
+
+            .employee-table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+
+            /* إخفاء حقل البحث عند الطباعة */
+            #messageSearchTable {
+                display: none;
+            }
+
+            #dateSearch {
+                display: none;
+            }
+
+            /* إزالة لون الخلفية فقط عند الطباعة */
+            body {
+                background-color: transparent !important;
+                /* إلغاء لون الخلفية */
+            }
         }
     </style>
 </head>
@@ -145,10 +210,14 @@
                 <h5></h5>
             </div>
         </div>
+
         <div class="header" style="display: flex;margin-top: 20px; width: 100%;">
             <div class="chat-search-container" style="flex-grow: 1;margin-left:10px;">
-                <input type="text" id="messageSearchTable" placeholder="البحث على موظف..." onkeyup="filterTable()"
-                    style="width: 100%; padding: 8px; box-sizing: border-box;">
+                <!-- حقل عند الكتابة فيه يتم استدعاء دالة البحث مباشرة -->
+                <input type="text" id="messageSearchTable" placeholder="البحث على موظف..." onkeyup="filterTable()">
+            </div>
+            <div class="chat-search-container" style="flex-grow: 1;margin-left:10px;">
+                <input type="date" id="dateSearch" placeholder="اختر التاريخ..." oninput="filterTable()">
             </div>
             <!-- زر الطباعة -->
             <button class="btn btn-success custom-btn-main print-btn" onclick="printPage()">طباعة التقارير</button>
@@ -168,33 +237,46 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>محمد أحمد</td>
-                        <td>اسم الملف</td>
-                        <td>2024-10-01</td>
-                        <td>لم تتم المشاهدة</td>
-                        <td>غير مقروءة</td>
+                    <script>
+                        $counter = 1; // المتغير الذي سيتم استخدامه كعداد
 
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>سارة علي</td>
-                        <td>اسم الملف</td>
-                        <td>2024-10-01</td>
-                        <td>2024-10-01</td>
-                        <td>مقروءة</td>
+                        // عند تحميل الصفحة، قم بجلب البيانات من PHP باستخدام fetch
+                        document.addEventListener("DOMContentLoaded", function () {
+                            fetch('php/archives_reports.php')  // اسم الملف الذي يحتوي على الاستعلام
+                                .then(response => response.json()) // تحويل الاستجابة إلى JSON
+                                .then(data => {
+                                    const tableBody = document.querySelector('.employee-table tbody');
 
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>أحمد خالد</td>
-                        <td>اسم الملف</td>
-                        <td>2024-10-01</td>
-                        <td>2024-10-01</td>
-                        <td>مقروءة</td>
+                                    // إذا كانت الرسالة تحتوي على "لا توجد بيانات"
+                                    if (data.message) {
+                                        const row = document.createElement('tr');
+                                        row.innerHTML = `<td colspan="6" style="text-align:center;">${data.message}</td>`;
+                                        tableBody.appendChild(row);
+                                    } else {
+                                        // إذا كانت هناك بيانات، نقوم بإنشاء الصفوف في الجدول
+                                        data.forEach(message => {
+                                            const row = document.createElement('tr');
 
-                    </tr>
+                                            row.innerHTML = `
+                                            <td>${$counter++}</td>
+                                            <td>${message.employee_name}</td>
+                                            <td>${message.file_column}</td>
+                                            <td>${message.sent_date}</td>
+                                            <td>${message.read_date}</td>
+                                            <td>${message.read_status}</td>
+                                            `;
+
+                                            // إضافة الصف إلى الجدول
+                                            tableBody.appendChild(row);
+                                        });
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error('خطأ في جلب البيانات:', error);
+                                });
+                        });
+                    </script>
+
                 </tbody>
             </table>
         </div>
@@ -202,57 +284,55 @@
 
     <!-- دالة الطباعة -->
     <script>
-
-
         function printPage() {
             window.print();
         }
 
+
+        /*
+        دالة للبحث في جدول عن طريق حقلين حقل للبحث عن طريق اسم الموظف وحقل للبحث عن طريق تاريخ الإرسال
+        */
         function filterTable() {
-            const input = document.getElementById('messageSearchTable');
-            const filter = input.value.toLowerCase();
+            //يتم جلب اسم الموظف والتاريخ
+            const nameInput = document.getElementById('messageSearchTable');
+            const dateInput = document.getElementById('dateSearch');
+            //الحصول على اسم الموظف والتاريخ
+            const nameFilter = nameInput.value.toLowerCase();
+            const dateFilter = dateInput.value;
+
+            
             const table = document.querySelector('.employee-table');
+            //الحصول على صفوف الجدول
             const rows = table.getElementsByTagName('tr');
 
-            // Loop through all table rows, and hide those that don't match the search query
-            for (let i = 1; i < rows.length; i++) { // Start at 1 to skip the header row
+            // حلقة للتنقل في جميع الصفوف واخفاء الصفوف التي لاتتطابق مع القيمة في حقل البحث
+            for (let i = 1; i < rows.length; i++) { // يتم تصفية الجدول باستخدام حلقة for التي تبدأ من الصف رقم 1 (أي بعد رأس الجدول)
                 const cells = rows[i].getElementsByTagName('td');
-                let rowVisible = false;
+                let rowVisible = true; // Assume the row is visible
 
-                for (let j = 0; j < cells.length; j++) {
-                    if (cells[j].textContent.toLowerCase().includes(filter)) {
-                        rowVisible = true;
-                        break;
+                // Check the name search
+                if (nameFilter) {
+                    const nameCell = cells[1].textContent.toLowerCase();
+                    if (!nameCell.includes(nameFilter)) {
+                        rowVisible = false;
+                    }
+                }
+
+                // Check the date search
+                if (dateFilter) {
+                    const dateCell = cells[3].textContent.trim(); // Assuming date is in the 4th column
+                    const dateParts = dateCell.split(" "); // افتراض أن التاريخ يحتوي على وقت (مثل "2024-11-17 00:30")
+                    const formattedDate = dateParts[0]; // نحصل فقط على التاريخ بدون الوقت
+                    if (formattedDate !== dateFilter) {
+                        rowVisible = false;
                     }
                 }
 
                 rows[i].style.display = rowVisible ? '' : 'none';
             }
         }
-        /*  const reportData = [
-             { employee: 'محمد أحمد', sendDate: '2024-10-01', viewDate: '2024-10-01' },
-             { employee: 'سارة علي', sendDate: '2024-10-01', viewDate: null },
-             { employee: 'أحمد خالد', sendDate: '2024-10-01', viewDate: null }
-         ];
- 
-         function loadReport() {
-             const tbody = document.querySelector('.employee-table tbody');
-             tbody.innerHTML = ''; // مسح الجدول الحالي
- 
-             reportData.forEach((data, index) => {
-                 const row = document.createElement('tr');
-                 row.innerHTML = `
-                     <td>${index + 1}</td>
-                     <td>${data.employee}</td>
-                     <td>${data.sendDate}</td>
-                     <td>${data.viewDate || 'لم تتم مشاهدته بعد'}</td>
-                 `;
-                 tbody.appendChild(row);
-             });
-         }
- 
-         // عند تحميل صفحة التقارير، قم بتحميل البيانات
-         document.addEventListener('DOMContentLoaded', loadReport); */
+
+
     </script>
 
 </body>

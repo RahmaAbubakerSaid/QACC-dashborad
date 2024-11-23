@@ -31,14 +31,14 @@
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
 
-    
-     <!-- SweetAlert2 CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
-<!-- SweetAlert2 JS -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 </head>
 
 <body>
@@ -54,17 +54,17 @@
 
 
         <!-- Sidebar Start -->
-        <div id="sidebar-container"></div> 
+        <div id="sidebar-container"></div>
         <script>
             fetch('php/sidebar.php')
-            .then(response => {
-                if (!response.ok) throw new Error('Network response was not ok');
-                return response.text();
-            })
-            .then(data => {
-                document.getElementById('sidebar-container').innerHTML = data;
-            })
-            .catch(error => console.error('هناك خطأ:', error));
+                .then(response => {
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    return response.text();
+                })
+                .then(data => {
+                    document.getElementById('sidebar-container').innerHTML = data;
+                })
+                .catch(error => console.error('هناك خطأ:', error));
         </script>
         <!-- Sidebar End -->
 
@@ -177,24 +177,24 @@
                                         }
                                     });
                                 }
-                                </script>
-                                <script>
-                                    fetch('php/user_info.php')
-                                        .then(response => response.json())
-                                        .then(data => {
-                                            if (data.loggedIn) {
-                                        // تحديث اسم المستخدم والصورة
-                                        document.getElementById('userName').innerText = data.username; // عرض اسم المستخدم
-                                            } else {
-                                                window.location.href = 'http://localhost/QACC-dashborad/signin.html'; // إعادة توجيه إلى صفحة تسجيل الدخول
-                                            }
-                                        });
-                                    </script>
+                            </script>
+                            <script>
+                                fetch('php/user_info.php')
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        if (data.loggedIn) {
+                                            // تحديث اسم المستخدم والصورة
+                                            document.getElementById('userName').innerText = data.username; // عرض اسم المستخدم
+                                        } else {
+                                            window.location.href = 'http://localhost/QACC-dashborad/signin.html'; // إعادة توجيه إلى صفحة تسجيل الدخول
+                                        }
+                                    });
+                            </script>
                         </div>
                     </div>
                     <!-------------------------------------------->
 
-               
+
                 </div>
             </nav>
             <!-- Navbar End -->
@@ -203,73 +203,47 @@
 
             <div class="main-container">
                 <div class="left-container">
-                  <div class="header">
-                    <h4>الموظفين</h4>
-                  </div>
-                  <div class="search-container">
-                    <div class="input"> 
-                      <i class="fa-solid fa-magnifying-glass"></i>
-                      <input type="text" id="searchInput" placeholder="بحث عن موظف" onkeyup="filterEmployees()">
+                    <div class="header">
+                        <h4>الموظفين</h4>
                     </div>
-                  </div>
-                  <div class="employee-list" id="employeeList">
-                    <div class="employee-box" data-employee-id="1">
-                        <input type="checkbox">
-                        <p>رحمة ابو بكر</p>
-                      </div>
-                      <div class="employee-box" data-employee-id="2">
-                        <input type="checkbox">
-                        <p>إكرام العرضاوي</p>
-                      </div>
-                      <div class="employee-box" data-employee-id="3">
-                        <input type="checkbox">
-                        <p>رحمة</p>
-                      </div>
-                      <div class="employee-box" data-employee-id="4">
-                        <input type="checkbox">
-                        <p>إكرام</p>
-                      </div>
-                      <div class="employee-box" data-employee-id="5">
-                        <input type="checkbox">
-                        <p>موظف 5</p>
-                      </div>
-                    <div class="employee-box" data-employee-id="1">
-                      <input type="checkbox">
-                      <p>رحمة ابو بكر</p>
+                    <div class="search-container">
+                        <div class="input">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input type="text" id="searchInput" placeholder="بحث عن موظف" onkeyup="filterEmployees()">
+                        </div>
                     </div>
-                    <div class="employee-box" data-employee-id="2">
-                      <input type="checkbox">
-                      <p>إكرام العرضاوي</p>
-                    </div>
+                    <div class="employee-list" id="employeeList">
 
-                  </div>
+                    </div>
                 </div>
-            
+
                 <div class="right-container">
                     <div class="header" style="display: flex; justify-content: space-between; align-items: center;">
                         <h4>الدردشة</h4>
-<!--                         <button class="btn btn-success custom-btn-main">تقارير</button>
- -->                        <a href="archives_reports.html" class="btn btn-success custom-btn-main" onclick="showDetails()">التقارير</a>
+                        <!--<button class="btn btn-success custom-btn-main">تقارير</button>-->
+                        <a href="archives_reports.html" class="btn btn-success custom-btn-main"
+                            onclick="showDetails()">التقارير</a>
                     </div>
-                
-                  <div class="chat-search-container">
-                    <input type="text" id="messageSearchInput" placeholder="بحث عن رسالة..." onkeyup="filterMessages()">
+
+                    <div class="chat-search-container">
+                        <input type="text" id="messageSearchInput" placeholder="بحث عن رسالة..."
+                            onkeyup="filterMessages()">
+                    </div>
+                    <div class="chat-container" id="chatContainer">
+                        <!-- الرسائل ستظهر هنا -->
+                    </div>
+                    <div class="drop-area" id="dropArea">
+                        اسحب وإفلت المجلدات هنا
+                    </div>
+                    <div class="chatbox-input">
+                        <input type="text" id="messageInput" placeholder="اكتب رسالة...">
+                        <input type="file" id="fileInput" class="file-input" multiple />
+                        <!-- webkitdirectory -->
+                        <i class="fas fa-solid fa-paperclip" id="attachFile"></i>
+                        <i class="fas fa-solid fa-paper-plane" id="sendButton" onclick="sendMessage()"></i>
+                    </div>
                 </div>
-                  <div class="chat-container" id="chatContainer">
-                    <!-- الرسائل ستظهر هنا -->
-                  </div>
-                  <div class="drop-area" id="dropArea">
-                    اسحب وإفلت المجلدات هنا
-                  </div>
-                  <div class="chatbox-input">
-                    <input type="text" id="messageInput" placeholder="اكتب رسالة...">
-                    <input type="file" id="fileInput" class="file-input" multiple />
-                    <!-- webkitdirectory -->
-                    <i class="fas fa-solid fa-paperclip" id="attachFile"></i>
-                    <i class="fas fa-solid fa-paper-plane" id="sendButton"></i>
-                  </div>
-                </div>
-              </div>
+            </div>
             <!-- Table End -->
 
         </div>
@@ -294,10 +268,309 @@
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
     <script src="js/operations.js"></script>
-    <script src="js/archives.js"></script>
+    <!-- <script src="js/archives.js"></script> -->
 
 
+    <script>
+        // دالة لتحميل أسماء الموظفين
+        function loadEmployeeList() {
+            fetch('php/view_employees.php')  // الاتصال بملف PHP لاسترجاع البيانات
+                .then(response => response.json())  // التعامل مع الاستجابة بتنسيق JSON
+                .then(data => {
+                    if (data.success) {
+                        const employeeList = document.getElementById('employeeList');  // الحصول على العنصر
+                        employeeList.innerHTML = '';  // مسح القائمة الحالية (تأكد أنه لا يوجد بيانات قديمة)
 
+                        // إضافة أسماء الموظفين إلى القائمة
+                        data.employees.forEach(employee => {
+                            // إنشاء div جديد لكل موظف
+                            const employeeBox = document.createElement('div');
+                            employeeBox.classList.add('employee-box');
+                            //اجعل
+                            //data-employee-id
+                            //تساوي employee.id
+                            //عن طريق دالة set
+                            employeeBox.setAttribute('data-employee-id', employee.id);
+                            //اذا كنت تريد التعامل مع القيمة 
+                            //const employeeId = employeeBox.getAttribute('data-employee-id');
+
+                            // إضافة checkbox واسم الموظف داخل div
+                            employeeBox.innerHTML = `
+                        <input type="checkbox">
+                        <p>${employee.name}</p>
+                    `;
+
+                            // إضافة العنصر الجديد إلى القائمة
+                            employeeList.appendChild(employeeBox);
+                        });
+                    } else {
+                        console.log(data.message);  // إذا لم توجد بيانات أو حدث خطأ
+                    }
+                })
+                .catch(error => console.error('Error loading employees:', error));  // التعامل مع الأخطاء
+        }
+        // استدعاء دالة تحميل الموظفين عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', function () {
+            loadEmployeeList();  // تحميل البيانات عند فتح الصفحة
+        });
+
+
+        // وظيفة البحث عن الموظفين داخل قائمةالموظفين 
+        function filterEmployees() {
+            //تعين متغير ليكون مرجع لعنصر الادخال بالصفحة
+            const input = document.getElementById('searchInput');
+            //حفظ النص المدخل بالحروف الصغيرة
+            const filter = input.value.toLowerCase();
+            // تعيين متغير ليكون مرجع للقائمة التي تحتوي على جميع الموظفين
+            const employeeList = document.getElementById('employeeList');
+            //getElementsByClassName
+            //يأخد جميع العناصر في 
+            //employee-box
+            //ويخزنها في
+            //employees
+            const employees = employeeList.getElementsByClassName('employee-box');
+
+            for (let i = 0; i < employees.length; i++) {
+                const p = employees[i].getElementsByTagName('p')[0];
+                if (p) {
+                    //تخزين قيمة الموجودة في p 
+                    //تتم عملية المقارنة واذا وجدنا القيمة المراد البحث عنها يتم عرضها والا لا يتم عرض شئ
+                    const txtValue = p.textContent || p.innerText;
+                    employees[i].style.display = txtValue.toLowerCase().indexOf(filter) > -1 ? "" : "none";
+                }
+            }
+        }
+
+        function sendMessage() {
+            const username = document.getElementById('userName').innerText;
+
+            const messageInput = document.getElementById('messageInput');
+            const selectedEmployees = Array.from(document.querySelectorAll('.employee-box input[type="checkbox"]:checked'))
+                .map(checkbox => checkbox.parentElement.getAttribute('data-employee-id'));
+
+            const messageText = messageInput.value;
+
+            // التحقق من أن حقل الرسالة غير فارغ
+            if (messageText.trim() === '') {
+                Swal.fire({
+                    icon: 'warning',               // أيقونة التحذير
+                    title: 'خطأ!',                 // عنوان التنبيه
+                    text: 'يرجى كتابة رسالة قبل الإرسال.',  // نص التنبيه
+                    confirmButtonText: 'حسنًا',     // نص زر التأكيد
+                    customClass: {
+                        confirmButton: 'btn btn-primary'  // تخصيص الزر إذا كنت تستخدم Bootstrap أو CSS
+                    },
+                    buttonsStyling: false,           // تعطيل التنسيق الافتراضي للأزرار
+                    allowOutsideClick: false,        // منع الإغلاق عند النقر على الخلفية
+                    backdrop: true                   // إضافة خلفية سوداء
+                });
+                return false;
+            }
+
+            // التحقق من أن مستخدمًا واحدًا على الأقل محدد
+            if (selectedEmployees.length === 0) {
+                Swal.fire({
+                    icon: 'warning',               // أيقونة التحذير
+                    title: 'خطأ!',                 // عنوان التنبيه
+                    text: ' يرجى اختيار موظف واحد على الأقل لإرسال الرسالة.',  // نص التنبيه
+                    confirmButtonText: 'حسنًا',     // نص زر التأكيد
+                    customClass: {
+                        confirmButton: 'btn btn-primary'  // تخصيص الزر إذا كنت تستخدم Bootstrap أو CSS
+                    },
+                    buttonsStyling: false,           // تعطيل التنسيق الافتراضي للأزرار
+                    allowOutsideClick: false,        // منع الإغلاق عند النقر على الخلفية
+                    backdrop: true                   // إضافة خلفية سوداء
+                });
+                return false;
+            }
+
+            // إعداد البيانات لإرسالها
+            const data = {
+                username: username,  // إضافة username إلى البيانات المرسلة
+                employees: selectedEmployees,
+                message: messageText
+            };
+
+            // إرسال البيانات إلى الملف PHP
+            fetch('php/send_messages.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // عرض رسالة النجاح
+                        loadMessages();
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'تم إرسال الرسالة بنجاح!',
+                            confirmButtonText: 'حسنًا',
+                            customClass: {
+                                confirmButton: 'btn btn-primary'
+                            }
+                        });
+                        messageInput.value = ''; // مسح حقل الإدخال
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'حدث خطأ',
+                            text: data.message,
+                            confirmButtonText: 'حسنًا',
+                            customClass: {
+                                confirmButton: 'btn btn-danger'
+                            }
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error sending message:', error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'حدث خطأ',
+                        text: 'لم نتمكن من إرسال الرسالة. يرجى المحاولة لاحقًا.',
+                        confirmButtonText: 'حسنًا',
+                        customClass: {
+                            confirmButton: 'btn btn-danger'
+                        }
+                    });
+                });
+        }
+
+
+        // وظيفة لتحميل الرسائل من قاعدة البيانات وعرضها
+        function loadMessages() {
+            fetch('php/fetch_messages.php')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const chatContainer = document.getElementById('chatContainer');
+                        chatContainer.innerHTML = ''; // تفريغ الرسائل القديمة
+
+                        data.messages.forEach(message => {
+                            addMessage(message.message_text, message.employee_name, message.id, message.created_at);
+                        });
+                    } else {
+                        console.error(data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching messages:', error);
+                });
+        }
+
+        // وظيفة لإضافة الرسالة إلى واجهة المستخدم
+        function addMessage(text, recipient, messageId, createdAt) {
+            const messageWrapper = document.createElement('div');
+            messageWrapper.className = 'message-wrapper';
+
+            const messageBox = document.createElement('div');
+            messageBox.className = 'message-box';
+            messageBox.innerHTML = `<p><b>تم إرسال رسالة :</b></p><p>${text}</p>`;
+
+            const recipientTag = document.createElement('p');
+            recipientTag.textContent = `إلى: ${recipient}`;
+            recipientTag.style.fontWeight = 'bold';
+            messageBox.appendChild(recipientTag);
+
+            const messageDate = document.createElement('p');
+            messageDate.className = 'message-date';
+            messageDate.textContent = new Date(createdAt).toLocaleString('ar-EG', { hour: 'numeric', minute: 'numeric', day: 'numeric', month: 'numeric', year: 'numeric' });
+            messageBox.appendChild(messageDate);
+
+            const deleteButton = document.createElement('span');
+            deleteButton.className = 'delete-message';
+            deleteButton.innerHTML = `<i class="fas fa-solid fa-trash"></i>`;
+            deleteButton.onclick = function () {
+                deleteMessage(messageId, messageWrapper);
+            };
+
+            messageWrapper.appendChild(messageBox);
+            messageWrapper.appendChild(deleteButton);
+
+            const chatContainer = document.getElementById('chatContainer');
+            chatContainer.prepend(messageWrapper);
+        }
+
+        // وظيفة حذف الرسالة
+        function deleteMessage(messageId, messageWrapper) {
+            Swal.fire({
+                icon: 'warning',               // أيقونة التحذير
+                title: 'تنبيه',
+                text: 'هل أنت متأكد أنك تريد حذف هذه الرسالة؟',
+                showCancelButton: true,
+                confirmButtonColor: '#D1A237',
+                cancelButtonColor: '#6c757d',
+                cancelButtonText: 'إلغاء',
+                confirmButtonText: 'نعم'   // تعطيل التنسيق الافتراضي للأزرار
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch('php/delete_messages.php', {
+                        method: 'DELETE', 
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ id: messageId }) // إرسال معرف الرسالة إلى السيرفر
+                    })
+                        .then(response => {
+                            console.log(response); // إضافة هذا السطر لرؤية تفاصيل الاستجابة
+                            return response.json(); // تحويل الاستجابة إلى JSON
+                        })
+                        .then(data => {
+                            console.log(data); // إضافة هذا السطر لرؤية بيانات الاستجابة
+                            if (data.success) {
+                                messageWrapper.remove(); // إزالة الرسالة من واجهة المستخدم
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'تم حذف الرسالة!',
+                                    text: 'الرسالة تم حذفها بنجاح.',
+                                    confirmButtonText: 'حسناً',
+                                    confirmButtonColor: '#D1A237',
+                                });
+                            } else {
+                                alert(data.message); // في حالة وجود خطأ، إظهار رسالة الخطأ
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error deleting message:', error); // معالجة الأخطاء المحتملة
+                        });
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', (event) => {
+            loadMessages(); // تحميل الرسائل عند بدء تشغيل الصفحة
+        });
+        function filterMessages() {
+            const input = document.getElementById('messageSearchInput');
+            const filter = input.value.toLowerCase();
+            const chatContainer = document.getElementById('chatContainer');
+            const messages = chatContainer.getElementsByClassName('message-wrapper');
+
+            for (let i = 0; i < messages.length; i++) {
+                const messageBox = messages[i].getElementsByClassName('message-box')[0];
+                const paragraphs = messageBox.getElementsByTagName('p');
+
+                // تحقق مما إذا كان هناك فقرات في الرسالة
+                if (paragraphs.length < 2) {
+                    messages[i].style.display = 'none'; // إخفاء الرسالة إذا لم تكن هناك فقرات كافية
+                    continue;
+                }
+
+                const recipientTag = paragraphs[paragraphs.length - 2]; // الفقرة الثانية من النهاية
+
+                // تحقق مما إذا كان الاسم موجودًا في النص
+                if (recipientTag.textContent.toLowerCase().includes(filter)) {
+                    messages[i].style.display = ''; // إظهار الرسالة
+                } else {
+                    messages[i].style.display = 'none'; // إخفاء الرسالة
+                }
+            }
+        }
+
+    </script>
 
 </body>
 

@@ -671,12 +671,16 @@ body {
     border-radius: 10px;
     background-color: #dcf8c6;
     flex: 1;
+    overflow-wrap: break-word; /* يسمح بكسر الكلمات الطويلة */
+    word-break: break-word; /* لكسر النصوص المتصلة في سطر جديد */
+
   }
 
   .message-box p, .message-box a {
     font-size: 14px;
     line-height: 1.4;
     margin: 0;
+
   }
 
   .message-date {
@@ -729,7 +733,7 @@ body {
   .chatbox-input i {
     font-size: 20px;
     color: #666;
-    margin: 0 10px;
+    margin: 10px 10px;
     cursor: pointer;
   }
 
