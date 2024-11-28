@@ -252,7 +252,7 @@
                                         <tr>
                                             <th scope="col">الرقم</th>
                                             <th scope="col">الإدارة</th>
-                                            <th scope="col">اسم المدير</th>
+                                            <th scope="col"> مدير الادارة</th>
                                             <th scope="col">الإجراءات</th>
                                         </tr>
                                     </thead>
@@ -265,7 +265,7 @@
                         
                         <div class="d-grid gap-2 d-md-flex justify-content-between">
                             <button type="submit" class="btn btn-primary py-3 w-100 mb-4 add-btn" onclick="createOrUpdateDepartment()">إضافة إدارة</button>
-                            <button type="button" class="btn btn-secondary py-3 w-0 mb-4" id="closeDialog">رجوع</button>
+                            <button type="button" class="btn btn-secondary py-3 w-0 mb-4" id="closeDialog" onclick="closeDialog()">رجوع</button>
                         </div>
                        
                     </div>
@@ -359,9 +359,36 @@
 
 <!-- JavaScript for Open Add/Edit Dialog -->
 <script>
-    let isEditMode = false;
+   
     let currentDepartmentId = null; // لحفظ معرف الإدارة عند التعديل
-  
+    function closeDialog() {
+    // إخفاء الـ Dialog
+    const dialog = document.getElementById('dialog');
+    if (dialog) {
+        dialog.style.display = 'none';
+    } else {
+        console.error("لم يتم العثور على عنصر الـ Dialog.");
+    }
+
+    // تفريغ الحقول
+    const departmentNameInput = document.getElementById('departementName');
+    const managerSelect = document.getElementById('managerName');
+
+    if (departmentNameInput) {
+        departmentNameInput.value = ''; // تفريغ حقل اسم الإدارة
+    }
+
+    if (managerSelect) {
+        managerSelect.value = ''; // إعادة تعيين اختيار المدير
+    }
+
+    // يمكنك أيضًا إعادة الزر إلى وضع "إضافة" إذا كان ذلك مطلوبًا
+    const addButton = document.querySelector('.add-btn');
+    if (addButton) {
+        addButton.textContent = 'إضافة إدارة'; // إعادة نص الزر إلى "إضافة إدارة"
+    }
+}
+
     // دالة التأكيد وحذف الإدارة
     function deleteDepartment(departmentId) {
         Swal.fire({
@@ -411,7 +438,7 @@
         });
     }
 
-
+    
     // دالة لفتح النموذج للإضافة
     function openDialogForAdd() {
         isEditMode = false;
@@ -650,8 +677,303 @@ function loadDepartments() {
 }
 
 
+
+// وظيفة لجلب أسماء الموظفين من الملف fetch_employees.php
+    function loadEmployeeNames() {
+        fetch('php/fetch_employees.php') // تعديل المسار حسب موقع الملف
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('فشل في جلب أسماء الموظفين.');
+                }
+                return response.text();
+            })
+            .then(data => {
+                const select = document.getElementById('section-manager-select');
+                select.innerHTML = '<option value="">اختر مدير القسم</option>' + data;
+            })
+            .catch(error => {
+                console.error('حدث خطأ:', error);
+            });
+    }
+
+    // استدعاء الوظيفة عند تحميل الصفحة
+    document.addEventListener('DOMContentLoaded', loadEmployeeNames);
+   
+// استدعاء الدالة عند تحديد إدارة معينة
+function loadSectionsForDepartment(departmentId) {
+    fetchSections(departmentId);
+}
+
+// مثال: استدعاء الدالة لتحميل الأقسام لإدارة رقم 1
+document.addEventListener('DOMContentLoaded', () => loadSectionsForDepartment(1));
+
+// استدعاء الدالة عند تحميل الصفحة
+document.addEventListener('DOMContentLoaded', fetchSections);
+
+// استدعاء الدالة عند تحميل الصفحة
+document.addEventListener('DOMContentLoaded', fetchSections);
+
+
 </script>
 
+
+<script>
+
+function openUnits(sectionId) {
+    alert(`عرض الوحدات للقسم رقم: ${sectionId}`);
+}
+
+function closeSectionsDialog() {
+    resetButtonState();
+    document.getElementById('sectionsDialog').style.display = 'none';
+}
+
+function openSectionsDialog(departmentId, departmentName) {
+    // تحديث العنوان حسب اسم القسم
+    const dialogTitle = document.getElementById("departmentTitle");
+    if (dialogTitle) {
+        dialogTitle.textContent = `إدارة قسم ${departmentName}`;
+    }
+
+    // تعبئة الحقل المخفي الخاص برقم الإدارة
+    const departmentIdInput = document.getElementById("departmentId");
+    if (departmentIdInput) {
+        departmentIdInput.value = departmentId;
+    }
+
+    // عرض الـ Dialog
+    const dialog = document.getElementById("sectionsDialog");
+    if (dialog) {
+        dialog.style.display = "block"; // إظهار النافذة
+    } else {
+        console.error("Dialog element not found!");
+        return; // إنهاء الدالة في حال لم يتم العثور على الـ Dialog
+    }
+
+    // استدعاء صفحة جلب الأقسام
+    fetch(`php/fetch_section.php?department_id=${departmentId}`)
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error("حدث خطأ أثناء جلب الأقسام");
+            }
+            return response.text();
+        })
+        .then((html) => {
+            const tableBody = document.getElementById("sectionsTable");
+            if (tableBody) {
+                tableBody.innerHTML = html; // عرض الأقسام داخل الجدول
+            } else {
+                console.error("لم يتم العثور على عنصر الجدول sectionsTable.");
+            }
+        })
+        .catch((error) => {
+            console.error("خطأ أثناء جلب الأقسام:", error);
+            alert("حدث خطأ أثناء تحميل الأقسام. يرجى المحاولة لاحقاً.");
+        });
+
+        loadSections(departmentId);
+}
+
+let isEditMode = false; // تحديد الوضع الحالي (إضافة أو تعديل)
+let currentSectionId = null; // لتخزين رقم القسم أثناء التعديل
+function handleAction() {
+    const sectionName = document.getElementById('sectionName').value.trim(); // قيمة اسم القسم
+    const managerName = document.getElementById('section-manager-select').value.trim(); // اسم المدير
+    const departmentId = document.getElementById('departmentId').value.trim(); // رقم الإدارة
+
+    if (!sectionName) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'تنبيه',
+            text: 'يرجى إدخال اسم القسم.',
+            confirmButtonText: 'حسنًا',
+        });
+        return;
+    }
+
+    if (!departmentId) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'تنبيه',
+            text: 'يرجى اختيار الإدارة التي ينتمي إليها القسم.',
+            confirmButtonText: 'حسنًا',
+        });
+        return;
+    }
+
+    const url = isEditMode ? 'php/update_section.php' : 'php/add_section.php';
+    const formData = new FormData();
+
+    if (isEditMode) {
+        formData.append('section_id', currentSectionId); // إضافة رقم القسم إذا كنا في وضع التعديل
+    }
+    formData.append('section_name', sectionName);
+    formData.append('manager_name', managerName);
+    formData.append('department_id', departmentId);
+
+    fetch(url, {
+        method: 'POST',
+        body: formData,
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'تمت العملية بنجاح!',
+                    text: isEditMode ? 'تم تعديل القسم بنجاح.' : 'تمت إضافة القسم بنجاح.',
+                    confirmButtonText: 'حسنًا',
+                }).then(() => {
+                    resetButtonState(); // إعادة الزر إلى وضع الإضافة
+                    loadSections(departmentId); // تحديث الجدول
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'خطأ!',
+                    text: data.message,
+                    confirmButtonText: 'حسنًا',
+                });
+            }
+        })
+        .catch(error => {
+            console.error('حدث خطأ:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'خطأ في الاتصال!',
+                text: 'حدث خطأ أثناء محاولة الاتصال بالخادم.',
+                confirmButtonText: 'حسنًا',
+            });
+        });
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    loadSections();
+});
+
+function editSection(sectionId, sectionName, managerName) {
+    // تخزين رقم القسم للتعديل
+    currentSectionId = sectionId; 
+    isEditMode = true; // تغيير الوضع إلى تعديل
+
+    // تغيير نص الزر
+    const actionButton = document.getElementById('actionButton');
+    if (actionButton) {
+        actionButton.textContent = 'تعديل';
+    }
+
+    // تعبئة الحقول بالقيم
+    const sectionNameInput = document.getElementById('sectionName');
+    const managerSelect = document.getElementById('section-manager-select');
+
+    if (sectionNameInput) {
+        sectionNameInput.value = sectionName; // تعبئة اسم القسم
+    }
+
+    if (managerSelect) {
+        managerSelect.value = managerName; // تعبئة اسم المدير
+    }
+   
+}
+
+
+function deleteSection(section_id, department_id) {
+        Swal.fire({
+            title: 'هل أنت متأكد؟',
+            text: "لن تتمكن من استرجاع هذه البيانات بعد الحذف!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'نعم، حذف!',
+            cancelButtonText: 'إلغاء'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // طلب حذف الإدارة
+                fetch('php/delete_section.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: `section_id=${section_id }`
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        Swal.fire(
+                            'تم الحذف!',
+                            data.message,
+                            'success'
+                        );
+                        // إعادة تحميل الجدول بعد الحذف بنجاح
+                        loadSections(department_id);
+                    } else {
+                        Swal.fire(
+                            'خطأ!',
+                            data.message,
+                            'error'
+                        );
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    Swal.fire(
+                        'خطأ!',
+                        'حدث خطأ أثناء محاولة الحذف.',
+                        'error'
+                    );
+                });
+            }
+        });
+    }
+
+
+ function resetButtonState() {
+    isEditMode = false; // إعادة الوضع إلى الإضافة
+    currentSectionId = null; // إعادة تعيين رقم القسم
+
+    const actionButton = document.getElementById('actionButton');
+    if (actionButton) {
+        actionButton.textContent = 'إضافة'; // إعادة النص إلى "إضافة"
+    }
+
+    // تفريغ الحقول
+    document.getElementById('sectionName').value = '';
+    document.getElementById('section-manager-select').value = '';
+}
+
+function loadSections(departmentId) {
+    if (!departmentId) {
+        console.error("رقم الإدارة غير متوفر.");
+        return;
+    }
+
+    // إرسال طلب لجلب الأقسام باستخدام Fetch API
+    fetch(`php/fetch_section.php?department_id=${departmentId}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("حدث خطأ أثناء جلب الأقسام.");
+            }
+            return response.text();
+        })
+        .then(html => {
+            const tableBody = document.getElementById("sectionsTable");
+            if (tableBody) {
+                tableBody.innerHTML = html; // عرض الأقسام داخل الجدول
+            } else {
+                console.error("لم يتم العثور على عنصر الجدول sectionsTable.");
+            }
+        })
+        .catch(error => {
+            console.error("خطأ أثناء جلب الأقسام:", error);
+            Swal.fire({
+                icon: 'error',
+                title: 'خطأ',
+                text: 'حدث خطأ أثناء تحميل الأقسام. يرجى المحاولة لاحقاً.',
+                confirmButtonText: 'حسنًا',
+            });
+        });
+}
+
+</script>
         
     <!-- Dialog للأقسام -->
 <div class="dialog-overlay" id="sectionsDialog" style="display: none;">
@@ -663,75 +985,49 @@ function loadDepartments() {
 
             <!-- حقل إضافة قسم جديد -->
             <div class="form-floating mb-3">
+                <input type="hidden" id="departmentId" name="department_id">
                 <input type="text" class="form-control" id="sectionName" placeholder="أدخل اسم القسم">
                 <label for="sectionName">اسم القسم</label>
             </div>
 
-            <!-- اختيار مدير القسم -->
+           <!-- اختيار مدير القسم -->
             <div class="form-floating mb-3">
                 <div class="user-selection">
                     <select id="section-manager-select">
-            
-                    <option value="">اختر مدير القسم</option>
-                    <option value="employee1">الموظف 1</option>
-                    <option value="employee2">الموظف 2</option>
-                    <option value="employee3">الموظف 3</option>
-                </select>
-                <label for="sectionManagerSelect">مدير القسم</label>
-            </div>
-</div>
-            <!-- جدول الأقسام -->
+                        <option value="">اختر مدير القسم</option>
+                        <!-- سيتم تحميل الخيارات هنا ديناميكيًا -->
+                    </select>
+                   
+                </div>
+            </div><!-- جدول الأقسام -->
             <h6 class="mb-4">جدول الأقسام</h6>
-            <div class="table-responsive">
+            <div class="table-responsive" style="max-height: 200px; overflow-y: auto;">
                 <table class="table">
                     <thead>
                         <tr>
                             <th scope="col">الرقم</th>
                             <th scope="col">القسم</th>
+                            <th scope="col">رئيس القسم</th>
                             <th scope="col">الإجراءات</th>
                         </tr>
                     </thead>
                     <tbody id="sectionsTable">
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>قسم شؤون الموظفين</td>
-                            
-                            <td class="d-flex align-items-center">    
-                                <div class="btn-group">
-                                    
-                                <a href="#" class="btn btn-success custom-btn ms-2" onclick="openUnitDialog('قسم  شؤون الموظفين')">الوحدات</a>
-                                <a href="#" class="custom-btn-icon" onclick="editSection(' قسم  شؤون الموظفين ')">
-                                    <i class="fas fa-pencil-alt" style="color: #007bff;"></i> <!-- لون تعديل -->
-                                </a>
-                                <a href="#" class="custom-btn-icon" onclick="deleteSection('قسم شؤون الموظفين   ')">
-                                    <i class="fas fa-trash-alt" style="color: #dc3545;"></i> <!-- أيقونة حذف -->
-                                </a>
-                                </div>
-                            </td>  </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>قسم الخدمات والحركة</td>
-                            
-                            <td class="d-flex align-items-center">    
-                                <div class="btn-group">
-                                <a href="#" class="btn btn-success custom-btn ms-2" onclick="openUnitDialog('قسم الخدمات والحركة')">الوحدات</a>
-                                <a href="#" class="custom-btn-icon" onclick="editUnit(' قسم الخدمات والحركة ')">
-                                    <i class="fas fa-pencil-alt" style="color: #007bff;"></i> <!-- لون تعديل -->
-                                </a>
-                                <a href="#" class="custom-btn-icon" onclick="deleteUnit('قسم الخدمات والحركة  ')">
-                                    <i class="fas fa-trash-alt" style="color: #dc3545;"></i> <!-- أيقونة حذف -->
-                                </a>
-                                </div>
-                            </td>
-                            
-                        </tr>
+                        <!-- سيتم ملء هذا الجزء ديناميكيًا -->
                     </tbody>
                 </table>
             </div>
+            
 
             <!-- أزرار التحكم -->
             <div class="d-grid gap-2 d-md-flex justify-content-between">
-                <button type="button" class="btn btn-primary py-3 w-100 mb-4 " onclick="validateSectionForm()">إضافة</button>
+<!-- زر الإضافة/التعديل -->
+                <button 
+                    type="button" 
+                    id="actionButton" 
+                    class="btn btn-primary py-3 w-100 mb-4" 
+                    onclick="handleAction()">
+                    إضافة
+                </button>
                 <button type="button" class="btn btn-secondary py-3 w-0 mb-4" id="sectionsDialog" onclick="closeSectionsDialog()">رجوع</button>
             </div>
         </div>
