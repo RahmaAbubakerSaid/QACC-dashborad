@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $employee_id = intval($_GET['id']);
 
     // استعلام لجلب بيانات الفئة، تاريخ الإرسال، واسم الملف و المسار من جدول employee_files
-    $stmt = $conn->prepare("SELECT category, send_date, file_name, file_path FROM employee_files WHERE employee_id = ?");
+    $stmt = $conn->prepare("SELECT id,category, send_date, file_name, file_path FROM employee_files WHERE employee_id = ?");
     $stmt->bind_param("i", $employee_id);  // ربط الـ employee_id بالاستعلام
 
     // تنفيذ الاستعلام

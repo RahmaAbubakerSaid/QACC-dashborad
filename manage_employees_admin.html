@@ -252,62 +252,64 @@
             </nav>
             <!-- Navbar End -->
             <div id="employeeDialog" class="dialog-overlay">
-                <div class="dialog-content-main" style="max-height: 80vh; overflow-y: auto;width: 50%;">
+                <div class="dialog-content-main" style="max-height: 80vh; overflow-y: auto; width: 52%;">
                     <h2>الملف المعني</h2>
+                    <h6 id="employeeNameDialog">اسم الموظف</h6>
+
                     <div id="employeeDetails"></div>
+                    <form id="employeeFileForm" style="display: block;">
+                        <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
 
-                    <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
-                        <div class="mb-3">
-                            <label for="category">اختر الفئة:</label>
-                            <select id="category" required>
-                                <option value="">اختر فئة</option>
-                                <option value="التكليفات">التكليفات</option>
-                                <option value="الزيارات">الزيارات</option>
-                                <option value="تشكيل لجان">تشكيل لجان</option>
-                                <option value="تقارير الكفاءة السنوية">تقارير الكفاءة السنوية</option>
-                                <option value="قرارات ترقيات">قرارات ترقيات</option>
-                                <option value="الإجازات">الإجازات</option>
-                                <option value="أخرى">أخرى</option>
-                            </select>
-                        </div>
-                        <div class="form-container">
-                            <label for="imageInput">اختر صورة (يمكن اختيار عدة صور):</label><br>
-                            <input type="file" id="imageInput" accept="image/*" multiple required><br><br>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <input type="date" class="form-control" id="sendDate" placeholder="تاريخ الإرسال" required>
-                            <label for="sendDate">تاريخ الإرسال</label>
-                        </div>
+                            <!-- Employee's Table -->
+                            <div class="col-sm-12">
+                                <div class="bg-light rounded h-100 p-4">
+                                    <h6 class="mb-4">جدول بيانات الموظفين</h6>
 
-                        <div class="d-grid gap-2 d-md-flex justify-content-between">
-                            <button type="button" class="btn btn-primary py-3 w-100 mb-4" id="sendButton">إرسال</button>
-                            <button type="button" class="btn btn-secondary py-3 w-0 mb-4"
-                                id="closeDialog">إلغاء</button>
-                        </div>
+                                    <!-- حقل البحث عن تاريخ الإرسال -->
+                                    <div class="mb-3">
+                                        <label for="dateFilter" class="form-label">بحث بتاريخ الإرسال</label>
+                                        <input type="date" id="dateFilter" class="form-control" />
+                                    </div>
+                                    <script>
+                                        document.getElementById('dateFilter').addEventListener('input', function () {
+                                            const filterDate = this.value;
+                                            const table = document.getElementById('resultTable');
+                                            const rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
 
-                        <!-- Employee's Table -->
-                        <div class="col-sm-12">
-                            <div class="bg-light rounded h-100 p-4">
-                                <h6 class="mb-4">جدول بيانات الموظفين</h6>
-                                <div style="background-color: white;">
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered text-center" id="resultTable">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col">نوع الفئة</th>
-                                                    <th scope="col">تاريخ الإرسال</th>
-                                                    <th scope="col">الملفات</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <!-- سيتم إضافة بيانات الموظفين هنا -->
-                                            </tbody>
-                                        </table>
+                                            for (let i = 0; i < rows.length; i++) {
+                                                const dateCell = rows[i].cells[1].innerText; // تاريخ الإرسال
+                                                if (filterDate === '' || dateCell === filterDate) {
+                                                    rows[i].style.display = ''; // إظهار الصف
+                                                } else {
+                                                    rows[i].style.display = 'none'; // إخفاء الصف
+                                                }
+                                            }
+                                        });
+                                    </script>
+                                    <div style="background-color: white;">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered text-center" id="resultTable">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">نوع الفئة</th>
+                                                        <th scope="col">تاريخ الإرسال</th>
+                                                        <th scope="col">الملفات</th>
+                                                        <th scope="col">الإجراء</th> <!-- عمود الحذف -->
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <!-- سيتم إضافة بيانات الموظفين هنا -->
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="d-grid gap-2 d-md-flex justify-content-end">
+                                        <button type="button" class="btn btn-secondary py-2 w-0 mb-4"
+                                            style="margin-top: 20px;" id="closeDialog">رجوع</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
                 </div>
             </div>
             <!-- Start Content-->
@@ -339,6 +341,7 @@
                                         <thead>
                                             <tr>
                                                 <th scope="col">رقم</th>
+                                                <th scope="col">الملف المعني</th>
                                                 <th scope="col">رقم الموظف</th>
                                                 <th scope="col">اسم الموظف الكامل</th>
                                                 <th scope="col"> اسم الأم </th>
@@ -467,6 +470,7 @@
                 // إضافة خلايا البيانات إلى الصف
                 row.innerHTML = `
                     <td>${employee.id}</td>
+                    <td><a href="#" class="btn btn-success custom-btn-main openDialogTable" data-employee-id="${employee.id}" data-employee-name = "${employee.name}">الملف المعني</a></td>
                     <td>${employee.employee_number}</td>
                     <td>${employee.name}</td>
                     <td>${employee.mother_name}</td>
@@ -518,6 +522,183 @@
                 // إضافة الصف إلى الجدول
                 tableBody.appendChild(row);
             });
+            // إضافة حدث للنقر على "الملف المعني"
+            document.querySelectorAll('.openDialogTable').forEach(button => {
+                button.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    currentEmployeeId = this.getAttribute('data-employee-id');  // حفظ الـ employee_id
+                    currentEmployeeName = this.getAttribute('data-employee-name');
+                    openEmployeeDialog(currentEmployeeId, currentEmployeeName);  // فتح مربع الحوار مع الـ employee_id
+                });
+            });
+
+        }
+
+// دالة لتصفير محتويات الـ dialog
+function resetEmployeeDialog() {
+    // إعادة تعيين اسم الموظف في الـ dialog إلى النص الافتراضي
+    document.getElementById('employeeNameDialog').textContent = 'اسم الموظف';
+
+    // مسح محتويات التفاصيل الخاصة بالموظف
+    document.getElementById('employeeDetails').innerHTML = '';
+
+    // مسح جدول بيانات الموظفين
+    const resultTableBody = document.getElementById('resultTable').getElementsByTagName('tbody')[0];
+    if (resultTableBody) {
+        resultTableBody.innerHTML = ''; // مسح جميع الصفوف في الجدول
+    }
+
+    // إعادة تعيين فلتر التاريخ إلى قيمته الافتراضية
+    const dateFilterInput = document.getElementById('dateFilter');
+    if (dateFilterInput) {
+        dateFilterInput.value = ''; // إعادة تعيين تاريخ الفلتر إلى القيمة الافتراضية
+    }
+
+    // إعادة تعيين النموذج إذا كان موجودًا
+    const employeeFileForm = document.getElementById('employeeFileForm');
+    if (employeeFileForm) {
+        employeeFileForm.reset(); // إعادة تعيين المدخلات في النموذج
+    }
+}
+
+        // إضافة مستمعات الأحداث بشكل منفصل عند تحميل الصفحة
+        document.getElementById('closeDialog').addEventListener('click', function () {
+            document.getElementById('employeeDialog').style.display = 'none';
+            //location.reload()
+            resetEmployeeDialog();
+        });
+
+        window.addEventListener('click', function (event) {
+            if (event.target === document.getElementById('employeeDialog')) {
+                document.getElementById('employeeDialog').style.display = 'none';
+                //location.reload()
+                resetEmployeeDialog();
+            }
+        });
+
+
+        // فتح مربع الحوار للموظف
+        function openEmployeeDialog(currentEmployeeId, currentEmployeeName) {
+            document.getElementById('employeeDialog').style.display = 'block'; // فتح النافذة
+            //alert(currentEmployeeName); // عرض الـ ID في الـ alert (يمكنك تعديل هذا لاحقًا)
+            document.getElementById('employeeNameDialog').textContent = currentEmployeeName // استبدل 'name' بالمفتاح الصحيح
+
+            // جلب البيانات الخاصة بالموظف من قاعدة البيانات
+            fetch(`php/get_employee_files.php?id=${currentEmployeeId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        displayEmployeeFiles(data.files); // عرض البيانات في الجدول
+                    } else {
+                        // alert('خطأ في استرجاع البيانات: ' + data.message);
+                        displayEmployeeFiles([]); // عرض جدول فارغ
+                        Swal.fire({
+                            icon: 'warning',
+                            title: '<strong style="font-size: 20px;">بالنظر إلى السجلات، </strong>',   // أيقونة التحذير
+                            text: data.message,  // نص التنبيه
+                            confirmButtonText: 'حسنًا',     // نص زر التأكيد
+                            confirmButtonColor: '#D1A237',
+                            allowOutsideClick: false,        // منع الإغلاق عند النقر على الخلفية
+                            backdrop: true                   // إضافة خلفية سوداء
+                        }).then(() => {
+                    // إخفاء الجدول عند ظهور الرسالة
+                    displayEmployeeFiles([]); // عرض جدول فارغ
+                });
+            }
+        })
+        .catch(error => {
+            console.error('خطأ:', error);
+            alert('حدث خطأ غير متوقع: ' + error.message);
+        });
+        }
+
+
+        // دالة لعرض الملفات المرسلة في الجدول
+        function displayEmployeeFiles(files) {
+            if (!files || !Array.isArray(files)) {
+                console.error('البيانات غير صالحة أو فارغة:', files);
+                return;
+            }
+
+            const tableBody = document.getElementById('resultTable').getElementsByTagName('tbody')[0];
+            tableBody.innerHTML = ''; // مسح الجدول قبل إضافة البيانات الجديدة
+
+            files.forEach(file => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+            <td>${file.category}</td>
+            <td>${file.send_date}</td>
+            <td>
+                <a href="${file.file_path}" target="_blank">
+                    <img src="${file.file_path}" alt="${file.file_name}" style="width: 50px; height: 50px; object-fit: cover;">
+                </a>
+            </td>
+            <td>
+            <button type="button" class="btn btn-danger custom-btn-main m-2" 
+                onclick="
+                    Swal.fire({
+                        icon: 'question',
+                        text: 'هل أنت متأكد أنك تريد حذف هذا الملف؟',
+                        showCancelButton: true,
+                        confirmButtonColor: '#dc3545',
+                        cancelButtonColor: '#6c757d',
+                        cancelButtonText: 'إلغاء',
+                        confirmButtonText: 'نـعـم'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            deleteFile(${file.id}); // استدعاء دالة الحذف
+                        }
+                    });
+                ">
+                حذف
+            </button>
+            </td>
+        `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        // دالة حذف الملف
+        function deleteFile(fileId) {
+            fetch('php/delete_employee_file.php', {
+                method: 'DELETE', // استخدام طريقة DELETE لحذف الملف
+                headers: {
+                    'Content-Type': 'application/json',  // نحدد أن البيانات المرسلة هي JSON
+                },
+                body: JSON.stringify({ id: fileId })  // إرسال بيانات الملف في الجسم
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'تم الحذف بنجاح!',
+                            confirmButtonText: 'حسنًا',
+                            confirmButtonColor: '#28a745',
+                        }).then(() => {
+                            // بعد الحذف، قم بإعادة تحميل الملفات
+                            openEmployeeDialog(currentEmployeeId, currentEmployeeName);
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'فشل الحذف',
+                            text: data.message,
+                            confirmButtonText: 'حسنًا',
+                            confirmButtonColor: '#dc3545',
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('حدث خطأ أثناء الحذف:', error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'خطأ غير متوقع',
+                        text: 'حدث خطأ أثناء الحذف، حاول مرة أخرى.',
+                        confirmButtonText: 'حسنًا',
+                        confirmButtonColor: '#dc3545',
+                    });
+                });
         }
 
         // استدعاء وظيفة تحميل البيانات عند تحميل الصفحة
@@ -528,16 +709,17 @@
     </script>
 
     <script>
-    //هذا الكود يحتوي على دالة printTable()
-    //تمكن المسنخدم من طباعة بيانات الموظفين مع صناديق للتحكم في ظهور الأعمدة في الطباعة
-    function printTable() {
-        //استخراج محتوى الجدول
-        const tableContent = document.getElementById('addEmployeeData').outerHTML;
-        //فتح نافذة جديدة وتحديد عرض طول لها
-        const newWindow = window.open('', '', 'width=800, height=600');
+        //هذا الكود يحتوي على دالة printTable()
+        //تمكن المسنخدم من طباعة بيانات الموظفين مع صناديق للتحكم في ظهور الأعمدة في الطباعة
+        function printTable() {
+            event.preventDefault();
+            //استخراج محتوى الجدول
+            const tableContent = document.getElementById('addEmployeeData').outerHTML;
+            //فتح نافذة جديدة وتحديد عرض طول لها
+            const newWindow = window.open('', '', 'width=800, height=600');
 
-        // بدء كتابة محتوى النافذة الجديدة
-        newWindow.document.write(`
+            // بدء كتابة محتوى النافذة الجديدة
+            newWindow.document.write(`
             <html>
             <head>
                 <title>طباعة الجدول</title>
@@ -592,67 +774,67 @@
             </body>
             </html>
         `);
-        //هذه الوظيفة تُغلق مستند
-        //html
-        //الذي تم كتابته في النافذة الجديدة، مما يعني أن المحتوى قد اكتمل ويمكن للنافذة أن تظهر
-        newWindow.document.close();
+            //هذه الوظيفة تُغلق مستند
+            //html
+            //الذي تم كتابته في النافذة الجديدة، مما يعني أن المحتوى قد اكتمل ويمكن للنافذة أن تظهر
+            newWindow.document.close();
 
-    
-        //بعدما تحميل المحتوى وجلب البيانات نفذ الكود
-        newWindow.onload = function () {
-            //يحدد جميع رؤوس الأعمدة في الجدول داخل النافذة الجديدة
-            //هو مصفوفة تحتوي على جميع العناصر من نوع <th> في الجدول في النافذة الجديدة.
-            const columns = newWindow.document.querySelectorAll('#addEmployeeData th');
-            //إنشاء مصفوفة لتخزين صناديق الاختيار (Checkboxes) التي سيتم إنشاؤها لكل عمود.
-            const checkboxes = [];
 
-            //الهدف: تكرار كل رأس عمود في المصفوفة columns، وتنفيذ الكود داخل الدالة على كل عمود.
-            //يشير إلى العنصر الحالي (رأس العمود <th>) في الدورة الحالية.
-            //هو فهرس (رقم) العنصر الحالي في المصفوفة (أي رقم العمود).
-            columns.forEach((col, index) => {
-                //يتم إنشاء عنصر HTML جديد من النوع <input>. هذا العنصر سيكون صندوق اختيار (Checkbox).
-                const checkbox = newWindow.document.createElement('input');
-                checkbox.type = 'checkbox';
-                checkbox.checked = true; // افتراضياً يتم تحديدها
-                //يتم إنشاء معرّف فريد لكل صندوق اختيار باستخدام index، مثل 'col0', 'col1', وهكذا. هذا يساعد في التمييز بين صناديق الاختيار المختلفة.
-                checkbox.id = 'col' + index;
+            //بعدما تحميل المحتوى وجلب البيانات نفذ الكود
+            newWindow.onload = function () {
+                //يحدد جميع رؤوس الأعمدة في الجدول داخل النافذة الجديدة
+                //هو مصفوفة تحتوي على جميع العناصر من نوع <th> في الجدول في النافذة الجديدة.
+                const columns = newWindow.document.querySelectorAll('#addEmployeeData th');
+                //إنشاء مصفوفة لتخزين صناديق الاختيار (Checkboxes) التي سيتم إنشاؤها لكل عمود.
+                const checkboxes = [];
 
-                checkbox.onchange = function() {
-                    //التغيير سيتم داخل الجدول addEmployeeData
-                    //td:nth-child(' + (index + 1) + ')
-                    //nth-child(n): هي طريقة لاختيار العنصر بناءً على ترتيبه داخل عنصر آخر.
-                    //هذا الجزء من المحدد يبحث عن جميع الخلايا (<td>) في العمود الحالي.
-                    //على سبيل المثال، إذا كان index = 0 (العمود الأول):
-                    //#addEmployeeData tr td:nth-child(1): ستختار جميع الخلايا في العمود الأول.
-                    //#addEmployeeData tr th:nth-child(1): ستختار رأس العمود الأول.
-                    //cells: هو متغير يحتوي على جميع الخلايا في العمود المقابل لصندوق الاختيار الذي تم تغييره.
-                    const cells = newWindow.document.querySelectorAll(
-                        '#addEmployeeData tr td:nth-child(' + (index + 1) + '), #addEmployeeData tr th:nth-child(' + (index + 1) + ')'
-                    );
-                    //الهدف: إظهار أو إخفاء الخلايا في العمود بناءً على حالة صندوق الاختيار.
-                    cells.forEach(cell => {
-                        if (this.checked) {
-                            cell.classList.remove('hidden');
-                        } else {
-                            cell.classList.add('hidden');
-                        }
-                    });
-                };
+                //الهدف: تكرار كل رأس عمود في المصفوفة columns، وتنفيذ الكود داخل الدالة على كل عمود.
+                //يشير إلى العنصر الحالي (رأس العمود <th>) في الدورة الحالية.
+                //هو فهرس (رقم) العنصر الحالي في المصفوفة (أي رقم العمود).
+                columns.forEach((col, index) => {
+                    //يتم إنشاء عنصر HTML جديد من النوع <input>. هذا العنصر سيكون صندوق اختيار (Checkbox).
+                    const checkbox = newWindow.document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.checked = true; // افتراضياً يتم تحديدها
+                    //يتم إنشاء معرّف فريد لكل صندوق اختيار باستخدام index، مثل 'col0', 'col1', وهكذا. هذا يساعد في التمييز بين صناديق الاختيار المختلفة.
+                    checkbox.id = 'col' + index;
 
-                // إضافة صندوق الاختيار إلى رأس العمود
-                const label = newWindow.document.createElement('label');
-                label.htmlFor = 'col' + index;
-                label.textContent = col.textContent;
+                    checkbox.onchange = function () {
+                        //التغيير سيتم داخل الجدول addEmployeeData
+                        //td:nth-child(' + (index + 1) + ')
+                        //nth-child(n): هي طريقة لاختيار العنصر بناءً على ترتيبه داخل عنصر آخر.
+                        //هذا الجزء من المحدد يبحث عن جميع الخلايا (<td>) في العمود الحالي.
+                        //على سبيل المثال، إذا كان index = 0 (العمود الأول):
+                        //#addEmployeeData tr td:nth-child(1): ستختار جميع الخلايا في العمود الأول.
+                        //#addEmployeeData tr th:nth-child(1): ستختار رأس العمود الأول.
+                        //cells: هو متغير يحتوي على جميع الخلايا في العمود المقابل لصندوق الاختيار الذي تم تغييره.
+                        const cells = newWindow.document.querySelectorAll(
+                            '#addEmployeeData tr td:nth-child(' + (index + 1) + '), #addEmployeeData tr th:nth-child(' + (index + 1) + ')'
+                        );
+                        //الهدف: إظهار أو إخفاء الخلايا في العمود بناءً على حالة صندوق الاختيار.
+                        cells.forEach(cell => {
+                            if (this.checked) {
+                                cell.classList.remove('hidden');
+                            } else {
+                                cell.classList.add('hidden');
+                            }
+                        });
+                    };
 
-                col.innerHTML = ''; // مسح محتوى الرأس الحالي
-                col.appendChild(checkbox); // إضافة صندوق الاختيار
-                col.appendChild(label); // إضافة التسمية
-                checkboxes.push(checkbox);
-            });
+                    // إضافة صندوق الاختيار إلى رأس العمود
+                    const label = newWindow.document.createElement('label');
+                    label.htmlFor = 'col' + index;
+                    label.textContent = col.textContent;
 
-            newWindow.print(); // بدء الطباعة تلقائيًا عند تحميل النافذة
-        };
-    }
+                    col.innerHTML = ''; // مسح محتوى الرأس الحالي
+                    col.appendChild(checkbox); // إضافة صندوق الاختيار
+                    col.appendChild(label); // إضافة التسمية
+                    checkboxes.push(checkbox);
+                });
+
+                newWindow.print(); // بدء الطباعة تلقائيًا عند تحميل النافذة
+            };
+        }
 
 
         // Function to filter employees table based on input
@@ -663,7 +845,7 @@
             table = document.getElementById("addEmployeeData");
             tr = table.getElementsByTagName("tr");
             for (i = 0; i < tr.length; i++) {
-                td = tr[i].getElementsByTagName("td")[2]; // Filter by employee name in this case
+                td = tr[i].getElementsByTagName("td")[3]; // Filter by employee name in this case
                 if (td) {
                     txtValue = td.textContent || td.innerText;
                     if (txtValue.toUpperCase().indexOf(filter) > -1) {
