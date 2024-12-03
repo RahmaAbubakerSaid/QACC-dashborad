@@ -11,7 +11,7 @@ if ($result->num_rows > 0) {
         echo "<tr>";
         echo "<th scope='row'>" . $counter++ . "</th>";
         echo "<td>" . htmlspecialchars($row['department_name']) . "</td>";
-        echo "<td>" . htmlspecialchars($row['manager_name']) . "</td>";
+        echo "<td>" . (!empty($row['manager_name']) ? htmlspecialchars($row['manager_name']) : 'غير محدد') . "</td>";
         echo "<td class='d-flex align-items-center'>
                 <div class='btn-group'>
 

@@ -21,7 +21,11 @@ if (isset($_GET['department_id']) && is_numeric($_GET['department_id'])) {
                 echo "<td>" . (!empty($row['manager_name']) ? htmlspecialchars($row['manager_name']) : "غير محدد") . "</td>";
                 echo "<td class='d-flex align-items-center'>
                         <div class='btn-group'>
-                            <a href='#' class='btn btn-success custom-btn' onclick='openUnits(\"" . $row['section_id'] . "\")'>الوحدات</a>
+                                                    
+                     <a href='#' class='btn btn-success custom-btn' 
+                        onclick='openUnitDialog(" . $row['section_id'] . ", \"" . addslashes($row['section_name']) . "\")'>
+                        الوحدات
+                        </a>
                           <a href='#' class='custom-btn-icon' onclick='editSection(\"" . $row['section_id'] . "\", \"" . htmlspecialchars($row['section_name']) . "\", \"" . htmlspecialchars($row['manager_name']) . "\")'>
                                 <i class='fas fa-pencil-alt' style='color: #007bff;'></i>
                             </a>
