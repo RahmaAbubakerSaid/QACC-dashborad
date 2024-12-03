@@ -11,13 +11,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $created_by = $_POST['created_by'];
 
     // التعامل مع الملفات
-    $upload_dir = 'uploads/';  // المجلد الذي سيتم تخزين الصور فيه
+    $upload_dir = $_SERVER['DOCUMENT_ROOT'] . '/QACC-dashborad/employeeFiles/';  // المجلد الذي سيتم تخزين الصور فيه على الخادم
     $uploaded_files = [];  // مصفوفة لحفظ الملفات المحملة
 
     // عنوان URL للوصول إلى المجلد عبر الإنترنت
-    //$base_url = 'http://example.com/php/uploads/'; // استبدل هذا بعنوان موقعك الفعلي
-    $base_url = 'php/uploads/'; // استبدل هذا بعنوان موقعك الفعلي
-
+    $base_url = 'http://localhost/QACC-dashborad/employeeFiles/'; // استبدال الرابط ليعكس المسار الصحيح عبر الإنترنت
 
     // التحقق من الملفات المحملة
     if (isset($_FILES['images']) && is_array($_FILES['images']['name'])) {
@@ -61,3 +59,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 // إغلاق الاتصال
 $conn->close();
 ?>
+

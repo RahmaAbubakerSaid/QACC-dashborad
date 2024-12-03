@@ -911,19 +911,63 @@
 
         }
 
+        // دالة لتصفير محتويات الـ dialog
+        function resetEmployeeDialog() {
+            // إعادة تعيين اسم الموظف في الـ dialog إلى النص الافتراضي
+            document.getElementById('employeeNameDialog').textContent = 'اسم الموظف';
 
+            // مسح محتويات التفاصيل الخاصة بالموظف
+            document.getElementById('employeeDetails').innerHTML = '';
+
+            // مسح جدول بيانات الموظفين
+            const resultTableBody = document.getElementById('resultTable').getElementsByTagName('tbody')[0];
+            if (resultTableBody) {
+                resultTableBody.innerHTML = ''; // مسح جميع الصفوف في الجدول
+            }
+
+            // إعادة تعيين فلتر التاريخ إلى قيمته الافتراضية
+            const dateFilterInput = document.getElementById('sendDate');
+            if (dateFilterInput) {
+                dateFilterInput.value = ''; // إعادة تعيين تاريخ الفلتر إلى القيمة الافتراضية
+            }
+
+            // إعادة تعيين الفئة المختارة إلى القيمة الافتراضية
+            const categorySelect = document.getElementById('category');
+            if (categorySelect) {
+                categorySelect.selectedIndex = 0; // إعادة تعيين الفئة المختارة إلى "اختر فئة"
+            }
+
+            // إعادة تعيين صورة المدخلات (إزالة الصور المختارة)
+            const imageInput = document.getElementById('imageInput');
+            if (imageInput) {
+                imageInput.value = ''; // مسح الصور المختارة
+            }
+
+            // مسح معاينة الصور (إذا كانت موجودة)
+            const imagePreviewContainer = document.getElementById('imagePreview');
+            if (imagePreviewContainer) {
+                imagePreviewContainer.innerHTML = ''; // مسح جميع المعاينات
+            }
+
+            // إعادة تعيين النموذج إذا كان موجودًا
+            const employeeFileForm = document.getElementById('employeeFileForm');
+            if (employeeFileForm) {
+                employeeFileForm.reset(); // إعادة تعيين المدخلات في النموذج
+            }
+        }
 
         // إضافة مستمعات الأحداث بشكل منفصل عند تحميل الصفحة
         document.getElementById('closeDialog').addEventListener('click', function () {
             document.getElementById('employeeDialog').style.display = 'none';
-            location.reload()
+            //location.reload()
+            resetEmployeeDialog();
         });
 
         window.addEventListener('click', function (event) {
             if (event.target === document.getElementById('employeeDialog')) {
                 document.getElementById('employeeDialog').style.display = 'none';
-                location.reload()
-
+                //location.reload()
+                resetEmployeeDialog();
             }
         });
 
@@ -931,7 +975,7 @@
         // فتح مربع الحوار للموظف
         function openEmployeeDialog(currentEmployeeId, currentEmployeeName) {
             document.getElementById('employeeDialog').style.display = 'block'; // فتح النافذة
-            alert(currentEmployeeName); // عرض الـ ID في الـ alert (يمكنك تعديل هذا لاحقًا)
+            //alert(currentEmployeeName); // عرض الـ ID في الـ alert (يمكنك تعديل هذا لاحقًا)
             document.getElementById('employeeNameDialog').textContent = currentEmployeeName // استبدل 'name' بالمفتاح الصحيح
 
             // جلب البيانات الخاصة بالموظف من قاعدة البيانات
@@ -942,6 +986,7 @@
                         displayEmployeeFiles(data.files); // عرض البيانات في الجدول
                     } else {
                         // alert('خطأ في استرجاع البيانات: ' + data.message);
+                        displayEmployeeFiles([]); // عرض جدول فارغ
                         Swal.fire({
                             icon: 'warning',
                             title: '<strong style="font-size: 20px;">بالنظر إلى السجلات، </strong>',   // أيقونة التحذير
