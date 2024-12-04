@@ -58,67 +58,67 @@ if ($stmt = $conn->prepare($query)) {
             $data[$departmentId]['sections'][$sectionId]['units'][] = $row['unit_name'];
         }
     }
+// عرض الجدول
+echo '<div class="table-responsive" style="width: 100%; margin: 20px auto;">';
+echo '<table class="table" style="border-collapse: collapse; width: 100%; font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;">';
+echo '<thead style="text-align: center;">';
+echo '<tr>';
+echo '<th scope="col" style="padding: 15px; text-align: center; border-bottom: 1px solid #ccc; border-left: 1px solid #ccc;">الإدارة</th>';
+echo '<th scope="col" style="padding: 15px; text-align: center; border-bottom: 1px solid #ccc; border-left: 1px solid #ccc;">القسم</th>';
+echo '<th scope="col" style="padding: 15px; text-align: center; border-bottom: 1px solid #ccc;">الوحدة</th>';
+echo '</tr>';
+echo '</thead>';
+echo '<tbody>';
 
-    // عرض الجدول
-    echo '<div class="table-responsive" style="max-width: 90%; margin: 20px auto;">';
-    echo '<table class="table" style="border-collapse: collapse; width: 100%; font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; border: 1px  #555;">';
-    echo '<thead style="background-color: #f8f9fa; color: #555; text-align: center;">';
-    echo '<tr>';
-    echo '<th scope="col" style="padding: 15px; text-align: center;">الإدارة</th>';
-    echo '<th scope="col" style="padding: 15px; text-align: center; border-right: 1px solid #ccc;">القسم</th>';
-    echo '<th scope="col" style="padding: 15px; text-align: center; border-right: 1px solid #ccc;">الوحدة</th>';
-    echo '</tr>';
-    echo '</thead>';
-    echo '<tbody>';
+foreach ($data as $departmentId => $department) {
+    $departmentRowspan = 0;
+    foreach ($department['sections'] as $section) {
+        $departmentRowspan += max(1, count($section['units']));
+    }
 
-    foreach ($data as $departmentId => $department) {
-        $departmentRowspan = 0;
-        foreach ($department['sections'] as $section) {
-            $departmentRowspan += max(1, count($section['units']));
-        }
+    $firstDepartmentRow = true;
+    foreach ($department['sections'] as $sectionId => $section) {
+        $sectionRowspan = max(1, count($section['units']));
+        $firstSectionRow = true;
 
-        $firstDepartmentRow = true;
-        foreach ($department['sections'] as $sectionId => $section) {
-            $sectionRowspan = max(1, count($section['units']));
-            $firstSectionRow = true;
+        if (empty($section['units'])) {
+            echo '<tr>';
+            if ($firstDepartmentRow) {
+                echo '<td rowspan="' . $departmentRowspan . '" style="padding: 15px; text-align: center; border-bottom: 1px solid #ccc; border-left: 1px solid #ccc;">' . $department['name'] . '</td>';
+                $firstDepartmentRow = false;
+            }
 
-            if (empty($section['units'])) {
+            if ($firstSectionRow) {
+                echo '<td rowspan="' . $sectionRowspan . '" style="padding: 15px; text-align: center; border-bottom: 1px solid #ccc; border-left: 1px solid #ccc;">' . $section['name'] . '</td>';
+                $firstSectionRow = false;
+            }
+
+            echo '<td style="padding: 15px; text-align: center; border-bottom: 1px solid #ccc;">لا يوجد</td>';
+            echo '</tr>';
+        } else {
+            foreach ($section['units'] as $unit) {
                 echo '<tr>';
                 if ($firstDepartmentRow) {
-                    echo '<td rowspan="' . $departmentRowspan . '" style="padding: 15px; text-align: center; background-color: #f8f9fa;">' . $department['name'] . '</td>';
+                    echo '<td rowspan="' . $departmentRowspan . '" style="padding: 15px; text-align: center; border-bottom: 1px solid #ccc; border-left: 1px solid #ccc;">' . $department['name'] . '</td>';
                     $firstDepartmentRow = false;
                 }
 
                 if ($firstSectionRow) {
-                    echo '<td rowspan="' . $sectionRowspan . '" style="padding: 15px; text-align: center; background-color: #f8f9fa; border-right: 1px solid #ccc;">' . $section['name'] . '</td>';
+                    echo '<td rowspan="' . $sectionRowspan . '" style="padding: 15px; text-align: center; border-bottom: 1px solid #ccc; border-left: 1px solid #ccc;">' . $section['name'] . '</td>';
                     $firstSectionRow = false;
                 }
 
-                echo '<td style="padding: 15px; text-align: center; background-color: #f8f9fa; border-right: 1px solid #ccc;">لا يوجد</td>';
+                echo '<td style="padding: 15px; text-align: center; border-bottom: 1px solid #ccc;">' . $unit . '</td>';
                 echo '</tr>';
-            } else {
-                foreach ($section['units'] as $unit) {
-                    echo '<tr>';
-                    if ($firstDepartmentRow) {
-                        echo '<td rowspan="' . $departmentRowspan . '" style="padding: 15px; text-align: center; background-color: #f8f9fa;">' . $department['name'] . '</td>';
-                        $firstDepartmentRow = false;
-                    }
-
-                    if ($firstSectionRow) {
-                        echo '<td rowspan="' . $sectionRowspan . '" style="padding: 15px; text-align: center; background-color: #f8f9fa; border-right: 1px solid #ccc;">' . $section['name'] . '</td>';
-                        $firstSectionRow = false;
-                    }
-
-                    echo '<td style="padding: 15px; text-align: center; background-color: #f8f9fa; border-right: 1px solid #ccc;">' . $unit . '</td>';
-                    echo '</tr>';
-                }
             }
         }
     }
+}
 
-    echo '</tbody>';
-    echo '</table>';
-    echo '</div>';
+echo '</tbody>';
+echo '</table>';
+echo '</div>';
+
 
     $stmt->close();
 } else {

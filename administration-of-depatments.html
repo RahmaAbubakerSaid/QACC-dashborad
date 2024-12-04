@@ -276,7 +276,7 @@
             <div class="bg-light rounded h-100 p-4">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h6>جدول الإدارات</h6>
-                    <a href="reports.html" class="btn btn-success custom-btn-main" style="color: white;">
+                    <a href="reports_dep.html" class="btn btn-success custom-btn-main" style="color: white;">
                         التقارير
                     </a>
                 </div>
@@ -290,25 +290,26 @@
 <!-- Table End -->
 
 <script>
-    // استدعاء صفحة PHP وتحميلها داخل الـ Div
-    document.addEventListener("DOMContentLoaded", function () {
-        const tableContainer = document.getElementById("departments-table-container");
+   function loadDepartmentsTable() {
+    const tableContainer = document.getElementById("departments-table-container");
 
-        fetch("php/fetch_dep_section_unit.php") // تعديل المسار حسب اسم وموقع الملف
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error("فشل في تحميل الجدول.");
-                }
-                return response.text(); // تحويل الاستجابة إلى نص
-            })
-            .then(data => {
-                tableContainer.innerHTML = data; // تحميل البيانات داخل الـ Div
-            })
-            .catch(error => {
-                console.error("حدث خطأ أثناء تحميل الجدول:", error);
-                tableContainer.innerHTML = "<p>حدث خطأ أثناء تحميل الجدول. يرجى المحاولة لاحقاً.</p>";
-            });
-    });
+    fetch("php/fetch_dep_section_unit.php") // تعديل المسار حسب اسم وموقع الملف
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("فشل في تحميل الجدول.");
+            }
+            return response.text(); // تحويل الاستجابة إلى نص
+        })
+        .then(data => {
+            tableContainer.innerHTML = data; // تحميل البيانات داخل الـ Div
+        })
+        .catch(error => {
+            console.error("حدث خطأ أثناء تحميل الجدول:", error);
+            tableContainer.innerHTML = "<p>حدث خطأ أثناء تحميل الجدول. يرجى المحاولة لاحقاً.</p>";
+        });
+}
+document.addEventListener("DOMContentLoaded", loadDepartmentsTable);
+
 </script>
 
         </div>
@@ -348,6 +349,8 @@
         console.error("لم يتم العثور على عنصر الـ Dialog.");
     }
     resetDepartmentDialog();
+    // console.log("إعادة تحميل الجدول بعد إغلاق الـ Dialog");
+    loadDepartmentsTable();
    }
 function resetDepartmentDialog() {
     // إخفاء مربع الحوار
@@ -1256,37 +1259,6 @@ function loadUnits(sectionId) {
 
 
 
-<script>
-
-$(document).ready(function() {
-    // عند كتابة نص في حقل البحث
-    $('#search_input_unit_section_dep').on('input', function() {
-        var searchQuery = $(this).val(); // النص المدخل
-
-        // التأكد من أن النص المدخل ليس فارغًا أو أقل من 3 أحرف
-        if (searchQuery.length >= 3 || searchQuery.length === 0) {
-            // إرسال طلب AJAX
-            $.ajax({
-                url: 'search.php',  // اسم الملف الذي يحتوي على الكود PHP
-                method: 'GET',
-                data: { search: searchQuery },  // إرسال قيمة البحث
-                beforeSend: function() {
-                    // يمكن إضافة مؤشر تحميل أثناء الانتظار
-                    $(".table-responsive").html('<p>جاري التحميل...</p>');
-                },
-                success: function(response) {
-                    // عند الحصول على النتيجة بنجاح، نعرض الجدول
-                    $(".table-responsive").html(response);
-                },
-                error: function() {
-                    alert('حدث خطأ أثناء تحميل البيانات.');
-                }
-            });
-        }
-    });
-});
-
-</script>
     <!-- Dialog للأقسام -->
 <div class="dialog-overlay" id="sectionsDialog" style="display: none;">
     <div class="dialog-content">
