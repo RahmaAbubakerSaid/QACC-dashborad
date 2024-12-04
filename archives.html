@@ -218,11 +218,16 @@
                 </div>
 
                 <div class="right-container">
-                    <div class="header" style="display: flex; justify-content: space-between; align-items: center;">
-                        <h4>الدردشة</h4>
+                    <div class="header"
+                        style="display: flex; justify-content: flex-end; align-items: center; width: 100%;">
+                        <h4 style="margin-left: auto;">الدردشة</h4>
                         <!--<button class="btn btn-success custom-btn-main">تقارير</button>-->
+                        <a href="" class="btn btn-success custom-btn-main" onclick="">تحويل الصور إلى PDF</a>
+                        <!--<button class="btn btn-success custom-btn-main">تقارير</button>-->
+                        <a href="" class="btn btn-success custom-btn-main" style="margin-right: 10px;"
+                            onclick="">الأرشيف</a>
                         <a href="archives_reports.html" class="btn btn-success custom-btn-main"
-                            onclick="showDetails()">التقارير</a>
+                            style="margin-right: 10px;" onclick="showDetails()">التقارير</a>
                     </div>
 
                     <div class="chat-search-container">
@@ -232,19 +237,140 @@
                     <div class="chat-container" id="chatContainer">
                         <!-- الرسائل ستظهر هنا -->
                     </div>
-                    <div class="drop-area" id="dropArea">
-                        اسحب وإفلت المجلدات هنا
-                    </div>
                     <div class="chatbox-input">
                         <input type="text" id="messageInput" placeholder="اكتب رسالة...">
-                        <input type="file" id="fileInput" class="file-input" multiple />
+                        <input type="file" id="fileInput" class="file-input" />
                         <!-- webkitdirectory -->
                         <i class="fas fa-solid fa-paperclip" id="attachFile"></i>
+                        <!-- عرض تنبيه إذا كان هناك ملف مرفق -->
+                        <div id="fileAttachmentStatus" class="file-status"
+                            style="display: none; color: #0dcaf0; margin: 10px;">
+                            تم إرفاق ملف.
+                        </div>
+
+                        <script>
+                            // تحديث حالة المرفق عند تغيير الملف
+                            document.getElementById('fileInput').addEventListener('change', function () {
+                                const fileInput = document.getElementById('fileInput');
+                                const fileAttachmentStatus = document.getElementById('fileAttachmentStatus');
+
+                                // إذا تم اختيار ملف، إظهار التنبيه
+                                if (fileInput.files.length > 0) {
+                                    fileAttachmentStatus.style.display = 'block';
+                                } else {
+                                    fileAttachmentStatus.style.display = 'none';
+                                }
+                            });
+                        </script>
+
                         <i class="fas fa-solid fa-paper-plane" id="sendButton" onclick="sendMessage()"></i>
                     </div>
                 </div>
             </div>
             <!-- Table End -->
+
+
+
+            <!-- Archival's Dialog -->
+            <div class="dialog-overlay" id="dialog">
+                <div class="dialog-content-main" style="max-height: 80vh; overflow-y: auto; width: 45%;">
+                    <!-- Your dialog content goes here -->
+                    <h3>أرشفة الملفات</h3>
+
+                    <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
+                        <div class="d-flex flex-column align-items-center mb-3">
+                        </div>
+                        <div class="form-floating mb-3">
+                            <select id="archiveType" style="color: #757575;" required>
+                                <option selected disabled>اختر نوع الأرشفة</option>
+                                <option value="صادرة">صادرة</option>
+                                <option value="واردة">واردة</option>
+                            </select>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col">
+                                <div class="form-floating">
+                                    <input type="number" class="form-control" id="sequence" required
+                                        placeholder="أدخل التسلسل">
+                                    <label for="sequence">التسلسل</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-floating">
+                                    <input type="number" class="form-control" id="referenceNumber" required
+                                        placeholder="أدخل الرقم الإشاري">
+                                    <label for="referenceNumber">الرقم الإشاري</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col">
+                                <div class="form-floating">
+                                    <input type="date" class="form-control" id="date" required
+                                        placeholder="اختر التاريخ">
+                                    <label for="date">التاريخ</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-floating">
+                                    <input type="number" class="form-control" id="decisionNumber" required
+                                        placeholder="أدخل رقم القرار">
+                                    <label for="decisionNumber">رقم القرار</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="from" required placeholder="أدخل القسم/ من">
+                            <label for="from">القسم/ من</label>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="to" required
+                                placeholder="أدخل الجهة المعنية/ إلى">
+                            <label for="to">الجهة المعنية/ إلى</label>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <select id="documentType" style="color: #757575;" required>
+                                <option selected disabled>اختر نوع الوثيقة</option>
+                                <option value="استقالة">استقالة</option>
+                                <option value="تشكيل لجنة">تشكيل لجنة</option>
+                                <option value="تصريح اجازة">تصريح اجازة</option>
+                                <option value="تصريح بالتجول">تصريح بالتجول</option>
+                                <option value="تصريح نقل">تصريح نقل</option>
+                                <option value="تعميم">تعميم</option>
+                                <option value="تكليف">تكليف</option>
+                                <option value="عقد عمل">عقد عمل</option>
+                            </select>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="attachments" placeholder="أدخل المرفقات">
+                            <label for="attachments">المرفقات</label>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <textarea class="form-control" id="messageSubject" required placeholder="أدخل موضوع الرسالة"
+                                style="height: 150px;"></textarea>
+                            <label for="messageSubject">موضوع الرسالة</label>
+                        </div>
+
+
+                        <!-- Hidden Fields for File Name and File URL -->
+                        <input type="hidden" id="fileName">
+                        <input type="hidden" id="fileUrl">
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-between">
+                            <button type="submit" class="btn btn-primary py-3 w-100 mb-4">أرشفة</button>
+                            <button type="button" class="btn btn-secondary py-3 w-0 mb-4" id="closeDialog">رجوع</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
 
         </div>
         <!-- Content End -->
@@ -272,6 +398,11 @@
 
 
     <script>
+        // وظيفة لفتح حقل إدخال الملفات
+        document.getElementById('attachFile').addEventListener('click', function () {
+            document.getElementById('fileInput').click();
+        });
+
         // دالة لتحميل أسماء الموظفين
         function loadEmployeeList() {
             fetch('php/view_employees.php')  // الاتصال بملف PHP لاسترجاع البيانات
@@ -343,26 +474,21 @@
 
         function sendMessage() {
             const username = document.getElementById('userName').innerText;
-
             const messageInput = document.getElementById('messageInput');
             const selectedEmployees = Array.from(document.querySelectorAll('.employee-box input[type="checkbox"]:checked'))
                 .map(checkbox => checkbox.parentElement.getAttribute('data-employee-id'));
-
             const messageText = messageInput.value;
+            const fileInput = document.getElementById('fileInput');
+            const files = fileInput.files;
 
             // التحقق من أن حقل الرسالة غير فارغ
-            if (messageText.trim() === '') {
+            if (messageText.trim() === '' && files.length === 0) {
                 Swal.fire({
-                    icon: 'warning',               // أيقونة التحذير
-                    title: 'خطأ!',                 // عنوان التنبيه
-                    text: 'يرجى كتابة رسالة قبل الإرسال.',  // نص التنبيه
-                    confirmButtonText: 'حسنًا',     // نص زر التأكيد
-                    customClass: {
-                        confirmButton: 'btn btn-primary'  // تخصيص الزر إذا كنت تستخدم Bootstrap أو CSS
-                    },
-                    buttonsStyling: false,           // تعطيل التنسيق الافتراضي للأزرار
-                    allowOutsideClick: false,        // منع الإغلاق عند النقر على الخلفية
-                    backdrop: true                   // إضافة خلفية سوداء
+                    icon: 'warning',
+                    title: 'خطأ!',
+                    text: 'يرجى كتابة رسالة أو إرفاق ملف قبل الإرسال.',
+                    confirmButtonText: 'حسنًا',
+                    customClass: { confirmButton: 'btn btn-primary' }
                 });
                 return false;
             }
@@ -370,58 +496,55 @@
             // التحقق من أن مستخدمًا واحدًا على الأقل محدد
             if (selectedEmployees.length === 0) {
                 Swal.fire({
-                    icon: 'warning',               // أيقونة التحذير
-                    title: 'خطأ!',                 // عنوان التنبيه
-                    text: ' يرجى اختيار موظف واحد على الأقل لإرسال الرسالة.',  // نص التنبيه
-                    confirmButtonText: 'حسنًا',     // نص زر التأكيد
-                    customClass: {
-                        confirmButton: 'btn btn-primary'  // تخصيص الزر إذا كنت تستخدم Bootstrap أو CSS
-                    },
-                    buttonsStyling: false,           // تعطيل التنسيق الافتراضي للأزرار
-                    allowOutsideClick: false,        // منع الإغلاق عند النقر على الخلفية
-                    backdrop: true                   // إضافة خلفية سوداء
+                    icon: 'warning',
+                    title: 'خطأ!',
+                    text: 'يرجى اختيار موظف واحد على الأقل لإرسال الرسالة.',
+                    confirmButtonText: 'حسنًا',
+                    customClass: { confirmButton: 'btn btn-primary' }
                 });
                 return false;
             }
+            if (files.length > 0) {
+                // إخفاء التنبيه عن وجود مرفق بعد الإرسال
+                fileAttachmentStatus.style.display = 'none';
+            }
+            // إعداد البيانات لإرسالها باستخدام FormData لإرسال النص والملف
+            const formData = new FormData();
+            formData.append('username', username);
+            formData.append('employees', JSON.stringify(selectedEmployees));
+            formData.append('message', messageText);
 
-            // إعداد البيانات لإرسالها
-            const data = {
-                username: username,  // إضافة username إلى البيانات المرسلة
-                employees: selectedEmployees,
-                message: messageText
-            };
+            // إضافة الملفات إذا كانت موجودة
+            if (files.length > 0) {
+                for (let i = 0; i < files.length; i++) {
+                    formData.append('files[]', files[i]);
+                }
+            }
 
             // إرسال البيانات إلى الملف PHP
             fetch('php/send_messages.php', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
+                body: formData
             })
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        // عرض رسالة النجاح
                         loadMessages();
                         Swal.fire({
                             icon: 'success',
                             title: 'تم إرسال الرسالة بنجاح!',
                             confirmButtonText: 'حسنًا',
-                            customClass: {
-                                confirmButton: 'btn btn-primary'
-                            }
+                            customClass: { confirmButton: 'btn btn-primary' }
                         });
                         messageInput.value = ''; // مسح حقل الإدخال
+                        fileInput.value = ''; // مسح حقل الملفات
                     } else {
                         Swal.fire({
                             icon: 'error',
                             title: 'حدث خطأ',
                             text: data.message,
                             confirmButtonText: 'حسنًا',
-                            customClass: {
-                                confirmButton: 'btn btn-danger'
-                            }
+                            customClass: { confirmButton: 'btn btn-danger' }
                         });
                     }
                 })
@@ -432,13 +555,10 @@
                         title: 'حدث خطأ',
                         text: 'لم نتمكن من إرسال الرسالة. يرجى المحاولة لاحقًا.',
                         confirmButtonText: 'حسنًا',
-                        customClass: {
-                            confirmButton: 'btn btn-danger'
-                        }
+                        customClass: { confirmButton: 'btn btn-danger' }
                     });
                 });
         }
-
 
         // وظيفة لتحميل الرسائل من قاعدة البيانات وعرضها
         function loadMessages() {
@@ -450,7 +570,8 @@
                         chatContainer.innerHTML = ''; // تفريغ الرسائل القديمة
 
                         data.messages.forEach(message => {
-                            addMessage(message.message_text, message.employee_name, message.id, message.created_at);
+                            // تمرير الملف أيضًا إلى دالة addMessage
+                            addMessage(message.message_text, message.employee_name, message.id, message.created_at, message.file_url, message.file_name, message.archive_status);
                         });
                     } else {
                         console.error(data.message);
@@ -461,38 +582,110 @@
                 });
         }
 
+
         // وظيفة لإضافة الرسالة إلى واجهة المستخدم
-        function addMessage(text, recipient, messageId, createdAt) {
+        function addMessage(text, recipient, messageId, createdAt, fileUrl, fileName, archiveStatus) {
             const messageWrapper = document.createElement('div');
             messageWrapper.className = 'message-wrapper';
 
             const messageBox = document.createElement('div');
             messageBox.className = 'message-box';
-            messageBox.innerHTML = `<p><b>تم إرسال رسالة :</b></p><p>${text}</p>`;
 
+            // إضافة نص الرسالة
+            messageBox.innerHTML = `<p><b>تم إرسال رسالة :</b></p><p style="margin-top: 10px;">${text}</p>`;
+
+
+            // إذا كان هناك ملف مرفق، إظهار الرابط أو عرض الصورة إذا كان الملف صورة
+            if (fileUrl) {
+                const fileContainer = document.createElement('p');
+
+                // تحقق إذا كان الملف صورة (يمكنك تعديل الشروط حسب الحاجة)
+                const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp'];
+                const fileExtension = fileName.split('.').pop().toLowerCase();
+
+                if (imageExtensions.includes(fileExtension)) {
+                    // إذا كان الملف صورة، عرض الصورة داخل الرابط
+                    const imageLink = document.createElement('a');
+                    imageLink.href = fileUrl;
+                    imageLink.target = "_blank";
+                    const image = document.createElement('img');
+                    image.src = fileUrl;
+                    image.alt = fileName;
+                    image.style.width = '100px';  // تغيير الحجم حسب الحاجة
+                    image.style.height = '85px';
+                    image.style.objectFit = 'cover';
+                    imageLink.appendChild(image);
+                    fileContainer.appendChild(imageLink);
+                } else {
+                    // إذا لم يكن الملف صورة، عرض رابط التحميل
+                    const fileLink = document.createElement('a');
+                    fileLink.href = fileUrl;
+                    fileLink.target = "_blank";
+                    fileLink.innerHTML = fileName;
+                    fileLink.style.color = '#0dcaf0'; // تغيير اللون إلى اللون الأزرق لرابط الملف
+                    fileContainer.appendChild(fileLink);
+                }
+
+                messageBox.appendChild(fileContainer);
+            }
+
+            // إضافة المستلم إلى الرسالة
             const recipientTag = document.createElement('p');
             recipientTag.textContent = `إلى: ${recipient}`;
             recipientTag.style.fontWeight = 'bold';
+            recipientTag.style.marginTop = '10px'; // إضافة فراغ بين النصوص
+
             messageBox.appendChild(recipientTag);
 
+            // إضافة تاريخ الرسالة
             const messageDate = document.createElement('p');
             messageDate.className = 'message-date';
             messageDate.textContent = new Date(createdAt).toLocaleString('ar-EG', { hour: 'numeric', minute: 'numeric', day: 'numeric', month: 'numeric', year: 'numeric' });
             messageBox.appendChild(messageDate);
 
-            const deleteButton = document.createElement('span');
-            deleteButton.className = 'delete-message';
-            deleteButton.innerHTML = `<i class="fas fa-solid fa-trash"></i>`;
+            // زر الأرشفة فقط إذا كان هناك ملف مرفق
+            let archiveButton;
+            if (fileUrl) {
+                archiveButton = document.createElement('button');
+                archiveButton.className = 'btn btn-success custom-btn-main';
+                // التحقق من حالة الأرشفة وتغيير نص الزر
+                if (archiveStatus === 'مؤرشفة') {
+                    archiveButton.innerHTML = `تم الأرشفة`;
+                    archiveButton.disabled = true;  // تعطيل الزر إذا كانت الحالة مؤرشفة
+                } else {
+                    archiveButton.innerHTML = `غير مؤرشفة`;
+                }
+
+                archiveButton.onclick = function () {
+                    openArchiveDialog(fileName, fileUrl); // تعديل الدالة لتمرير حالة الأرشفة
+                };
+            }
+
+            // فاصل بين الأزرار
+            const separator = document.createElement('span');
+            separator.style.margin = '0 4px'; // تعيين الهوامش للفاصل
+
+            // زر الحذف
+            const deleteButton = document.createElement('button');
+            deleteButton.className = 'btn btn-danger custom-btn-main';
+            deleteButton.innerHTML = `حذف`;
             deleteButton.onclick = function () {
                 deleteMessage(messageId, messageWrapper);
             };
 
+            // إضافة العناصر إلى الرسالة
             messageWrapper.appendChild(messageBox);
+            if (archiveButton) {
+                messageWrapper.appendChild(archiveButton); // إضافة زر الأرشفة فقط إذا كان هناك ملف مرفق
+            }
+            messageWrapper.appendChild(separator);
             messageWrapper.appendChild(deleteButton);
 
+            // إضافة الرسالة إلى واجهة المستخدم
             const chatContainer = document.getElementById('chatContainer');
             chatContainer.prepend(messageWrapper);
         }
+
 
         // وظيفة حذف الرسالة
         function deleteMessage(messageId, messageWrapper) {
@@ -504,11 +697,11 @@
                 confirmButtonColor: '#D1A237',
                 cancelButtonColor: '#6c757d',
                 cancelButtonText: 'إلغاء',
-                confirmButtonText: 'نعم'   // تعطيل التنسيق الافتراضي للأزرار
+                confirmButtonText: 'نـعـم'   // تعطيل التنسيق الافتراضي للأزرار
             }).then((result) => {
                 if (result.isConfirmed) {
                     fetch('php/delete_messages.php', {
-                        method: 'DELETE', 
+                        method: 'DELETE',
                         headers: {
                             'Content-Type': 'application/json'
                         },
@@ -543,6 +736,131 @@
         document.addEventListener('DOMContentLoaded', (event) => {
             loadMessages(); // تحميل الرسائل عند بدء تشغيل الصفحة
         });
+
+
+
+        // وظيفة لفتح الـ Dialog الخاص بالأرشفة
+        function openArchiveDialog(fileName, fileUrl) {
+            const dialog = document.getElementById('dialog');
+            dialog.style.display = 'block';
+
+            // تعيين القيم للحقول المخفية
+            document.getElementById('fileName').value = fileName;
+            document.getElementById('fileUrl').value = fileUrl;
+
+
+        }
+
+
+        // إغلاق الـ Dialog عند الضغط على زر "رجوع"
+        document.getElementById('closeDialog').addEventListener('click', function () {
+            document.getElementById('dialog').style.display = 'none';
+        });
+
+        // إغلاق الـ Dialog عند الضغط على الخلفية السوداء
+        document.getElementById('dialog').addEventListener('click', function (event) {
+            if (event.target === document.getElementById('dialog')) {
+                document.getElementById('dialog').style.display = 'none';
+            }
+        });
+
+        // إرسال البيانات عبر AJAX عند الضغط على زر "أرشفة"
+        document.querySelector('button[type="submit"]').addEventListener('click', function (e) {
+            e.preventDefault(); // منع إرسال النموذج بالطريقة التقليدية
+
+            // جمع البيانات من الحقول
+            const username = document.getElementById('userName').innerText;
+            const fileName = document.getElementById('fileName').value;
+            const fileUrl = document.getElementById('fileUrl').value;
+            const archiveType = document.getElementById('archiveType').value;
+            const sequence = document.getElementById('sequence').value;
+            const referenceNumber = document.getElementById('referenceNumber').value;
+            const date = document.getElementById('date').value;
+            const decisionNumber = document.getElementById('decisionNumber').value;
+            const from = document.getElementById('from').value;
+            const to = document.getElementById('to').value;
+            const documentType = document.getElementById('documentType').value;
+            const attachments = document.getElementById('attachments').value;
+            const messageSubject = document.getElementById('messageSubject').value;
+
+            // التحقق من ملء جميع الحقول
+            if (!fileName || !fileUrl || !archiveType || !sequence || !referenceNumber || !date || !decisionNumber || !from || !to || !documentType || !attachments || !messageSubject) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: '<strong style="font-size: 20px;">يجب ملء جميع الحقول </strong>',   // أيقونة التحذير
+                    text: 'يجب عليك ملء جميع الحقول لتتمكن من أرشفة الملف',  // نص التنبيه
+                    confirmButtonText: 'حسنًا',     // نص زر التأكيد
+                    confirmButtonColor: '#D1A237',
+                    allowOutsideClick: false,        // منع الإغلاق عند النقر على الخلفية
+                    backdrop: true                   // إضافة خلفية سوداء
+                });
+                return; // إيقاف الإرسال إذا كان هناك حقل فارغ
+            }
+
+            // جمع البيانات في FormData
+            const formData = new FormData();
+            formData.append('created_by', username);  // إضافة اسم المستخدم إلى البيانات المرسلة
+            formData.append('fileName', fileName);
+            formData.append('fileUrl', fileUrl);
+            formData.append('archiveType', archiveType);
+            formData.append('sequence', sequence);
+            formData.append('referenceNumber', referenceNumber);
+            formData.append('date', date);
+            formData.append('decisionNumber', decisionNumber);
+            formData.append('from', from);
+            formData.append('to', to);
+            formData.append('documentType', documentType);
+            formData.append('attachments', attachments);
+            formData.append('messageSubject', messageSubject);
+
+            // إرسال البيانات إلى ملف PHP
+            fetch('php/archive_files.php', {
+                method: 'POST',
+                body: formData,
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        Swal.fire({
+                            icon: 'success',
+                            title: '<strong style="font-size: 20px;">تم الأرشفة بنجاح </strong>',   // أيقونة التحذير
+                            text: 'تم عملية أرشفة الملف بنجاح',  // نص التنبيه
+                            confirmButtonText: 'حسنًا',     // نص زر التأكيد
+                            confirmButtonColor: '#D1A237',
+                            allowOutsideClick: false,        // منع الإغلاق عند النقر على الخلفية
+                            backdrop: true                   // إضافة خلفية سوداء
+                        });
+
+                        loadMessages();
+
+                        document.getElementById('dialog').style.display = 'none'; // إغلاق الـ Dialog بعد الإرسال
+
+                        // إعادة تعيين الحقول
+                        document.getElementById('archiveType').selectedIndex = 0; // الخيار الأول (اختر نوع الأرشفة)
+                        document.getElementById('documentType').selectedIndex = 0; // الخيار الأول (اختر نوع الوثيقة)
+                        document.getElementById('sequence').value = '';
+                        document.getElementById('referenceNumber').value = '';
+                        document.getElementById('date').value = '';
+                        document.getElementById('decisionNumber').value = '';
+                        document.getElementById('from').value = '';
+                        document.getElementById('to').value = '';
+                        document.getElementById('attachments').value = '';
+                        document.getElementById('messageSubject').value = '';
+                        document.getElementById('fileName').value = '';
+                        document.getElementById('fileUrl').value = '';
+
+
+                    } else {
+                        alert('حدث خطأ أثناء الأرشفة');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('حدث خطأ أثناء إرسال البيانات');
+                });
+        });
+
+
         function filterMessages() {
             const input = document.getElementById('messageSearchInput');
             const filter = input.value.toLowerCase();

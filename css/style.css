@@ -668,6 +668,7 @@ body {
   .message-box {
     max-width: 60%;
     padding: 10px;
+    margin-left: 10px;
     border-radius: 10px;
     background-color: #dcf8c6;
     flex: 1;

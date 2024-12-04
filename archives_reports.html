@@ -230,7 +230,8 @@
                     <tr>
                         <th>ر.م</th>
                         <th>اسم الموظف</th>
-                        <th>الملف</th>
+                        <th>نص الرسالة</th>
+                        <th>اسم الملف</th>
                         <th>تاريخ الإرسال</th>
                         <th>تاريخ المشاهدة</th>
                         <th>حالة القراءة</th>
@@ -250,7 +251,7 @@
                                     // إذا كانت الرسالة تحتوي على "لا توجد بيانات"
                                     if (data.message) {
                                         const row = document.createElement('tr');
-                                        row.innerHTML = `<td colspan="6" style="text-align:center;">${data.message}</td>`;
+                                        row.innerHTML = `<td colspan="7" style="text-align:center;">${data.message}</td>`;
                                         tableBody.appendChild(row);
                                     } else {
                                         // إذا كانت هناك بيانات، نقوم بإنشاء الصفوف في الجدول
@@ -260,7 +261,8 @@
                                             row.innerHTML = `
                                             <td>${$counter++}</td>
                                             <td>${message.employee_name}</td>
-                                            <td>${message.file_column}</td>
+                                            <td>${message.message_text}</td>
+                                            <td>${message.file_name}</td>
                                             <td>${message.sent_date}</td>
                                             <td>${message.read_date}</td>
                                             <td>${message.read_status}</td>
@@ -300,7 +302,7 @@
             const nameFilter = nameInput.value.toLowerCase();
             const dateFilter = dateInput.value;
 
-            
+
             const table = document.querySelector('.employee-table');
             //الحصول على صفوف الجدول
             const rows = table.getElementsByTagName('tr');
@@ -320,7 +322,7 @@
 
                 // Check the date search
                 if (dateFilter) {
-                    const dateCell = cells[3].textContent.trim(); // Assuming date is in the 4th column
+                    const dateCell = cells[4].textContent.trim(); // Assuming date is in the 4th column
                     const dateParts = dateCell.split(" "); // افتراض أن التاريخ يحتوي على وقت (مثل "2024-11-17 00:30")
                     const formattedDate = dateParts[0]; // نحصل فقط على التاريخ بدون الوقت
                     if (formattedDate !== dateFilter) {

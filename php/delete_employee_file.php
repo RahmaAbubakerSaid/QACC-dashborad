@@ -26,9 +26,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
                 echo json_encode(['success' => false, 'message' => 'فشل في حذف الملف من المجلد']);
                 exit;
             }
-        } else {
-            echo json_encode(['success' => false, 'message' => 'الملف غير موجود على الخادم']);
-            exit;
         }
 
         // استعلام لحذف الملف من جدول employee_files
@@ -47,7 +44,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
         // إغلاق الاستعلام
         $stmt_delete->close();
     } else {
-        echo json_encode(['success' => false, 'message' => 'الملف غير موجود في قاعدة البيانات']);
+        // حذف السجل حتى لو لم يكن موجودًا على الخادم
+        $stmt_delete = $conn->prepare("DELETE FROM employee_files WHERE id = ?");
+        $stmt_delete->bind_param("i", $file_id);  // ربط الـ file_id بالاستعلام
+
+        if ($stmt_delete->execute()) {
+            // إذا تم الحذف بنجاح، إرسال استجابة بنجاح
+            echo json_encode(['success' => true, 'message' => 'تم حذف السجل بنجاح ']);
+        } else {
+            // إذا فشل الحذف في قاعدة البيانات، إرسال رسالة خطأ
+            echo json_encode(['success' => false, 'message' => 'فشل في حذف السجل من قاعدة البيانات']);
+        }
+
+        // إغلاق الاستعلام
+        $stmt_delete->close();
     }
 
     // إغلاق الاتصال
