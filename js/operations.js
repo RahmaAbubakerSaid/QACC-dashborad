@@ -439,40 +439,7 @@ function editOffice(officeName) {
         backdrop: true
     });
 }
-   //دالة حذف مكتب
-function deleteOffice(officeName) {
-    Swal.fire({
-        icon: 'warning',
-        title: 'هل أنت متأكد؟',
-        text: 'سيتم حذف مكتب: ' + officeName,
-        showCancelButton: true,
-        confirmButtonText: 'موافق',
-        cancelButtonText: 'إلغاء',
-        customClass: {
-            confirmButton: 'btn btn-danger ms-2',  // إضافة مسافة إلى زر موافق
-            cancelButton: 'btn btn-secondary'
-        },
-        buttonsStyling: false,
-        allowOutsideClick: false,
-        backdrop: true
-    }).then((result) => {
-        if (result.isConfirmed) {
-            Swal.fire({
-                icon: 'success',
-                title: 'تم الحذف بنجاح!',
-                confirmButtonText: 'حسنًا',
-                customClass: {
-                    confirmButton: 'btn btn-primary'
-                },
-                buttonsStyling: false,
-                allowOutsideClick: false,
-                backdrop: true
-            });
-        }
-    });
-
-    
-}
+   
 
 
 function showDetails() {

@@ -24,6 +24,26 @@ if (empty($createdBy)) {
     exit();
 }
 
+// التحقق من عدم وجود القسم مسبقًا
+$checkStmt = $conn->prepare("
+    SELECT COUNT(*) AS count 
+    FROM sections 
+    WHERE section_name = ? AND department_id = ?
+");
+$checkStmt->bind_param("si", $sectionName, $departmentId);
+$checkStmt->execute();
+$checkResult = $checkStmt->get_result();
+$row = $checkResult->fetch_assoc();
+
+if ($row['count'] > 0) {
+    echo json_encode(['success' => false, 'message' => 'القسم موجود مسبقًا في هذه الإدارة.']);
+    $checkStmt->close();
+    $conn->close();
+    exit();
+}
+
+$checkStmt->close();
+
 // تنفيذ عملية الإضافة
 $stmt = $conn->prepare("
     INSERT INTO sections (section_name, manager_name, department_id, created_by) 
@@ -32,7 +52,7 @@ $stmt = $conn->prepare("
 $stmt->bind_param("ssis", $sectionName, $managerName, $departmentId, $createdBy);
 
 if ($stmt->execute()) {
-    echo json_encode(['success' => true]);
+    echo json_encode(['success' => true, 'message' => 'تمت إضافة القسم بنجاح.']);
 } else {
     echo json_encode(['success' => false, 'message' => 'حدث خطأ أثناء إضافة القسم.']);
 }

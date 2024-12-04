@@ -43,6 +43,8 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0/select2.min.css" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0/select2.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
 </head>
 
@@ -206,19 +208,13 @@
 
             <div class="container-fluid pt-4 px-4">
                 <div class="bg-light rounded h-100 p-4">
-                    <h6 class="mb-4">بناء الهيكل التنظيمي </h6>
-                    <div class="m-n2">
-                        <button type="button" class="btn btn-primary m-2" id="openDialog"><i
-                                class="fas fa fa-plus me-2"></i>إضافة الإدارات والأقسام والوحدات  </button>
+                    <h6 class="mb-4">بناء الهيكل التنظيمي</h6>
+                    <div class="d-flex justify-content-between">
+                        <button type="button" class="btn btn-primary m-2" id="openDialog">
+                            <i class="fas fa fa-plus me-2"></i>إضافة الإدارات والأقسام والوحدات
+                        </button>
+                       
                     </div>
-                </div>
-            </div>
-            <div class="container-fluid pt-4 px-4">
-                <div class="bg-light rounded h-100 p-4">
-                    <form class="d-none d-md-flex ms-4">
-                        <input class="form-control border-0" type="search" placeholder="ابحث عن إدارة او قسم او وحدة">
-                    </form>
-                   
                 </div>
             </div>
             
@@ -227,7 +223,7 @@
                     <div class="bg-light rounded p-3 p-sm-4 my-3 mx-3"> <!-- تقليل المسافة الداخلية -->
                         <div class="d-flex flex-column align-items-center mb-3">
                             <img src="img/qacc.png" alt="شعار الموقع" style="width: 115px; height: 80px; margin-bottom: 20px;">
-                            <h5>إضافة إدارة</h5>
+                            <h5> إدارة الإدارات</h5>
                         </div>
             
                         <div class="form-floating mb-2">
@@ -238,7 +234,8 @@
                         <div class="form-floating mb-3">
                             <div class="user-selection">
                                 <select id="managerName" class="form-select" style="width: 100%;">
-                                    <option value="">جاري تحميل الأسماء...</option>
+                                    <option value="">اختر مدير الادارة</option>
+                                    
                                 </select>
                                 
                             </div>
@@ -272,67 +269,49 @@
                 </div>
             </div>
             
-            
-            <!-- Table Start -->
-            <div class="container-fluid pt-4 px-4">
-                <div class="row g-4">
-
-
-                    <div class="col-12">
-                        <div class="bg-light rounded h-100 p-4">
-                            <h6 class="mb-4">جدول الادارات </h6>
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">الرقم </th>
-                                            <th scope="col">الادارة</th>
-                                            <th scope="col">القسم  </th>
-                                            <th scope="col">الوحدة</th>
-                                            <th scope="col">الاجراءات   </th>
-                                         
-                                            
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td> ادراة الشؤون الادارية والمالية </td>
-                                            <td>قسم شؤون الموظفين </td>
-                                            <td>وحدة شؤون الموظفين</td>
-                                            <td>
-                                                <a href="detiales.html" class="btn btn-success custom-btn" >التفاصيل</a>
-          
-                                            </td>
-                                            
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">2</th>
-                                            <td>  ادارة الشؤون الادارية والمالية  </td>
-                                            <td> قسم الخدمات والحركة </td>
-                                            <td>لا يوجد</td>
-                                            <td>
-                                                <a href="detiales.html" class="btn btn-success custom-btn" onclick="showDetails()">التفاصيل</a>
-                                            </td>
-                                            
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">3</th>
-                                            <td> ادارة الاعتماد المؤسسي</td>
-                                            <td>قسم اعتماد  المؤسسات التدريبية  </td>
-                                            <td>لا يوجد</td>
-                                            <td>
-                                                <a href="detiales.html" class="btn btn-success custom-btn" onclick="showDetails()">التفاصيل</a>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+          <!-- Table Start -->
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-12">
+            <div class="bg-light rounded h-100 p-4">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h6>جدول الإدارات</h6>
+                    <a href="reports_dep.html" class="btn btn-success custom-btn-main" style="color: white;">
+                        التقارير
+                    </a>
                 </div>
+                <!-- مكان تحميل الجدول -->
+                <div id="departments-table-container"></div>
             </div>
-            <!-- Table End -->
+            
+        </div>
+    </div>
+</div>
+<!-- Table End -->
+
+<script>
+   function loadDepartmentsTable() {
+    const tableContainer = document.getElementById("departments-table-container");
+
+    fetch("php/fetch_dep_section_unit.php") // تعديل المسار حسب اسم وموقع الملف
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("فشل في تحميل الجدول.");
+            }
+            return response.text(); // تحويل الاستجابة إلى نص
+        })
+        .then(data => {
+            tableContainer.innerHTML = data; // تحميل البيانات داخل الـ Div
+        })
+        .catch(error => {
+            console.error("حدث خطأ أثناء تحميل الجدول:", error);
+            tableContainer.innerHTML = "<p>حدث خطأ أثناء تحميل الجدول. يرجى المحاولة لاحقاً.</p>";
+        });
+}
+document.addEventListener("DOMContentLoaded", loadDepartmentsTable);
+
+</script>
+
         </div>
         <!-- Content End -->
 
@@ -369,6 +348,24 @@
     } else {
         console.error("لم يتم العثور على عنصر الـ Dialog.");
     }
+    resetDepartmentDialog();
+    // console.log("إعادة تحميل الجدول بعد إغلاق الـ Dialog");
+    loadDepartmentsTable();
+   }
+function resetDepartmentDialog() {
+    // إخفاء مربع الحوار
+    const dialog = document.getElementById('dialog');
+    if (dialog) {
+        dialog.style.display = 'none';
+    } else {
+        console.error("لم يتم العثور على عنصر الـ Dialog.");
+    }
+
+    // إعادة الزر إلى وضع الإضافة
+    const addButton = document.querySelector('.add-btn');
+    if (addButton) {
+        addButton.textContent = 'إضافة إدارة';
+    }
 
     // تفريغ الحقول
     const departmentNameInput = document.getElementById('departementName');
@@ -380,12 +377,6 @@
 
     if (managerSelect) {
         managerSelect.value = ''; // إعادة تعيين اختيار المدير
-    }
-
-    // يمكنك أيضًا إعادة الزر إلى وضع "إضافة" إذا كان ذلك مطلوبًا
-    const addButton = document.querySelector('.add-btn');
-    if (addButton) {
-        addButton.textContent = 'إضافة إدارة'; // إعادة نص الزر إلى "إضافة إدارة"
     }
 }
 
@@ -640,23 +631,27 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function loadEmployees() {
-    fetch('php/fetch_employees.php') // اسم ملف PHP
-        .then(response => response.text())
-        .then(data => {
-            // إضافة الخيارات إلى القائمة
-            const managerSelect = document.getElementById('managerName');
-            managerSelect.innerHTML = data;
+   
+    fetch('php/fetch_employees.php') // تعديل المسار حسب موقع الملف
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('فشل في جلب أسماء الموظفين.');
+                }
+                return response.text();
+            })
+            .then(data => {
+                const select = document.getElementById('managerName');
+                select.innerHTML = '<option value="">اختر مدير الادارة</option>' + data;
+            })
+            .catch(error => {
+                console.error('حدث خطأ:', error);
+            });
 
-            // إعادة تهيئة Select2
-            $('#managerName').trigger('change');
-        })
-        .catch(error => {
-            console.error('Error fetching employee names:', error);
-            const managerSelect = document.getElementById('managerName');
-            managerSelect.innerHTML = '<option value="">خطأ في تحميل الأسماء</option>';
-        });
+         
+       
 }
 
+document.addEventListener('DOMContentLoaded', loadEmployees);
 
 document.addEventListener('DOMContentLoaded', function () {
     loadDepartments();
@@ -675,30 +670,6 @@ function loadDepartments() {
             document.getElementById('departmentTableBody').innerHTML = "<tr><td colspan='4'>خطأ في تحميل البيانات</td></tr>";
         });
 }
-
-
-
-// وظيفة لجلب أسماء الموظفين من الملف fetch_employees.php
-    function loadEmployeeNames() {
-        fetch('php/fetch_employees.php') // تعديل المسار حسب موقع الملف
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('فشل في جلب أسماء الموظفين.');
-                }
-                return response.text();
-            })
-            .then(data => {
-                const select = document.getElementById('section-manager-select');
-                select.innerHTML = '<option value="">اختر مدير القسم</option>' + data;
-            })
-            .catch(error => {
-                console.error('حدث خطأ:', error);
-            });
-    }
-
-    // استدعاء الوظيفة عند تحميل الصفحة
-    document.addEventListener('DOMContentLoaded', loadEmployeeNames);
-   
 // استدعاء الدالة عند تحديد إدارة معينة
 function loadSectionsForDepartment(departmentId) {
     fetchSections(departmentId);
@@ -719,13 +690,36 @@ document.addEventListener('DOMContentLoaded', fetchSections);
 
 <script>
 
-function openUnits(sectionId) {
-    alert(`عرض الوحدات للقسم رقم: ${sectionId}`);
-}
+// وظيفة لجلب أسماء الموظفين من الملف fetch_employees.php
+function loadEmployeeNames() {
+        fetch('php/fetch_employees.php') // تعديل المسار حسب موقع الملف
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('فشل في جلب أسماء الموظفين.');
+                }
+                return response.text();
+            })
+            .then(data => {
+                const select = document.getElementById('section-manager-select');
+                select.innerHTML = '<option value="">اختر مدير القسم</option>' + data;
+            })
+            .catch(error => {
+                console.error('حدث خطأ:', error);
+            });
+    }
+
+    // استدعاء الوظيفة عند تحميل الصفحة
+    document.addEventListener('DOMContentLoaded', loadEmployeeNames);
+   
+
+    
+    // استدعاء الوظيفة عند تحميل الصفحة
+    document.addEventListener('DOMContentLoaded', resetSectionButtonState);
+   
 
 function closeSectionsDialog() {
-    resetButtonState();
     document.getElementById('sectionsDialog').style.display = 'none';
+    resetSectionButtonState();
 }
 
 function openSectionsDialog(departmentId, departmentName) {
@@ -824,7 +818,7 @@ function handleAction() {
                     text: isEditMode ? 'تم تعديل القسم بنجاح.' : 'تمت إضافة القسم بنجاح.',
                     confirmButtonText: 'حسنًا',
                 }).then(() => {
-                    resetButtonState(); // إعادة الزر إلى وضع الإضافة
+                    resetSectionButtonState(); // إعادة الزر إلى وضع الإضافة
                     loadSections(departmentId); // تحديث الجدول
                 });
             } else {
@@ -924,20 +918,30 @@ function deleteSection(section_id, department_id) {
             }
         });
     }
-
-
- function resetButtonState() {
-    isEditMode = false; // إعادة الوضع إلى الإضافة
-    currentSectionId = null; // إعادة تعيين رقم القسم
+   
+    function resetSectionButtonState() {
+    // إعادة الزر إلى وضع الإضافة
+    isEditMode = false;
+    currentSectionId = null;
 
     const actionButton = document.getElementById('actionButton');
     if (actionButton) {
-        actionButton.textContent = 'إضافة'; // إعادة النص إلى "إضافة"
+        actionButton.textContent = 'إضافة قسم';
     }
 
     // تفريغ الحقول
-    document.getElementById('sectionName').value = '';
-    document.getElementById('section-manager-select').value = '';
+    const sectionNameInput = document.getElementById('sectionName');
+    const managerSelect = document.getElementById('section-manager-select');
+   
+
+    if (sectionNameInput) {
+        sectionNameInput.value = '';
+    }
+
+    if (managerSelect) {
+        managerSelect.value = '';
+    }
+
 }
 
 function loadSections(departmentId) {
@@ -974,7 +978,287 @@ function loadSections(departmentId) {
 }
 
 </script>
-        
+ 
+
+<!-- ملف الجافا الخاص بالوحدات  -->
+<script>
+
+    // وظيفة لجلب أسماء الموظفين من الملف fetch_employees.php
+function loadEmployeeNames() {
+        fetch('php/fetch_employees.php') // تعديل المسار حسب موقع الملف
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('فشل في جلب أسماء الموظفين.');
+                }
+                return response.text();
+            })
+            .then(data => {
+                const select = document.getElementById('unit-manager-select');
+                select.innerHTML = '<option value="">اختر مدير الوحدة</option>' + data;
+            })
+            .catch(error => {
+                console.error('حدث خطأ:', error);
+            });
+    }
+
+    // استدعاء الوظيفة عند تحميل الصفحة
+    document.addEventListener('DOMContentLoaded', loadEmployeeNames);
+    
+    function openUnitDialog(sectionId, sectionName) {
+    // تحديث العنوان حسب اسم القسم
+    const dialogTitle = document.getElementById("unitDialogTitle");
+    if (dialogTitle) {
+        dialogTitle.textContent = `إدارة وحدة ${sectionName}`;
+    }
+
+    // تعبئة الحقل المخفي الخاص برقم القسم
+    const sectionIdInput = document.getElementById("sectionId");
+    if (sectionIdInput) {
+        sectionIdInput.value = sectionId;
+    }
+
+    // عرض الـ Dialog
+    const dialog = document.getElementById("unitDialog");
+    if (dialog) {
+        dialog.style.display = "block"; // إظهار النافذة
+    }
+
+    // استدعاء صفحة جلب الوحدات
+    fetch(`php/fetch_units.php?section_id=${sectionId}`)
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error("حدث خطأ أثناء جلب الوحدات");
+            }
+            return response.text();
+        })
+        .then((html) => {
+            const tableBody = document.getElementById("unitTableBody");
+            if (tableBody) {
+                tableBody.innerHTML = html; // عرض الوحدات داخل الجدول
+            } else {
+                console.error("لم يتم العثور على عنصر الجدول unitTableBody.");
+            }
+        })
+        .catch((error) => {
+            console.error("خطأ أثناء جلب الوحدات:", error);
+            Swal.fire({
+                icon: 'error',
+                title: 'خطأ!',
+                text: 'حدث خطأ أثناء تحميل الوحدات. يرجى المحاولة لاحقًا.',
+                confirmButtonText: 'حسنًا',
+            });
+        });
+}
+
+
+
+
+let isUnitEditMode = false; // تحديد الوضع الحالي (إضافة أو تعديل)
+let currentUnitId = null; // لتخزين رقم الوحدة أثناء التعديل
+
+function handleActionUnit() {
+    const unitName = document.getElementById('unitName').value.trim(); // قيمة اسم الوحدة
+    const managerName = document.getElementById('unit-manager-select').value.trim(); // اسم المدير
+    const sectionId = document.getElementById('sectionId').value.trim(); // رقم القسم
+
+    if (!unitName) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'تنبيه',
+            text: 'يرجى إدخال اسم الوحدة.',
+            confirmButtonText: 'حسنًا',
+        });
+        return;
+    }
+
+    if (!sectionId) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'تنبيه',
+            text: 'يرجى اختيار القسم الذي ينتمي إليه الوحدة.',
+            confirmButtonText: 'حسنًا',
+        });
+        return;
+    }
+
+    // تحديد URL بناءً على الوضع الحالي (إضافة/تعديل)
+    const url = isUnitEditMode ? 'php/update_units.php' : 'php/add_units.php';
+    const formData = new FormData();
+
+    if (isUnitEditMode) {
+        formData.append('unit_id', currentUnitId); // إضافة رقم الوحدة في حالة التعديل
+    }
+    formData.append('unit_name', unitName);
+    formData.append('manager_name', managerName);
+    formData.append('section_id', sectionId);
+
+    fetch(url, {
+        method: 'POST',
+        body: formData,
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'تمت العملية بنجاح!',
+                    text: isUnitEditMode ? 'تم تعديل الوحدة بنجاح.' : 'تمت إضافة الوحدة بنجاح.',
+                    confirmButtonText: 'حسنًا',
+                }).then(() => {
+                    resetButtonState(); // إعادة الزر إلى وضع الإضافة
+                    loadUnits(sectionId); // تحديث الجدول
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'خطأ!',
+                    text: data.message,
+                    confirmButtonText: 'حسنًا',
+                });
+            }
+        })
+        .catch(error => {
+            console.error('حدث خطأ:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'خطأ في الاتصال!',
+                text: 'حدث خطأ أثناء محاولة الاتصال بالخادم.',
+                confirmButtonText: 'حسنًا',
+            });
+        });
+}
+
+function editUnitFun(unitId, unitName, managerName) {
+    // تخزين رقم الوحدة للتعديل
+    currentUnitId = unitId; 
+    isUnitEditMode = true; // تغيير الوضع إلى تعديل
+
+    // تغيير نص الزر إلى "تعديل"
+    const actionButton = document.getElementById('unitActionButton');
+    if (actionButton) {
+        actionButton.textContent = 'تعديل';
+    }
+
+    // تعبئة الحقول بالقيم
+    const unitNameInput = document.getElementById('unitName');
+    const managerSelect = document.getElementById('unit-manager-select');
+
+    if (unitNameInput) {
+        unitNameInput.value = unitName; // تعبئة اسم الوحدة
+    }
+
+    if (managerSelect) {
+        managerSelect.value = managerName; // تعبئة اسم المدير
+    }
+}
+
+function resetButtonState() {
+    // إعادة الزر إلى وضع الإضافة
+    isUnitEditMode = false;
+    currentUnitId = null;
+
+    const actionButton = document.getElementById('unitActionButton');
+    if (actionButton) {
+        actionButton.textContent = 'إضافة وحدة';
+    }
+
+    // تفريغ الحقول
+    const unitNameInput = document.getElementById('unitName');
+    const managerSelect = document.getElementById('unit-manager-select');
+
+    if (unitNameInput) {
+        unitNameInput.value = '';
+    }
+
+    if (managerSelect) {
+        managerSelect.value = '';
+    }
+}
+
+
+// إغلاق نافذة إضافة الوحدة
+function closeUnitDialog() {
+    document.getElementById("unitDialog").style.display = "none";
+    resetUnitButtonState();
+}
+
+// حذف الوحدة
+function deleteUnit(unitId, sectionId) {
+    // استخدام SweetAlert2 لإظهار نافذة تأكيد
+    Swal.fire({
+        title: 'هل أنت متأكد؟',
+        text: 'لن تتمكن من التراجع عن هذا الإجراء!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'نعم، احذفها!',
+        cancelButtonText: 'إلغاء'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // إذا تم التأكيد، إرسال طلب الحذف
+            fetch('php/delete_units.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `unit_id=${unitId}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    Swal.fire(
+                        'تم الحذف!',
+                        'تم حذف الوحدة بنجاح.',
+                        'success'
+                    );
+                    loadUnits(sectionId); // تحديث قائمة الوحدات
+                } else {
+                    Swal.fire(
+                        'خطأ!',
+                        data.message,
+                        'error'
+                    );
+                }
+            })
+            .catch(error => {
+                console.error("خطأ أثناء حذف الوحدة:", error);
+                Swal.fire(
+                    'خطأ!',
+                    'حدث خطأ أثناء الاتصال بالخادم.',
+                    'error'
+                );
+            });
+        }
+    });
+}
+
+function loadUnits(sectionId) {
+    fetch(`php/fetch_units.php?section_id=${sectionId}`)
+        .then(response => response.text())
+        .then(html => {
+            const tableBody = document.getElementById('unitTableBody');
+            if (tableBody) {
+                tableBody.innerHTML = html; // عرض الوحدات في الجدول
+            } else {
+                console.error('لم يتم العثور على عنصر الجدول unitTableBody.');
+            }
+        })
+        .catch(error => {
+            console.error('خطأ أثناء جلب الوحدات:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'خطأ في الاتصال!',
+                text: 'حدث خطأ أثناء محاولة جلب الوحدات.',
+                confirmButtonText: 'حسنًا',
+            });
+        });
+}
+
+</script>
+
+
+
     <!-- Dialog للأقسام -->
 <div class="dialog-overlay" id="sectionsDialog" style="display: none;">
     <div class="dialog-content">
@@ -1035,13 +1319,14 @@ function loadSections(departmentId) {
 </div>
 
 <!-- Dialog for adding a unit -->
-<div class="dialog-overlay" id="unitDialog">
+<div class="dialog-overlay" id="unitDialog" style="display: none;">
     <div class="dialog-content">
         <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
             <div class="d-flex flex-column align-items-center mb-3">
                 <h5 id="unitDialogTitle">إضافة وحدة</h5> <!-- سيتم تعديل النص بناءً على اسم القسم -->
             </div>
             <div class="form-floating mb-3">
+                <input type="hidden" id="sectionId" name="section_id">
                 <input type="text" class="form-control" id="unitName" placeholder="اسم الوحدة">
                 <label for="unitName">اسم الوحدة</label>
             </div>
@@ -1050,53 +1335,45 @@ function loadSections(departmentId) {
                 <div class="user-selection">
                     <select id="unit-manager-select">
                         <option value="">اختر مدير الوحدة</option>
-                        <option value="user1">فتحي موسى الحباسي</option>
-                        <option value="user2">عبد الحفيظ عمر خليفة</option>
-                        <option value="user3">عبد الباسط فاتح نصير</option>
-                        <option value="user4">اكرام خليفة محمد العرضاوي</option>
-                        <option value="user5">ايناس سالم السني قشوط</option>
+                        <!-- سيتم تحميل الخيارات هنا ديناميكيًا -->
                     </select>
                 </div>
             </div>
 
-            <div class="table-responsive">
+            <div class="table-responsive" style="max-height: 200px; overflow-y: auto;">
                 <table class="table">
                     <thead>
                         <tr>
                             <th scope="col">الرقم</th>
                             <th scope="col">الوحدة</th>
+                            <th scope="col">رئيس الوحدة</th>
                             <th scope="col">الإجراءات</th>
                         </tr>
                     </thead>
                     <tbody id="unitTableBody">
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>وحدة شؤون الموظفين</td>
-                                <td class="d-flex align-items-center">
-                                    <div class="btn-group">  
-                                    <a href="#" class="custom-btn-icon" onclick="editUnit(' وحدة  شؤون الموظفين ')">
-                                        <i class="fas fa-pencil-alt" style="color: #007bff;"></i> <!-- لون تعديل -->
-                                    </a>
-                                    <a href="#" class="custom-btn-icon" onclick="deleteUnit('وحدة شؤون الموظفين   ')">
-                                        <i class="fas fa-trash-alt" style="color: #dc3545;"></i> <!-- أيقونة حذف -->
-                                    </a>
-                                    </div>
-                            </td>
-                        </tr>
-                        <!-- مزيد من الصفوف سيتم إضافتها هنا -->
+                        <!-- سيتم ملء هذا الجزء ديناميكيًا عبر Fetch -->
                     </tbody>
                 </table>
             </div>
 
             <div class="d-grid gap-2 d-md-flex justify-content-between">
-                <button type="submit" class="btn btn-primary py-3 w-100 mb-4" onclick="validateFormUnit()">إضافة وحدة</button>
-                <button type="button" class="btn btn-secondary py-3 w-0 mb-4" id="unitDialog" onclick="closeUnitDialog()">رجوع</button>
+                <button 
+                type="button" 
+                id="unitActionButton" 
+                class="btn btn-primary py-3 w-100 mb-4" 
+                onclick="handleActionUnit()">
+                إضافة 
+            </button>
+            
+                            <button type="button" class="btn btn-secondary py-3 w-0 mb-4" onclick="closeUnitDialog()">رجوع</button>
             </div>
         </div>
     </div>
 </div>
 
     
+
+
 
 </body>
 

@@ -36,7 +36,19 @@
 
 <!-- SweetAlert2 JS -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <!-- تضمين مكتبة SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0/select2.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
 </head>
 
 <body>
@@ -199,181 +211,339 @@
 
             <div class="container-fluid pt-4 px-4">
                 <div class="bg-light rounded h-100 p-4">
-                    <h6 class="mb-4">إضافة مكتب </h6>
+                    <h6 class="mb-4">ادارة المكاتب </h6>
                     
                     <div class="m-n2">
-                        <button type="button" class="btn btn-primary m-2" id="openDialog"><i
-                                class="fas fa fa-plus me-2"></i>اضافة مكتب </button>
-                    </div>
+                        <button type="button" class="btn btn-primary m-2" id="openDialog" onclick="openOfficeDialog()">
+                            <i class="fas fa fa-plus me-2"></i>إضافة مكتب
+                        </button>
+                          </div>
                 </div>
             </div>
 
-            <div class="dialog-overlay" id="dialog">
-                <div class="dialog-content-main">
-                    <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
-                        <div class="d-flex flex-column align-items-center mb-3">
-                            <img src="img/qacc.png" alt="شعار الموقع" style="width: 115px; height: 80px; margin-bottom: 45px;">
-                            <h5>إضافة مكتب</h5>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="officeName" placeholder="مكتب ">
-                            <label for="officeName">اسم المكتب</label>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <div class="user-selection">
-                                <select id="user-select">
-                                    <option value="" hidden>اختر مدير المكتب</option>
-                                    <option value="user1">فتحي موسى الحباسي</option>
-                                    <option value="user2">عبد الحفيظ عمر خليفة</option>
-                                    <option value="user3">عبد الباسط فاتح نصير</option>
-                                    <option value="user4">اكرام خليفة محمد العرضاوي</option>
-                                    <option value="user5">ايناس سالم السني قشوط</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="d-grid gap-2 d-md-flex justify-content-between">
-                            <button type="submit" class="btn btn-primary py-3 w-100 mb-4" onclick="createOffice()">إضافة مكتب</button>
-                            <button type="button" class="btn btn-secondary py-3 w-0 mb-4" id="closeDialog">رجوع</button>
-                        </div>
-                    </div>
+          <!-- Dialog for adding an office -->
+<div class="dialog-overlay" id="officeDialog" style="display: none;">
+    <div class="dialog-content">
+        <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
+            <div class="d-flex flex-column align-items-center mb-3">
+                <img src="img/qacc.png" alt="شعار الموقع" style="width: 115px; height: 80px; margin-bottom: 20px;">
+                <h5 id="officeDialogTitle"> إدارة المكاتب</h5>
+            </div>
+            <div class="form-floating mb-3">
+                
+                <input type="hidden" id="officeId" name="office_id">
+                <input type="text" class="form-control" id="officeName" placeholder="اسم المكتب">
+                <label for="officeName">اسم المكتب</label>
+            </div>
+            <div class="form-floating mb-3">
+                <div class="user-selection">
+                    <select id="office-manager-select">
+                        <option value="">اختر مدير المكتب</option>
+                        <!-- سيتم تحميل الخيارات هنا ديناميكيًا -->
+                    </select>
+                </div>
+            </div>
+            <div class="col-12">
+                <h6 class="mb-3">جدول المكاتب</h6>
+                <div class="table-responsive" style="max-height: 200px; overflow-y: auto;">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">الرقم</th>
+                                <th scope="col">اسم المكتب</th>
+                                <th scope="col">مدير المكتب</th>
+                                <th scope="col">الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="officeTableBody">
+                            <!-- سيتم تحميل البيانات هنا باستخدام AJAX -->
+                        </tbody>
+                    </table>
                 </div>
             </div>
             
+            <div class="d-grid gap-2 d-md-flex justify-content-between">
+                <button 
+                type="button" 
+                id="officeActionButton" 
+                class="btn btn-primary py-3 w-100 mb-4" 
+                onclick="handleActionOffice()">
+                إضافة 
+            </button>
+            
+                <button 
+                type="button" 
+                class="btn btn-secondary py-3 w-0 mb-4" 
+                onclick="closeOfficeDialog()">رجوع</button>
+            </div>
+        </div>
+    </div>
+</div>
+
             <script>
-            function createOffice() {
-                const officeName = document.getElementById('officeName').value;
-                const managerName = document.getElementById('user-select').value;
-                const userId = document.getElementById('userName').value;
-            
-                if (!officeName) {
-                    Swal.fire({
-                        icon: 'warning',
-                        title: 'تنبيه',
-                        text: 'يرجى ملء اسم المكتب.',
-                        confirmButtonText: 'حسنًا',
-                        customClass: { confirmButton: 'btn btn-primary' },
-                        buttonsStyling: false
-                    });
-                    return;
+        
+                function openOfficeDialog() {
+            const officeDialog = document.getElementById('officeDialog');
+            if (officeDialog) {
+                officeDialog.style.display = 'block'; // عرض الـ Dialog
+            } else {
+                console.error("لم يتم العثور على عنصر الـ Dialog الخاص بالمكاتب.");
+            }
+        }
+
+        function closeOfficeDialog() {
+    const officeDialog = document.getElementById('officeDialog');
+    if (officeDialog) {
+        officeDialog.style.display = 'none'; // إخفاء الـ Dialog
+    } else {
+        console.error("لم يتم العثور على عنصر الـ Dialog الخاص بالمكاتب.");
+    }
+    resetButtonState();
+}
+
+   // وظيفة لجلب أسماء الموظفين من الملف fetch_employees.php
+   function loadEmployeeNames() {
+        fetch('php/fetch_employees.php') // تعديل المسار حسب موقع الملف
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('فشل في جلب أسماء الموظفين.');
                 }
-            
-                const formData = new FormData();
-                formData.append('officeName', officeName);
-                formData.append('managerName', managerName);
-                formData.append('createdBy', userId);
-            
-                fetch('php/add_office.php', {
+                return response.text();
+            })
+            .then(data => {
+                const select = document.getElementById('office-manager-select');
+                select.innerHTML = '<option value="">اختر مدير المكتب</option>' + data;
+            })
+            .catch(error => {
+                console.error('حدث خطأ:', error);
+            });
+    }
+
+    // استدعاء الوظيفة عند تحميل الصفحة
+    document.addEventListener('DOMContentLoaded', loadEmployeeNames);
+
+// دالة لتحميل المكاتب وعرضها في الجدول الأول
+function loadOffices() {
+    fetch('php/fetch_offices.php') // استخدام ملف PHP لجلب البيانات
+        .then(response => response.text()) // الحصول على البيانات النصية من ملف PHP
+        .then(data => {
+            document.getElementById('officeTableBody').innerHTML = data; // ملء الجدول بالبيانات
+        })
+        .catch(error => console.error('Error:', error)); // التعامل مع الأخطاء
+}
+
+// دالة لتحميل المكاتب وعرضها في الجدول الثاني
+function loadOfficesSecondTable() {
+    fetch('php/fetch_offices_second.php') // جلب البيانات من ملف PHP الخاص بالمكاتب
+        .then(response => response.text()) // الحصول على البيانات النصية
+        .then(data => {
+            document.getElementById('officeTableBody2').innerHTML = data; // ملء الجدول بالبيانات
+        })
+        .catch(error => console.error('Error:', error)); // التعامل مع الأخطاء
+}
+
+// استدعاء الدالتين عند تحميل الصفحة
+window.onload = function() {
+    loadOffices();  // تحميل البيانات في الجدول الأول
+    loadOfficesSecondTable();  // تحميل البيانات في الجدول الثاني
+};
+
+let isUnitEditMode = false; // تحديد الوضع الحالي (إضافة أو تعديل)
+let currentUnitId = null; // لتخزين رقم الوحدة أثناء التعديل
+
+function handleActionOffice() {
+    const officeName = document.getElementById('officeName').value.trim(); // قيمة اسم الوحدة
+    const managerName = document.getElementById('office-manager-select').value.trim(); // اسم المدير
+
+    if (!officeName) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'تنبيه',
+            text: 'يرجى إدخال اسم الوحدة.',
+            confirmButtonText: 'حسنًا',
+        });
+        return;
+    }
+
+   
+    // تحديد URL بناءً على الوضع الحالي (إضافة/تعديل)
+    const url = isUnitEditMode ? 'php/update_office.php' : 'php/add_office.php';
+    const formData = new FormData();
+
+    if (isUnitEditMode) {
+        formData.append('office_id', currentUnitId); // إضافة رقم الوحدة في حالة التعديل
+    }
+    formData.append('office_name', officeName);
+    formData.append('manager_name', managerName);
+  
+
+    fetch(url, {
+        method: 'POST',
+        body: formData,
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'تمت العملية بنجاح!',
+                    text: isUnitEditMode ? 'تم تعديل المكتب بنجاح.' : 'تمت إضافة المكتب بنجاح.',
+                    confirmButtonText: 'حسنًا',
+                }).then(() => {
+                    resetButtonState(); // إعادة الزر إلى وضع الإضافة
+                    loadOffices(); // تحديث الجدول الأول
+                    loadOfficesSecondTable();  // تحديث الجدول
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'خطأ!',
+                    text: data.message,
+                    confirmButtonText: 'حسنًا',
+                });
+            }
+        })
+        .catch(error => {
+            console.error('حدث خطأ:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'خطأ في الاتصال!',
+                text: 'حدث خطأ أثناء محاولة الاتصال بالخادم.',
+                confirmButtonText: 'حسنًا',
+            });
+        });
+}
+
+function editofficeFun(unitId, officeName, managerName) {
+    // تخزين رقم الوحدة للتعديل
+    currentUnitId = unitId; 
+    isUnitEditMode = true; // تغيير الوضع إلى تعديل
+
+    // تغيير نص الزر إلى "تعديل"
+    const actionButton = document.getElementById('officeActionButton');
+    if (actionButton) {
+        actionButton.textContent = 'تعديل';
+    }
+
+    // تعبئة الحقول بالقيم
+    const officeNameInput = document.getElementById('officeName');
+    const managerSelect = document.getElementById('office-manager-select');
+
+    if (officeNameInput) {
+        officeNameInput.value = officeName; // تعبئة اسم الوحدة
+    }
+
+    if (managerSelect) {
+        managerSelect.value = managerName; // تعبئة اسم المدير
+    }
+}
+
+function resetButtonState() {
+    // إعادة الزر إلى وضع الإضافة
+    isUnitEditMode = false;
+    currentUnitId = null;
+
+    const actionButton = document.getElementById('officeActionButton');
+    if (actionButton) {
+        actionButton.textContent = 'إضافة وحدة';
+    }
+
+    // تفريغ الحقول
+    const officeNameInput = document.getElementById('officeName');
+    const managerSelect = document.getElementById('office-manager-select');
+
+    if (officeNameInput) {
+        officeNameInput.value = '';
+    }
+
+    if (managerSelect) {
+        managerSelect.value = '';
+    }
+}
+
+function deleteOffice(officeId) {
+    Swal.fire({
+            title: 'هل أنت متأكد؟',
+            text: "لن تتمكن من استرجاع هذه البيانات بعد الحذف!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'نعم، حذف!',
+            cancelButtonText: 'إلغاء'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // طلب حذف الإدارة
+                fetch('php/delete_office.php', {
                     method: 'POST',
-                    body: formData
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: `office_id=${officeId}`
                 })
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'تم إضافة المكتب بنجاح.',
-                            confirmButtonText: 'حسنًا',
-                            customClass: { confirmButton: 'btn btn-primary' },
-                            buttonsStyling: false
-                        });
-                        document.getElementById('officeName').value = '';
-                        document.getElementById('user-select').value = '';
+                        Swal.fire(
+                            ' ثم الحذف بنجاح',
+                            data.message,
+                            'success'
+                        );
+                        // إعادة تحميل الجدول بعد الحذف بنجاح
+                       loadOffices();
+                       loadOfficesSecondTable();
                     } else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'خطأ',
-                            text: data.message,
-                            confirmButtonText: 'حسنًا',
-                            customClass: { confirmButton: 'btn btn-primary' },
-                            buttonsStyling: false
-                        });
+                        Swal.fire(
+                            'خطأ!',
+                            data.message,
+                            'error'
+                        );
                     }
                 })
-                .catch(error => console.error('Error:', error));
+                .catch(error => {
+                    console.error('Error:', error);
+                    Swal.fire(
+                        'خطأ!',
+                        'حدث خطأ أثناء محاولة الحذف.',
+                        'error'
+                    );
+                });
             }
+        });
+}
+
+
             </script>
             
             <!-- Table Start -->
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
 
-
                     <div class="col-12">
                         <div class="bg-light rounded h-100 p-4">
-                            <h6 class="mb-4">جدول المكاتب</h6>
+
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <h6>جدول المكاتب</h6>
+                                <a href="reports_office.html" class="btn btn-success custom-btn-main" style="color: white;">
+                                    التقارير
+                                </a>
+                            </div>
+                            
                             <div class="table-responsive">
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th scope="col">الرقم</th>
-                                            <th scope="col">اسم المكتب </th>
-                                            <th scope="col"> اسم مدير المكتب</th>
-                                            <th scope="col">عدد موظفي المكتب</th>
-                                            <th scope="col"> الاجراءات</th>
-                                            
+                                            <th scope="col">اسم المكتب</th>
+                                            <th scope="col">اسم مدير المكتب</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>مكتب التوثيق والمعلومات</td>
-                                            <td>اسراء التليسي</td>
-                                            <td>4</td>
-                                            <td>
-                                                <div class="btn-group">
-                                                    <a href="#" class="btn btn-success custom-btn">التفاصيل</a>
-                                                    <a href="#" class="custom-btn-icon" onclick="editOffice('مكتب التوثيق والمعلومات')">
-                                                        <i class="fas fa-pencil-alt" style="color: #007bff;"></i> <!-- لون تعديل -->
-                                                    </a>
-                                                    <a href="#" class="custom-btn-icon" onclick="deleteOffice('مكتب التوثيق والمعلومات')">
-                                                        <i class="fas fa-trash-alt" style="color: #dc3545;"></i> <!-- أيقونة حذف -->
-                                                    </a>
-                                                </div>
-                                            </td>
-                                            
-                                            
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">2</th>
-                                            <td>مكتب المدير العام </td>
-                                            <td>عبد الباسط</td>
-                                            <td>6</td>
-                                            <td>
-                                                <div class="btn-group">
-                                                <a href="#" class="btn btn-success custom-btn">التفاصيل</a>
-                                                <a href="#" class="custom-btn-icon" onclick="editOffice(' قسم  شؤون الموظفين ')">
-                                                    <i class="fas fa-pencil-alt" style="color: #007bff;"></i> <!-- لون تعديل -->
-                                                </a>
-                                                <a href="#" class="custom-btn-icon" onclick="deleteOffice('قسم شؤون الموظفين   ')">
-                                                    <i class="fas fa-trash-alt" style="color: #dc3545;"></i> <!-- أيقونة حذف -->
-                                                </a>
-                                            </div>
-                                            </td>
-                                            
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">3</th>
-                                            <td>المكتب القانوني</td>
-                                            <td>نجاح الباجقني</td>
-                                            <td>2</td>
-                                            <td>
-                                                <div class="btn-group">
-                                                <a href="#" class="btn btn-success custom-btn">التفاصيل</a>
-                                                <a href="#" class="custom-btn-icon" onclick="editOffice(' قسم  شؤون الموظفين ')">
-                                                    <i class="fas fa-pencil-alt" style="color: #007bff;"></i> <!-- لون تعديل -->
-                                                </a>
-                                                <a href="#" class="custom-btn-icon" onclick="deleteOffice('قسم شؤون الموظفين   ')">
-                                                    <i class="fas fa-trash-alt" style="color: #dc3545;"></i> <!-- أيقونة حذف -->
-                                                </a>
-                                                </div>
-                                            </td>
-                                            
-                                        </tr>
+                                    <tbody id="officeTableBody2">
+                                        <!-- سيتم تحميل البيانات هنا باستخدام AJAX -->
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
+                    
+                    
                 </div>
             </div>
             <!-- Table End -->
@@ -399,7 +569,7 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
-    <script src="js/operations.js"></script>
+    <!-- <script src="js/operations.js"></script> -->
 
 
 
