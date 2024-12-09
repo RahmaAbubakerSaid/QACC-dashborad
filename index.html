@@ -328,99 +328,51 @@
                 </div>
             </div>
 
-            <!-- Recent Sales Start -->
             <div class="container-fluid pt-4 px-4">
                 <div class="bg-light text-center rounded p-4">
                     <div class="d-flex align-items-center justify-content-between mb-4">
                         <h6 class="mb-0">تفاصيل الهيكل التنظيمي</h6>
                         <a href="administration-of-depatments.html">عرض التفاصيل</a>
                     </div>
-                    <div class="table-responsive">
-                        <table class="table text-start align-middle table-bordered table-hover mb-0">
-                            <thead>
-                                <tr class="text-dark">
-                                    <th scope="col">الإدارة</th>
-                                    <th scope="col">الأقسام</th>
-                                    <th scope="col">الوحدات</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td rowspan="9">إدارة الشوؤن الادارية والمالية</td>
-                                    <td rowspan="3">قسم الخدمات والحركة</td>
-                                    <td>وحدة الحركة</td>
-                                </tr>
-                                <tr>
-                                    <td>وحدة الخدمات</td>
-                                </tr>
-                                <tr>
-                                    <td>وحدة الامن والسلامة</td>
-                                </tr>
-                                <tr>
-                                    <td rowspan="4">قسم الشوؤن المالية</td>
-                                    <td>وحدة الحسابات</td>
-                                </tr>
-                                <tr>
-                                    <td>وحدة المرتبات</td>
-                                </tr>
-                                <tr>
-                                    <td>وحدة الخزينة</td>
-                                </tr>
-                                <tr>
-                                    <td>وحدة المخازن</td>
-                                </tr>
-
-                                <tr>
-                                    <td rowspan="2">قسم الشوؤن الادارية</td>
-                                    <td>وحدة المحفوظات</td>
-                                </tr>
-                                <tr>
-                                    <td>وحدة شوؤن الموظفين</td>
-                                </tr>
-                                <tr>
-                                    <td rowspan="2">إدارة الاعتماد والمعايرة المهنية</td>
-                                    <td>قسم المعايرة والاختبارات المهنية</td>
-                                    <td>لا يوجد</td>
-                                </tr>
-                                <tr>
-                                    <td>قسم اعتماد المؤسسات التدريبية</td>
-                                    <td>لا يوجد</td>
-                                </tr>
-
-                                <tr>
-                                    <td rowspan="2">إدارة تحديد المهارات والتصنيفات</td>
-                                    <td>قسم المعايرة والتصنيفات المهنية</td>
-                                    <td>لا يوجد</td>
-                                </tr>
-                                <tr>
-                                    <td>قسم المؤهلات المهنية</td>
-                                    <td>لا يوجد</td>
-                                </tr>
-
-                                <tr>
-                                    <td rowspan="2">إدارة التفتيش وضمان الجودة</td>
-                                    <td>قسم ضمان الجودة</td>
-                                    <td>لا يوجد</td>
-                                </tr>
-                                <tr>
-                                    <td>قسم التفتيش والمتابعة</td>
-                                    <td>لا يوجد</td>
-                                </tr>
-
-                                <tr>
-                                    <td rowspan="2">إدارة التخطيط وتنمية الموارد البشرية</td>
-                                    <td>قسم التدريب والتطوير</td>
-                                    <td>لا يوجد</td>
-                                </tr>
-                                <tr>
-                                    <td>قسم التخطيط والتنمية المستدامة</td>
-                                    <td>لا يوجد</td>
-                                </tr>
-                            </tbody>
-                        </table>
+            
+                    <div id="departments-table-container" class="table-responsive">
+                        <!-- سيتم تحميل الجدول ديناميكيًا هنا -->
+                        <p>جاري تحميل الجدول...</p>
                     </div>
                 </div>
             </div>
+            
+            <script>
+               
+               function loadDepartmentsTable() {
+    const tableContainer = document.getElementById("departments-table-container");
+
+    // إرسال طلب لجلب البيانات من ملف PHP
+    fetch("php/fetch_dep_section_unit.php")
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("فشل في تحميل الجدول.");
+            }
+            return response.text();
+        })
+        .then(data => {
+            // عرض البيانات المستلمة داخل الـ DIV
+            tableContainer.innerHTML = data;
+        })
+        .catch(error => {
+            console.error("حدث خطأ أثناء تحميل الجدول:", error);
+            tableContainer.innerHTML = "<p>حدث خطأ أثناء تحميل الجدول. يرجى المحاولة لاحقاً.</p>";
+        });
+}
+
+// تحميل الجدول عند تحميل الصفحة
+document.addEventListener("DOMContentLoaded", loadDepartmentsTable);
+
+
+              </script>
+                
+                <div id="departments-table-container"></div>
+                
             <!-- Office's Cards -->
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
@@ -517,65 +469,50 @@
                     </div>
                 </div>
             </div>
+
+       
             <!-- Widgets Start -->
             <div class="container-fluid pt-4 px-4">
                 <div class="bg-light text-center rounded p-4">
                     <div class="d-flex align-items-center justify-content-between mb-4">
                         <h6 class="mb-0">تفاصيل المكاتب</h6>
-                        <a href="administration-of-depatments.html">عرض التفاصيل</a>
+                        <a href="officeManagement.html">عرض التفاصيل</a>
                     </div>
-
                     <div class="table-responsive">
                         <table class="table text-start align-middle table-bordered table-hover mb-0">
                             <thead>
                                 <tr class="text-dark">
                                     <th scope="col">المكتب</th>
                                     <th scope="col">مدير المكتب</th>
-                                    <th scope="col">عدد الموظفين</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td>مكتب شوؤن المدير العام</td>
-                                    <td>INV-0123</td>
-                                    <td>6</td>
-                                </tr>
-                                <tr>
-                                    <td>مكتب المراجعة الداخلية</td>
-                                    <td>INV-0123</td>
-                                    <td>6</td>
-                                </tr>
-                                <tr>
-                                    <td>مكتب التوثيق والمعلومات</td>
-                                    <td>INV-0123</td>
-                                    <td>6</td>
-                                </tr>
-                                <tr>
-                                    <td>مكتب جائزة التمييز</td>
-                                    <td>INV-0123</td>
-                                    <td>6</td>
-                                </tr>
-                                <tr>
-                                    <td>مكتب الشوؤن القانونية</td>
-                                    <td>INV-0123</td>
-                                    <td>6</td>
-                                </tr>
-                                <tr>
-                                    <td>مكتب العلاقات العامة والتعاون المؤسسي</td>
-                                    <td>INV-0123</td>
-                                    <td>6</td>
-                                </tr>
-                                <tr>
-                                    <td>مكتب شوؤن الاعلام والدعاية</td>
-                                    <td>INV-0123</td>
-                                    <td>6</td>
-                                </tr>
+                            <tbody id="officeTableBody2">
+                                <!-- سيتم تحميل البيانات هنا باستخدام AJAX -->
                             </tbody>
                         </table>
                     </div>
+                    
+                    
                 </div>
             </div>
+<script>
+ // دالة لتحميل المكاتب وعرضها في الجدول الثاني
+function loadOfficesSecondTable() {
+    fetch('php/fetch_offices_second.php') // جلب البيانات من ملف PHP
+        .then(response => response.text()) // الحصول على البيانات النصية
+        .then(data => {
+            document.getElementById('officeTableBody2').innerHTML = data; // ملء الجدول بالبيانات
+        })
+        .catch(error => console.error('Error:', error)); // التعامل مع الأخطاء
+}
 
+// استدعاء الدالة عند تحميل الصفحة
+window.onload = function() {
+    loadOfficesSecondTable();  // تحميل البيانات في الجدول الثاني
+};
+
+
+</script>
             <!-- Widgets End -->
 
 
