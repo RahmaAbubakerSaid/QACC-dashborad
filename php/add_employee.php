@@ -27,10 +27,10 @@ $libyana_phone = $_POST['libyanaPhone'];
 $madar_phone = $_POST['madarPhone'];
 $financial_number = $_POST['financialNumber'];
 $position = $_POST['position'];
-$department = $_POST['department'];
-$division = $_POST['division'];
-$unit = $_POST['unit'];  // استلام الوحدة
-$office = $_POST['office'];  // استلام المكتب
+$department = isset($_POST['department']) ? $_POST['department'] : ''; // تغيير هنا في حالة عدم اختيار الإدارة
+$division = isset($_POST['division']) ? $_POST['division'] : ''; // تغيير هنا في حالة عدم اختيار القسم
+$unit = isset($_POST['unit']) ? $_POST['unit'] : ''; // تغيير هنا في حالة عدم اختيار الوحدة
+$office = isset($_POST['office']) ? $_POST['office'] : ''; // تغيير هنا في حالة عدم اختيار الوحدة
 $grade = $_POST['grade'];
 $education = $_POST['education'];
 $job_status = $_POST['jobStatus'];
@@ -53,7 +53,7 @@ $created_by = $_POST['created_by'];
 
 // تحضير استعلام SQL لإدخال البيانات في الجدول
 $sql = "INSERT INTO employees (
-     employee_number, name, mother_name, date_of_birth, birth_place, age, national_id,
+    employee_number, name, mother_name, date_of_birth, birth_place, age, national_id,
     national_id_issuance_authority, family_book_number, family_book_issuance_authority, passport_number,
     passport_issuance_authority, family_sheet_number, registration_number, nationality, gender, marital_status,
     children_count, blood_type, email, libyana_phone, madar_phone, financial_number, position, department,
@@ -64,13 +64,16 @@ $sql = "INSERT INTO employees (
     '$employee_number', '$name', '$mother_name', '$date_of_birth', '$birth_place', '$age', '$national_id',
     '$national_id_issuance_authority', '$family_book_number', '$family_book_issuance_authority', '$passport_number',
     '$passport_issuance_authority', '$family_sheet_number', '$registration_number', '$nationality', '$gender', '$marital_status',
-    '$children_count', '$blood_type', '$email', '$libyana_phone', '$madar_phone', '$financial_number', '$position', '$department',
-    '$division', '$unit', '$office', '$grade', '$education', '$job_status', '$job_number', '$join_date', '$contract_start_date', 
+    '$children_count', '$blood_type', '$email', '$libyana_phone', '$madar_phone', '$financial_number', '$position', 
+    " . (empty($department) ? "NULL" : "'$department'") . ",
+    " . (empty($division) ? "NULL" : "'$division'") . ",
+    " . (empty($unit) ? "NULL" : "'$unit'") . ",
+    " . (empty($office) ? "NULL" : "'$office'") . ",
+    '$grade', '$education', '$job_status', '$job_number', '$join_date', '$contract_start_date', 
     '$contract_duration', '$guarantee_number', '$current_allowance', '$bank_name', '$account_number', '$monthly_salary', 
-    '$annual_leave', '$annual_increase', '$emergency_leave_balance', '$last_promotion_date', '$last_allowance_date', '$notes', 
-    '$created_by'
+    '$annual_leave', '$annual_increase', '$emergency_leave_balance', '$last_promotion_date', '$last_allowance_date', 
+    '$notes', '$created_by'
 )";
-
 
 // تنفيذ الاستعلام
 if ($conn->query($sql) === TRUE) {

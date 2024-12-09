@@ -1,7 +1,7 @@
 <?php
 require 'database.php';
 
-$section_id = $_GET['section_id'];
+$section_id = $_GET['section_id']; // الحصول على ID القسم من الاستعلام
 
 $query = "SELECT unit_id, unit_name FROM units WHERE section_id = ?";
 $stmt = $conn->prepare($query);
@@ -9,14 +9,10 @@ $stmt->bind_param('i', $section_id);
 $stmt->execute();
 $result = $stmt->get_result();
 
-$options = '<option value="">اختر الوحدة</option>';
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $options .= '<option value="' . $row['unit_id'] . '">' . $row['unit_name'] . '</option>';
-    }
-} else {
-    $options .= '<option value="">لا يوجد وحدات بهذا القسم</option>';
+$units = [];
+while ($row = mysqli_fetch_assoc($result)) {
+    $units[] = $row;
 }
 
-echo $options;
+echo json_encode($units);
 ?>

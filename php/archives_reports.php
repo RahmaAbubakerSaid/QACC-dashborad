@@ -4,11 +4,17 @@ header('Content-Type: application/json');
 include 'database.php'; // قم باستيراد ملف الاتصال بقاعدة البيانات
 
 // استعلام SQL لجلب البيانات من جدول الرسائل والموظفين
-//  employee_id استعلام يجلب بيانات من جدولين يربط بينهما 
 $sql = "
 SELECT 
     e.name AS employee_name, 
-    COALESCE(m.message_text, m.file_name, m.directory_name) AS file_column, 
+    CASE 
+        WHEN m.message_text = '' OR m.message_text IS NULL THEN 'لا يوجد نص' 
+        ELSE m.message_text 
+    END AS message_text,  
+    CASE 
+        WHEN m.file_name = '' OR m.file_name IS NULL THEN 'لا يوجد ملف' 
+        ELSE m.file_name 
+    END AS file_name,  -- عرض اسم الملف إذا كان فارغًا يظهر 'لا يوجد اسم ملف' 
     m.created_at AS sent_date, 
     CASE 
         WHEN m.read_status = 'read' THEN m.read_at 
