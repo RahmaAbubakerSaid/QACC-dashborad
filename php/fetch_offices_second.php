@@ -7,7 +7,7 @@ $result = $conn->query($query);
 
 // التحقق من وجود بيانات
 if ($result->num_rows > 0) {
-    // عرض المكاتب في الجدول
+    // إنشاء صفوف الجدول
     while ($row = $result->fetch_assoc()) {
         echo "<tr>";
         echo "<td>" . htmlspecialchars($row['office_name']) . "</td>";
@@ -17,5 +17,6 @@ if ($result->num_rows > 0) {
 } else {
     echo "<tr><td colspan='2'>لا توجد مكاتب حالياً.</td></tr>";
 }
+
 $conn->close();
 ?>
