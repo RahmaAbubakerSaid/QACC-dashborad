@@ -222,7 +222,257 @@
                         style="display: flex; justify-content: flex-end; align-items: center; width: 100%;">
                         <h4 style="margin-left: auto;">الدردشة</h4>
                         <!--<button class="btn btn-success custom-btn-main">تقارير</button>-->
-                        <a href="" class="btn btn-success custom-btn-main" onclick="">تحويل الصور إلى PDF</a>
+                        <button type="button" class="btn btn-success custom-btn-main" id="openPdfDialog">تحويل الصور إلى
+                            PDF</button>
+                        <div class="dialog-overlay" id="pdfDialog">
+                            <div class="dialog-content-main" style="max-height: 80vh; overflow-y: auto; width: 40%;">
+                                <!-- محتوى الحوار -->
+                                <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
+                                    <!-- العنوان -->
+                                    <div class="d-flex flex-column align-items-center mb-3">
+                                        <h5>تحويل الصور إلى PDF</h5>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="pdfName">اسم الملف:</label>
+                                        <input type="text" id="pdfName" name="pdfName" class="form-control" required
+                                            placeholder="أدخل اسم الملف">
+                                    </div>
+                                    <!-- الفورم الخاص برفع الصور -->
+                                    <form id="imageToPdfForm" style="display: block;">
+                                        <div class="mb-3">
+                                            <label for="imageInput">اختر الصور (يمكن اختيار عدة صور):</label><br><br>
+                                            <input type="file" id="imageInput" name="images[]" accept="image/*" multiple
+                                                required class="form-control-file">
+                                        </div>
+
+                                        <!-- معاينة الصور -->
+                                        <div id="imagePreviewContainer" class="mt-4">
+                                            <div id="imagePreview" class="image-preview-container"></div>
+                                        </div>
+                                        <br>
+
+                                        <!-- زر تحويل الصور إلى PDF -->
+                                        <div class="d-grid gap-2 d-md-flex justify-content-between">
+                                            <button type="button" class="btn btn-success py-3 w-100 mb-4"
+                                                id="convertToPdfBtn">تحويل إلى PDF</button>
+                                            <button type="button" class="btn btn-secondary py-3 w-0 mb-4"
+                                                id="closePdfDialog">إلغاء</button>
+                                        </div>
+
+                                        <!-- شريط التقدم للتحويل -->
+                                        <div id="conversionProgress" style="display: none;">
+                                            <div class="progress">
+                                                <div class="progress-bar progress-bar-striped progress-bar-animated"
+                                                    style="width: 0%;" id="progressBar"></div>
+                                            </div>
+                                            <p class="text-center">جاري التحويل...</p>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+                        <script>
+                            document.addEventListener("DOMContentLoaded", function () {
+                                const { jsPDF } = window.jspdf;
+
+                                // عناصر HTML
+                                const openPdfDialogBtn = document.getElementById("openPdfDialog");
+                                const pdfDialog = document.getElementById("pdfDialog");
+                                const closePdfDialogBtn = document.getElementById("closePdfDialog");
+                                const convertToPdfBtn = document.getElementById("convertToPdfBtn");
+                                const imageInput = document.getElementById("imageInput");
+                                const imagePreviewContainer = document.getElementById("imagePreview");
+                                const conversionProgress = document.getElementById("conversionProgress");
+                                const progressBar = document.getElementById("progressBar");
+
+                                let selectedFiles = [];
+
+                                imagePreviewContainer.style.display = "flex";
+                                imagePreviewContainer.style.flexWrap = "wrap";
+
+                                openPdfDialogBtn.addEventListener("click", function () {
+                                    pdfDialog.style.display = "block";
+                                });
+
+                                closePdfDialogBtn.addEventListener("click", function () {
+                                    pdfDialog.style.display = "none";
+                                    // إعادة تعيين المدخلات
+                                    imageInput.value = ""; // مسح الحقل المختار للصور
+                                    imagePreviewContainer.innerHTML = ""; // إزالة المعاينة السابقة
+                                    selectedFiles = []; // إفراغ المصفوفة التي تحتوي على الملفات
+                                    // إعادة تعيين حقل اسم الملف
+                                    document.getElementById("pdfName").value = ""; // مسح حقل اسم الملف
+
+                                    // إعادة تعيين شريط التقدم
+                                    conversionProgress.style.display = "none";
+                                    progressBar.style.width = "0%"; // إعادة شريط التقدم إلى صفر
+                                });
+
+                                imageInput.addEventListener("change", function (event) {
+                                    const files = event.target.files;
+                                    // لا نمسح المعاينة السابقة، بل نضيف الصور الجديدة إلى الصور الموجودة بالفعل
+                                    const newFiles = Array.from(files);
+                                    selectedFiles = [...selectedFiles, ...newFiles]; // إضافة الملفات الجديدة إلى المصفوفة الحالية
+
+                                    updateImagePreview(); // إعادة تحديث المعاينة
+                                    updateFileInput(); // تحديث المدخل ليشمل الملفات الجديدة
+                                });
+
+                                function updateImagePreview() {
+                                    imagePreviewContainer.innerHTML = ""; // مسح المعاينة الحالية
+                                    selectedFiles.forEach((file, index) => {
+                                        const reader = new FileReader();
+                                        reader.onload = function (e) {
+                                            const imageWrapper = document.createElement("div");
+                                            imageWrapper.classList.add("image-wrapper");
+                                            imageWrapper.style.position = "relative";
+                                            imageWrapper.style.margin = "5px";
+
+                                            const img = document.createElement("img");
+                                            img.src = e.target.result;
+                                            img.classList.add("img-thumbnail", "preview-img");
+                                            img.style.width = "100px";
+                                            img.style.margin = "5px";
+                                            imageWrapper.appendChild(img);
+
+                                            img.addEventListener("click", function () {
+                                                const newWindow = window.open("", "_blank");
+                                                newWindow.document.write('<img src="' + img.src + '" style="width:80%; height:auto;">');
+                                            });
+
+                                            const deleteButton = document.createElement("button");
+                                            deleteButton.innerHTML = "X";
+                                            deleteButton.style.position = "absolute";
+                                            deleteButton.style.top = "5px";
+                                            deleteButton.style.right = "5px";
+                                            deleteButton.style.background = "rgba(255, 0, 0, 0.7)";
+                                            deleteButton.style.color = "white";
+                                            deleteButton.style.border = "none";
+                                            deleteButton.style.borderRadius = "50%";
+                                            deleteButton.style.padding = "5px 10px";
+                                            deleteButton.style.fontSize = "12px";
+                                            deleteButton.style.cursor = "pointer";
+
+                                            deleteButton.addEventListener("click", function () {
+                                                imagePreviewContainer.removeChild(imageWrapper);
+                                                selectedFiles.splice(index, 1);
+                                                updateImagePreview();
+                                                updateFileInput();
+                                            });
+
+                                            imageWrapper.appendChild(deleteButton);
+                                            imagePreviewContainer.appendChild(imageWrapper);
+                                        };
+                                        reader.readAsDataURL(file);
+                                    });
+                                }
+
+                                function updateFileInput() {
+                                    const dataTransfer = new DataTransfer();
+                                    selectedFiles.forEach(file => {
+                                        dataTransfer.items.add(file);
+                                    });
+                                    imageInput.files = dataTransfer.files; // تحديث المدخل ليشمل جميع الصور
+                                }
+
+
+                                convertToPdfBtn.addEventListener("click", function () {
+                                    const files = imageInput.files;
+                                    const pdfName = document.getElementById("pdfName").value.trim(); // الحصول على اسم الملف من المدخل
+                                    if (pdfName === "") { // التحقق من وجود اسم للملف
+                                        Swal.fire({
+                                            icon: 'warning',
+                                            text: 'يرجى إدخال اسم للملف!',
+                                            showCancelButton: false,  // حذف زر الإلغاء
+                                            confirmButtonColor: '#D1A237',
+                                            confirmButtonText: 'نعم'
+                                        });
+                                        return;
+                                    }
+                                    if (files.length === 0) {
+                                        Swal.fire({
+                                            icon: 'warning',
+                                            text: 'يرجى اختيار صور أولاً!',
+                                            showCancelButton: false,  // حذف زر الإلغاء
+                                            confirmButtonColor: '#D1A237',
+                                            confirmButtonText: 'حسنًــا'
+                                        });
+                                        return;
+                                    }
+
+                                    conversionProgress.style.display = "block";
+                                    let progress = 0;
+                                    progressBar.style.width = progress + "%";
+
+                                    const pdf = new jsPDF();
+                                    let count = 0;
+                                    let totalImages = files.length;  // عدد الصور التي سيتم تحويلها
+                                    let imagesProcessed = 0;  // عدد الصور المعالجة
+
+                                    // أبعاد صفحة A4 بالـ PDF (بوحدات النقاط)
+                                    const pageWidth = pdf.internal.pageSize.width;
+                                    const pageHeight = pdf.internal.pageSize.height;
+
+                                    // إضافة الصور إلى PDF
+                                    Array.from(files).forEach(file => {
+                                        const img = new Image();
+                                        img.src = URL.createObjectURL(file);
+
+                                        img.onload = function () {
+                                            if (count > 0) {
+                                                pdf.addPage();  // إضافة صفحة جديدة إذا كانت الصورة ليست الأولى
+                                            }
+
+                                            // استخدام الأبعاد الأصلية للصورة
+                                            const imgWidth = img.width;
+                                            const imgHeight = img.height;
+
+                                            // حساب نسبة الأبعاد للصورة بحيث لا تتجاوز حجم الصفحة
+                                            const scale = Math.min(pageWidth / imgWidth, pageHeight / imgHeight);
+
+                                            // حساب الأبعاد المعدلة بناءً على النسبة المئوية
+                                            const newImgWidth = imgWidth * scale;
+                                            const newImgHeight = imgHeight * scale;
+
+                                            // إضافة الصورة إلى PDF باستخدام الأبعاد المعدلة
+                                            pdf.addImage(img, 'JPEG', 0, 0, newImgWidth, newImgHeight); // يتم وضع الصورة في أعلى يسار الصفحة
+                                            count++;
+
+                                            // تحديث التقدم بناءً على عدد الصور المعالجة
+                                            imagesProcessed++;
+                                            progress = Math.floor((imagesProcessed / totalImages) * 100);
+                                            progressBar.style.width = progress + "%";
+
+                                            // إذا تم معالجة جميع الصور
+                                            if (imagesProcessed === totalImages) {
+                                                conversionProgress.style.display = "none"; // إخفاء شريط التقدم عند اكتمال التحويل
+                                                Swal.fire({
+                                                    icon: 'success',
+                                                    text: 'تم تحويل الصور إلى PDF بنجاح!',
+                                                    showCancelButton: false,
+                                                    confirmButtonColor: '#D1A237',
+                                                    confirmButtonText: 'حسنًــا'
+                                                });
+
+                                                // تنزيل PDF بعد التحويل باستخدام الاسم المدخل
+                                                setTimeout(() => {
+                                                    pdf.save(pdfName + ".pdf"); // حفظ الملف بالاسم المدخل
+                                                }, 500); // تأخير بسيط قبل حفظ الملف
+                                            }
+                                        };
+                                    });
+                                });
+
+
+
+
+                            });
+                        </script>
+
+
+
                         <!--<button class="btn btn-success custom-btn-main">تقارير</button>-->
                         <a href="" class="btn btn-success custom-btn-main" style="margin-right: 10px;"
                             onclick="">الأرشيف</a>
@@ -230,9 +480,12 @@
                             style="margin-right: 10px;" onclick="showDetails()">التقارير</a>
                     </div>
 
-                    <div class="chat-search-container">
-                        <input type="text" id="messageSearchInput" placeholder="بحث عن رسالة..."
-                            onkeyup="filterMessages()">
+                    <!-- حقل البحث عن الرسائل وحقل البحث عن الملفات بجانب بعض -->
+                    <div class="chat-search-container" style="display: flex; justify-content: flex-start; gap: 10px;">
+                        <input type="text" id="messageSearchInput" placeholder="البحث عن موظف..."
+                            onkeyup="filterMessagesCombined()" style="flex: 1;">
+                        <input type="text" id="fileSearchInput" placeholder="بحث عن اسم الملف..."
+                            onkeyup="filterMessagesCombined()" style="flex: 1;">
                     </div>
                     <div class="chat-container" id="chatContainer">
                         <!-- الرسائل ستظهر هنا -->
@@ -604,19 +857,28 @@
                 const fileExtension = fileName.split('.').pop().toLowerCase();
 
                 if (imageExtensions.includes(fileExtension)) {
-                    // إذا كان الملف صورة، عرض الصورة داخل الرابط
+                    // إذا كان الملف صورة، عرض الصورة واسم الملف
                     const imageLink = document.createElement('a');
                     imageLink.href = fileUrl;
                     imageLink.target = "_blank";
+
                     const image = document.createElement('img');
                     image.src = fileUrl;
                     image.alt = fileName;
-                    image.style.width = '100px';  // تغيير الحجم حسب الحاجة
+                    image.style.width = '100px'; // تغيير الحجم حسب الحاجة
                     image.style.height = '85px';
                     image.style.objectFit = 'cover';
+
+                    const imageName = document.createElement('span');
+                    imageName.textContent = ` (${fileName})`; // عرض اسم الملف بجانب الصورة
+                    imageName.style.display = 'inline-block';
+                    imageName.style.marginLeft = '10px';
+
                     imageLink.appendChild(image);
                     fileContainer.appendChild(imageLink);
-                } else {
+                    fileContainer.appendChild(imageName); // إضافة اسم الملف النصي
+                }
+                else {
                     // إذا لم يكن الملف صورة، عرض رابط التحميل
                     const fileLink = document.createElement('a');
                     fileLink.href = fileUrl;
@@ -861,9 +1123,11 @@
         });
 
 
-        function filterMessages() {
-            const input = document.getElementById('messageSearchInput');
-            const filter = input.value.toLowerCase();
+        function filterMessagesCombined() {
+            const messageInput = document.getElementById('messageSearchInput');
+            const fileInput = document.getElementById('fileSearchInput');
+            const messageFilter = messageInput.value.toLowerCase();
+            const fileFilter = fileInput.value.toLowerCase();
             const chatContainer = document.getElementById('chatContainer');
             const messages = chatContainer.getElementsByClassName('message-wrapper');
 
@@ -871,22 +1135,25 @@
                 const messageBox = messages[i].getElementsByClassName('message-box')[0];
                 const paragraphs = messageBox.getElementsByTagName('p');
 
-                // تحقق مما إذا كان هناك فقرات في الرسالة
-                if (paragraphs.length < 2) {
-                    messages[i].style.display = 'none'; // إخفاء الرسالة إذا لم تكن هناك فقرات كافية
+                // تحقق من وجود فقرات كافية
+                if (paragraphs.length < 3) {
+                    messages[i].style.display = 'none';
                     continue;
                 }
 
-                const recipientTag = paragraphs[paragraphs.length - 2]; // الفقرة الثانية من النهاية
+                const recipientTag = paragraphs[paragraphs.length - 2].textContent.toLowerCase(); // الفقرة الثانية من النهاية
+                const targetParagraph = paragraphs[paragraphs.length - 3].textContent.toLowerCase(); // الفقرة الثالثة من النهاية
 
-                // تحقق مما إذا كان الاسم موجودًا في النص
-                if (recipientTag.textContent.toLowerCase().includes(filter)) {
+                // تحقق من مطابقة كلا الفلترين
+                if (recipientTag.includes(messageFilter) && targetParagraph.includes(fileFilter)) {
                     messages[i].style.display = ''; // إظهار الرسالة
                 } else {
                     messages[i].style.display = 'none'; // إخفاء الرسالة
                 }
             }
         }
+
+
 
     </script>
 
