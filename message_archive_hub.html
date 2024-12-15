@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="utf-8">
+    <title>تنسيق الصفحة</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link rel="icon" href="img/link-icon.png" sizes="32x32" type="image/png">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- تنسيقات خاصة -->
+    <style>
+        body {
+            font-family: 'Amiri', serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            /* خلفية خفيفة */
+        }
+
+        .container {
+            padding: 20px;
+            overflow-x: auto;
+            /* إضافة شريط تمرير أفقي إذا لزم الأمر */
+
+        }
+
+        /* تحسين تنسيق الشعار */
+        .header img {
+            float: right;
+            margin-left: 20px;
+            width: 80px;
+        }
+
+        .header-text {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .header h3 {
+            font-size: 28px;
+            /* اللون الذهبي */
+            margin-bottom: 5px;
+        }
+
+        .header h4 {
+            font-size: 22px;
+            color: #444;
+            margin-bottom: 5px;
+        }
+
+        .header h5 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .header {
+            overflow: hidden;
+        }
+
+        /* تنسيق الحقول التفاعلية */
+        .chat-search-container input {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        /* التنسيق الخاص بالحقول التفاعلية أسفل الجدول */
+        .search-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .chat-search-container {
+            flex-basis: 20%;
+        }
+
+        /* تحسين تنسيق الجدول */
+        .employee-table {
+            width: calc(100% - 40px);
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+
+        /* تحسين تنسيق الجدول */
+        .employee-table-container {
+            max-width: 100%;
+            /* تأكد من أن الجدول لا يتجاوز عرض الـ div */
+            overflow-x: auto;
+            /* تمكين التمرير الأفقي داخل الجدول فقط */
+            margin: 0 auto;
+            /* لضبط الجدول في المنتصف */
+        }
+
+        .employee-table th,
+        .employee-table td {
+            padding: 15px;
+            text-align: center;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            border: 1px solid #ddd;
+
+        }
+
+        .employee-table th {
+            background-color: #CA9733;
+            color: white;
+            font-size: 16px;
+        }
+
+        .employee-table td {
+            background-color: #fff;
+            color: #555;
+            font-size: 14px;
+        }
+
+        .employee-table tr:nth-child(even) td {
+            background-color: #f9f9f9;
+        }
+
+        .employee-table td:hover {
+            background-color: #f1f1f1;
+        }
+
+        @media (max-width: 768px) {
+            .employee-table {
+                font-size: 12px;
+            }
+
+            .employee-table th,
+            .employee-table td {
+                padding: 8px;
+            }
+        }
+
+        /* زر الطباعة */
+        .print-btn {
+            background-color: #198754;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .print-btn:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container mt-4">
+        <div class="header clearfix">
+            <!-- النصوص الثلاثة -->
+            <div class="header-text">
+                <h3>مركز ضمان الجودة والمعايرة المهنية</h3>
+                <h4>قسم وحدة المحفوظات - الأرشفة</h4>
+                <h5></h5>
+            </div>
+        </div>
+
+        <div class="header" style="display: flex; flex-wrap: wrap; margin-top: 20px; width: 100%; gap: 10px;">
+            <div class="chat-search-container" style="flex-grow: 1;">
+                <input type="text" id="search-file-name" placeholder="بحث باسم الملف..." onkeyup="filterTable()">
+            </div>
+            <div class="chat-search-container" style="flex-grow: 1;">
+                <input type="text" id="search-archive-type" placeholder="بحث بنوع الأرشيف..." onkeyup="filterTable()">
+            </div>
+            <div class="chat-search-container" style="flex-grow: 1;">
+                <input type="text" id="search-sequence" placeholder="بحث بالتسلسل..." onkeyup="filterTable()">
+            </div>
+            <div class="chat-search-container" style="flex-grow: 1;">
+                <input type="text" id="search-reference-number" placeholder="بحث بالرقم الإشاري..."
+                    onkeyup="filterTable()">
+            </div>
+            <div class="chat-search-container" style="flex-grow: 1;">
+                <input type="date" id="search-date" placeholder="بحث بالتاريخ" oninput="filterTable()">
+            </div>
+            <div class="chat-search-container" style="flex-grow: 1;">
+                <input type="text" id="search-decision-number" placeholder="بحث برقم القرار..." onkeyup="filterTable()">
+            </div>
+            <div class="chat-search-container" style="flex-grow: 1;">
+                <input type="text" id="search-from-department" placeholder="بحث بالقسم/من..." onkeyup="filterTable()">
+            </div>
+            <div class="chat-search-container" style="flex-grow: 1;">
+                <input type="text" id="search-to-department" placeholder="بحث بالجهة المعنية/إلى..." onkeyup="filterTable()">
+            </div>
+            <div class="chat-search-container" style="flex-grow: 1;">
+                <input type="text" id="search-document-type" placeholder="بحث بنوع المستند..." onkeyup="filterTable()">
+            </div>
+            <div class="chat-search-container" style="flex-grow: 1;">
+                <input type="text" id="search-created-by" placeholder="بحث بواسطة من قام بالأرشفة..." onkeyup="filterTable()">
+            </div>
+            <div class="chat-search-container" style="flex-grow: 1;">
+                <input type="date" id="search-created-at" placeholder="بحث بتاريخ الإنشاء" oninput="filterTable()">
+            </div>
+            <!-- زر الطباعة -->
+            <div class="chat-search-container" style="flex-grow: 1;">
+                <button class="btn btn-success custom-btn-main print-btn" style="width: 100%;" onclick="printTable()">طباعة التقارير</button>
+            </div>
+        </div>
+
+        <!-- جدول الموظفين -->
+        <div class="body mt-4">
+            <div class="employee-table-container">
+                <table class="employee-table">
+                    <thead>
+                        <tr>
+                            <th>ر.م</th>
+                            <th>اسم الملف</th>
+                            <th>رابط الملف</th>
+                            <th>نوع الأرشفة</th>
+                            <th>التسلسل</th>
+                            <th>الرقم الإشاري</th>
+                            <th>التاريخ</th>
+                            <th>رقم القرار</th>
+                            <th>القسم/من</th>
+                            <th>الجهة المعنية/إلى</th>
+                            <th>نوع المستند</th>
+                            <th>المرفقات</th>
+                            <th>موضوع الرسالة</th>
+                            <th>أنشئ بواسطة</th>
+                            <th>تاريخ الإنشاء</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <script>
+                            document.addEventListener("DOMContentLoaded", function () {
+                                fetch('php/message_archive_hub.php') // اسم الملف الذي يحتوي على الاستعلام
+                                    .then(response => response.json()) // تحويل الاستجابة إلى JSON
+                                    .then(data => {
+                                        const tableBody = document.querySelector('.employee-table tbody');
+                                        tableBody.innerHTML = ''; // تفريغ الجدول قبل الإضافة
+
+                                        let counter = 1; // عداد للترقيم التسلسلي
+
+                                        if (data.length === 0) {
+                                            const row = document.createElement('tr');
+                                            row.innerHTML = `<td colspan="15" style="text-align:center;">لا توجد بيانات</td>`;
+                                            tableBody.appendChild(row);
+                                        } else {
+                                            data.forEach(archive => {
+                                                const row = document.createElement('tr');
+                                                row.innerHTML = `
+                                                <td>${counter++}</td>
+                                                <td>${archive.file_name}</td>
+                                                <td><a href="${archive.file_url}" target="_blank">رابط الملف</a></td>
+                                                <td>${archive.archive_type}</td>
+                                                <td>${archive.sequence}</td>
+                                                <td>${archive.reference_number}</td>
+                                                <td>${archive.date}</td>
+                                                <td>${archive.decision_number}</td>
+                                                <td>${archive.from_department}</td>
+                                                <td>${archive.to_department}</td>
+                                                <td>${archive.document_type}</td>
+                                                <td>${archive.attachments}</td>
+                                                <td>${archive.message_subject}</td>
+                                                <td>${archive.created_by}</td>
+                                                <td>${archive.created_at}</td>
+                                            `;
+                                                tableBody.appendChild(row);
+                                            });
+                                        }
+                                    })
+                                    .catch(error => {
+                                        console.error('خطأ في جلب البيانات:', error);
+                                        const tableBody = document.querySelector('.employee-table tbody');
+                                        const row = document.createElement('tr');
+                                        row.innerHTML = `<td colspan="15" style="text-align:center; color:red;">خطأ في جلب البيانات</td>`;
+                                        tableBody.appendChild(row);
+                                    });
+                            });
+                        </script>
+
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- دالة الطباعة -->
+    <script>
+        function printTable() {
+            const tableContent = document.querySelector('.employee-table').outerHTML; // الحصول على محتوى الجدول
+            const newWindow = window.open('', '', 'width=800, height=600'); // فتح نافذة جديدة
+
+            // كتابة محتوى جديد في النافذة للطباعة
+            newWindow.document.write(`
+        <html>
+        <head>
+            <title>طباعة الجدول</title>
+            <style>
+                body {
+                    font-family: 'Amiri', serif;
+                    direction: rtl;  /* عكس اتجاه النص ليكون من اليمين إلى اليسار */
+                    text-align: right;  /* محاذاة النص لليمين */
+                    margin: 20px;
+                }
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                }
+                th {
+                    background-color: #CA9733;
+                    color: white;
+                }
+                th, td {
+                    border: 1px solid black;
+                    padding: 8px;
+                    text-align: center;
+                }
+                    button#printBtn {
+                        display: block; 
+                        margin-bottom: 20px; 
+                        color: #fff;
+                        background-color: #198754;
+                        border-color: #198754;
+                        width: 10%;
+                        padding: 10px;
+                    }
+
+                /* إخفاء زر الطباعة عند الطباعة */
+                    @media print {
+                        button#printBtn {
+                            display: none; 
+                        }
+
+                    .employee-table th:nth-child(3),
+                .employee-table td:nth-child(3) {
+                    display: none;
+                }
+                }
+            </style>
+        </head>
+        <body>
+                <h1 style="text-align:center;">تقرير بيانات الأرشيف</h1>
+                <br>
+                <button id="printBtn" onclick="window.print()">طباعة</button>
+                <div>
+                    ${tableContent}
+                </div>        
+                </body>
+        </html>
+    `);
+
+            newWindow.document.close(); // إنهاء تحرير الصفحة
+            newWindow.focus(); // التركيز على النافذة الجديدة
+        }
+
+
+
+        /*
+        دالة للبحث في جدول عن طريق حقلين حقل للبحث عن طريق اسم الموظف وحقل للبحث عن طريق تاريخ الإرسال
+        */
+        function filterTable() {
+            const inputs = {
+                fileName: document.getElementById('search-file-name').value.toLowerCase(),
+                archiveType: document.getElementById('search-archive-type').value.toLowerCase(),
+                sequence: document.getElementById('search-sequence').value.toLowerCase(),
+                referenceNumber: document.getElementById('search-reference-number').value.toLowerCase(),
+                date: document.getElementById('search-date').value,
+                decisionNumber: document.getElementById('search-decision-number').value.toLowerCase(),
+                fromDepartment: document.getElementById('search-from-department').value.toLowerCase(),
+                toDepartment: document.getElementById('search-to-department').value.toLowerCase(),
+                documentType: document.getElementById('search-document-type').value.toLowerCase(),
+                createdBy: document.getElementById('search-created-by').value.toLowerCase(),
+                createdAt: document.getElementById('search-created-at').value,
+            };
+
+            const rows = document.querySelectorAll('.employee-table tbody tr');
+
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                const rowData = {
+                    fileName: cells[1]?.textContent.toLowerCase(),
+                    archiveType: cells[3]?.textContent.toLowerCase(),
+                    sequence: cells[4]?.textContent.toLowerCase(),
+                    referenceNumber: cells[5]?.textContent.toLowerCase(),
+                    date: cells[6]?.textContent,
+                    decisionNumber: cells[7]?.textContent.toLowerCase(),
+                    fromDepartment: cells[8]?.textContent.toLowerCase(),
+                    toDepartment: cells[9]?.textContent.toLowerCase(),
+                    documentType: cells[10]?.textContent.toLowerCase(),
+                    createdBy: cells[13]?.textContent.toLowerCase(),
+                    createdAt: cells[14]?.textContent,
+                };
+
+                const isMatch = Object.keys(inputs).every(key => {
+                    if (!inputs[key]) return true; // إذا لم يُدخل المستخدم قيمة للبحث في الحقل
+                    return rowData[key]?.includes(inputs[key]);
+                });
+
+                row.style.display = isMatch ? '' : 'none';
+            });
+        }
+
+    </script>
+
+</body>
+
+</html>
