@@ -31,11 +31,18 @@
             text-align: center;
             padding: 10px;
         }
+        thead tr {
+            background-color: #CA9733; /* لون الصف العلوي */
+            color: white; /* لون النص */
+        }
         th {
-            background-color: #f8f9fa;
-            font-weight: bold;
+            font-weight: bold; /* الخط العريض لعناوين الأعمدة */
+        }
+        tr:nth-child(even) {
+            background-color: #f8f9fa; /* لون الخلفية للصفوف الزوجية */
         }
     </style>
+    
 </head>
 <body>
     <div class="container mt-5">
@@ -43,55 +50,254 @@
         <!-- نموذج التقارير -->
         <form id="reportsForm">
             <div class="row g-3 align-items-center">
-                <!-- الحقل الأول: الإدارات -->
+                <!-- الإدارات -->
                 <div class="col-md-4">
                     <label for="departmentSelect" class="form-label">الإدارة</label>
                     <select id="departmentSelect" class="form-select">
                         <option value="">اختر الإدارة</option>
+                        <!-- سيتم ملؤها من PHP -->
                     </select>
                 </div>
-                <!-- الحقل الثاني: الأقسام -->
+                <!-- الأقسام -->
                 <div class="col-md-4">
                     <label for="sectionSelect" class="form-label">القسم</label>
                     <select id="sectionSelect" class="form-select" disabled>
                         <option value="">اختر الإدارة أولاً</option>
                     </select>
                 </div>
-                <!-- الحقل الثالث: الوحدات -->
+                <!-- الوحدات -->
                 <div class="col-md-4">
                     <label for="unitSelect" class="form-label">الوحدة</label>
                     <select id="unitSelect" class="form-select" disabled>
                         <option value="">اختر القسم أولاً</option>
                     </select>
                 </div>
+                <!-- زر الطباعة -->
+                <div class="col-md-12 text-end mt-3">
+                    <button type="button" class="btn btn-success" id="printButton">طباعة التقرير</button>
+                </div>
             </div>
         </form>
 
-        <!-- عنصر الجدول -->
-        <div id="tableContainer">
-            <!-- سيتم تحميل الجدول هنا عبر PHP -->
+        <!-- جدول البيانات -->
+        <div class="table-responsive mt-4">
+            <table class="table table-bordered" id="dataTable">
+                <thead>
+                    <tr>
+                        <th>رقم</th>
+                        <th>الاسم</th>
+                        <th>الوظيفة</th>
+                        <th>الإدارة</th>
+                        <th>القسم</th>
+                        <th id="unitColumnHeader">الوحدة</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- سيتم ملؤه ديناميكيًا -->
+                </tbody>
+            </table>
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- Script لتحميل البيانات وطباعة الجدول -->
     <script>
-        $(document).ready(function() {
-            // تحميل الجدول عند فتح الصفحة
-            loadTable();
-
-            function loadTable() {
-                $.ajax({
-                    url: 'fetch_table_reports_dep.php', // ملف PHP لجلب الجدول
-                    method: 'GET',
-                    success: function(data) {
-                        $('#tableContainer').html(data); // عرض الجدول داخل العنصر
-                    },
-                    error: function() {
-                        $('#tableContainer').html('<p>حدث خطأ أثناء تحميل البيانات.</p>');
-                    }
+        // تحميل الإدارات عند تحميل الصفحة
+        document.addEventListener("DOMContentLoaded", function () {
+            fetch("php/load_departments.php")
+                .then((response) => response.json())
+                .then((data) => {
+                    const departmentSelect = document.getElementById("departmentSelect");
+                    data.forEach((department) => {
+                        const option = document.createElement("option");
+                        option.value = department.department_id;
+                        option.textContent = department.department_name;
+                        departmentSelect.appendChild(option);
+                    });
                 });
+        });
+
+        // جلب الأقسام عند اختيار إدارة
+        document.getElementById("departmentSelect").addEventListener("change", function () {
+            const departmentId = this.value;
+            const sectionSelect = document.getElementById("sectionSelect");
+            const unitSelect = document.getElementById("unitSelect");
+
+            // إعادة تعيين الأقسام والوحدات
+            sectionSelect.innerHTML = '<option value="">اختر الإدارة أولاً</option>';
+            unitSelect.innerHTML = '<option value="">اختر القسم أولاً</option>';
+            unitSelect.disabled = true;
+
+            if (departmentId) {
+                fetch(`php/load_sections.php?department_id=${departmentId}`)
+                    .then((response) => response.json())
+                    .then((data) => {
+                        if (data.length > 0) {
+                            data.forEach((section) => {
+                                const option = document.createElement("option");
+                                option.value = section.section_id;
+                                option.textContent = section.section_name;
+                                sectionSelect.appendChild(option);
+                            });
+                            sectionSelect.disabled = false;
+                        } else {
+                            sectionSelect.innerHTML = '<option value="">لا توجد أقسام</option>';
+                            sectionSelect.disabled = true;
+                        }
+                    });
+            } else {
+                sectionSelect.disabled = true;
             }
         });
+
+        // جلب الوحدات عند اختيار قسم
+        document.getElementById("sectionSelect").addEventListener("change", function () {
+            const sectionId = this.value;
+            const unitSelect = document.getElementById("unitSelect");
+
+            unitSelect.innerHTML = '<option value="">اختر القسم أولاً</option>';
+
+            if (sectionId) {
+                fetch(`php/load_units.php?section_id=${sectionId}`)
+                    .then((response) => response.json())
+                    .then((data) => {
+                        if (data.length > 0) {
+                            data.forEach((unit) => {
+                                const option = document.createElement("option");
+                                option.value = unit.unit_id;
+                                option.textContent = unit.unit_name;
+                                unitSelect.appendChild(option);
+                            });
+                            unitSelect.disabled = false;
+                        } else {
+                            unitSelect.innerHTML = '<option value="">لا توجد وحدات</option>';
+                            unitSelect.disabled = true;
+                        }
+                    });
+            } else {
+                unitSelect.disabled = true;
+            }
+        });
+
+        // تحميل الجدول بناءً على الإدارات أو الأقسام أو الوحدات
+        function loadTable(departmentId = '', sectionId = '', unitId = '') {
+            const dataTableBody = document.querySelector("#dataTable tbody");
+            const unitColumnHeader = document.querySelector("#unitColumnHeader");
+            dataTableBody.innerHTML = '<tr><td colspan="6">جاري التحميل...</td></tr>';
+
+            fetch(`php/load_table.php?department_id=${departmentId}&section_id=${sectionId}&unit_id=${unitId}`)
+                .then((response) => response.json())
+                .then((data) => {
+                    dataTableBody.innerHTML = "";
+
+                    const hasUnits = data.some((row) => row.unit && row.unit.trim() !== "");
+                    if (hasUnits) {
+                        unitColumnHeader.style.display = "";
+                    } else {
+                        unitColumnHeader.style.display = "none";
+                    }
+
+                    if (data.length > 0) {
+                        data.forEach((row, index) => {
+                            const tableRow = document.createElement("tr");
+                            tableRow.innerHTML = `
+                                <td>${index + 1}</td>
+                                <td>${row.name}</td>
+                                <td>${row.position}</td>
+                                <td>${row.department}</td>
+                                <td>${row.section}</td>
+                                ${hasUnits ? `<td>${row.unit || ''}</td>` : ""}
+                            `;
+                            dataTableBody.appendChild(tableRow);
+                        });
+                    } else {
+                        dataTableBody.innerHTML = '<tr><td colspan="6">لا توجد بيانات</td></tr>';
+                    }
+                })
+                .catch((error) => {
+                    dataTableBody.innerHTML = '<tr><td colspan="6">حدث خطأ أثناء جلب البيانات</td></tr>';
+                    console.error("Error loading table data:", error);
+                });
+        }
+
+        // تحميل الجدول عند تغيير الإدارة أو القسم أو الوحدة
+        document.getElementById("departmentSelect").addEventListener("change", function () {
+            loadTable(this.value);
+        });
+
+        document.getElementById("sectionSelect").addEventListener("change", function () {
+            loadTable(document.getElementById("departmentSelect").value, this.value);
+        });
+
+        document.getElementById("unitSelect").addEventListener("change", function () {
+            loadTable(
+                document.getElementById("departmentSelect").value,
+                document.getElementById("sectionSelect").value,
+                this.value
+            );
+        });
+// طباعة الجدول مع نافذة تحتوي على زر الطباعة الذي يختفي أثناء الطباعة
+document.getElementById("printButton").addEventListener("click", function () {
+    const tableContent = document.querySelector("#dataTable").outerHTML;
+    const printWindow = window.open("", "", "width=800,height=600");
+
+    printWindow.document.write(`
+        <html>
+            <head>
+                <title>طباعة التقرير</title>
+                <style>
+                    body {
+                        direction: rtl; /* اتجاه النص من اليمين إلى اليسار */
+                        font-family: Arial, sans-serif;
+                    }
+                    table {
+                        width: 100%;
+                        border-collapse: collapse;
+                    }
+                    th, td {
+                        border: 1px solid #ddd;
+                        padding: 8px;
+                        text-align: right; /* محاذاة النص إلى اليمين */
+                    }
+                    thead tr {
+                        background-color: #CA9733;
+                        color: black;
+                    }
+                    #printButton {
+                        display: inline-block;
+                        margin: 20px 0;
+                        padding: 10px 15px;
+                        background-color:#CA9733;
+                        color: white;
+                        border: none;
+                        border-radius: 5px;
+                        cursor: pointer;
+                        font-size: 16px;
+                    }
+                    #printButton:hover {
+                        background-color: #CA9733;
+                    }
+                    /* إخفاء الزر أثناء الطباعة */
+                    @media print {
+                        #printButton {
+                            display: none;
+                        }
+                    }
+                </style>
+            </head>
+            <body>
+                <div>
+                    <button id="printButton" onclick="window.print()">طباعة</button>
+                </div>
+                ${tableContent}
+            </body>
+        </html>
+    `);
+
+    printWindow.document.close();
+});
+
+        
     </script>
 </body>
+
 </html>
