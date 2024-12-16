@@ -41,6 +41,9 @@
 
         .container {
             padding: 20px;
+            overflow-x: auto;
+            /* إضافة شريط تمرير أفقي إذا لزم الأمر */
+
         }
 
         /* تحسين تنسيق الشعار */
@@ -85,17 +88,44 @@
             border-radius: 5px;
         }
 
+        /* التنسيق الخاص بالحقول التفاعلية أسفل الجدول */
+        .search-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .chat-search-container {
+            flex-basis: 20%;
+        }
+
         /* تحسين تنسيق الجدول */
         .employee-table {
             width: 100%;
+            margin: 20px auto;
             border-collapse: collapse;
-            margin-top: 20px;
+        }
+
+        /* تحسين تنسيق الجدول */
+        .employee-table-container {
+            max-width: 100%;
+            /* تأكد من أن الجدول لا يتجاوز عرض الـ div */
+            overflow-x: auto;
+            /* تمكين التمرير الأفقي داخل الجدول فقط */
+            margin: 0 auto;
+            /* لضبط الجدول في المنتصف */
         }
 
         .employee-table th,
         .employee-table td {
-            padding: 12px;
+            padding: 15px;
             text-align: center;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            border: 1px solid #ddd;
+
         }
 
         .employee-table th {
@@ -108,17 +138,6 @@
             background-color: #fff;
             color: #555;
             font-size: 14px;
-            max-width: 200px;
-            /* تحديد أقصى عرض للخلية */
-            text-overflow: ellipsis;
-            /* إضافة ثلاث نقاط ... إذا كان النص طويل */
-            overflow: hidden;
-            /* إخفاء النص الذي يتجاوز الحد */
-            white-space: nowrap;
-            /* منع النص من الانتقال إلى السطر التالي */
-            padding: 10px;
-            /* لضبط المسافة داخل الخلايا */
-
         }
 
         .employee-table tr:nth-child(even) td {
@@ -127,7 +146,17 @@
 
         .employee-table td:hover {
             background-color: #f1f1f1;
-            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .employee-table {
+                font-size: 12px;
+            }
+
+            .employee-table th,
+            .employee-table td {
+                padding: 8px;
+            }
         }
 
         /* زر الطباعة */
@@ -145,54 +174,6 @@
         .print-btn:hover {
             background-color: #218838;
         }
-
-        /* تحسين التفاعل مع الطباعة */
-        @media print {
-            .print-btn {
-                display: none;
-            }
-
-            .employee-table thead tr,
-            .header img {
-                background-color: #CA9733 !important;
-                -webkit-print-color-adjust: exact;
-                /* لتثبيت اللون عند الطباعة */
-            }
-
-            .employee-table tr:nth-child(even) td {
-                -webkit-print-color-adjust: exact;
-            }
-
-            .header img {
-                -webkit-print-color-adjust: exact;
-                /* لجعل الشعار يظهر بالألوان */
-            }
-
-            .employee-table th,
-            .employee-table td {
-                border-color: #000;
-            }
-
-            .employee-table {
-                width: 100%;
-                border-collapse: collapse;
-            }
-
-            /* إخفاء حقل البحث عند الطباعة */
-            #messageSearchTable {
-                display: none;
-            }
-
-            #dateSearch {
-                display: none;
-            }
-
-            /* إزالة لون الخلفية فقط عند الطباعة */
-            body {
-                background-color: transparent !important;
-                /* إلغاء لون الخلفية */
-            }
-        }
     </style>
 </head>
 
@@ -200,8 +181,7 @@
 
     <div class="container mt-4">
         <div class="header clearfix">
-            <!-- الشعار -->
-            <img src="img/logo.jpg" alt="شعار">
+
 
             <!-- النصوص الثلاثة -->
             <div class="header-text">
@@ -211,54 +191,56 @@
             </div>
         </div>
 
-        <div class="header" style="display: flex;margin-top: 20px; width: 100%;">
-            <div class="chat-search-container" style="flex-grow: 1;margin-left:10px;">
+        <div class="header" style="display: flex; flex-wrap: wrap; margin-top: 20px; width: 100%; gap: 10px;">
+            <div class="chat-search-container" style="flex-grow: 1;">
                 <!-- حقل عند الكتابة فيه يتم استدعاء دالة البحث مباشرة -->
                 <input type="text" id="messageSearchTable" placeholder="البحث على موظف..." onkeyup="filterTable()">
             </div>
-            <div class="chat-search-container" style="flex-grow: 1;margin-left:10px;">
+            <div class="chat-search-container" style="flex-grow: 1;">
                 <input type="date" id="dateSearch" placeholder="اختر التاريخ..." oninput="filterTable()">
             </div>
             <!-- زر الطباعة -->
-            <button class="btn btn-success custom-btn-main print-btn" onclick="printPage()">طباعة التقارير</button>
+            <button class="btn btn-success custom-btn-main print-btn" onclick="printTable()">طباعة التقارير</button>
         </div>
 
         <!-- جدول الموظفين -->
         <div class="body mt-4">
-            <table class="employee-table">
-                <thead>
-                    <tr>
-                        <th>ر.م</th>
-                        <th>اسم الموظف</th>
-                        <th>نص الرسالة</th>
-                        <th>اسم الملف</th>
-                        <th>تاريخ الإرسال</th>
-                        <th>تاريخ المشاهدة</th>
-                        <th>حالة القراءة</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <script>
-                        $counter = 1; // المتغير الذي سيتم استخدامه كعداد
+            <div class="employee-table-container">
+                <table class="employee-table">
+                    <thead>
+                        <tr>
+                            <th>ر.م</th>
+                            <th>اسم الموظف</th>
+                            <th>نص الرسالة</th>
+                            <th>اسم الملف</th>
+                            <th>تاريخ الإرسال</th>
+                            <th>تاريخ المشاهدة</th>
+                            <th>حالة القراءة</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <script>
+                            $counter = 1; // المتغير الذي سيتم استخدامه كعداد
 
-                        // عند تحميل الصفحة، قم بجلب البيانات من PHP باستخدام fetch
-                        document.addEventListener("DOMContentLoaded", function () {
-                            fetch('php/archives_reports.php')  // اسم الملف الذي يحتوي على الاستعلام
-                                .then(response => response.json()) // تحويل الاستجابة إلى JSON
-                                .then(data => {
-                                    const tableBody = document.querySelector('.employee-table tbody');
+                            // عند تحميل الصفحة، قم بجلب البيانات من PHP باستخدام fetch
+                            document.addEventListener("DOMContentLoaded", function () {
+                                fetch('php/archives_reports.php')  // اسم الملف الذي يحتوي على الاستعلام
+                                    .then(response => response.json()) // تحويل الاستجابة إلى JSON
+                                    .then(data => {
+                                        const tableBody = document.querySelector('.employee-table tbody');
+                                        tableBody.innerHTML = ''; // تفريغ الجدول قبل الإضافة
 
-                                    // إذا كانت الرسالة تحتوي على "لا توجد بيانات"
-                                    if (data.message) {
-                                        const row = document.createElement('tr');
-                                        row.innerHTML = `<td colspan="7" style="text-align:center;">${data.message}</td>`;
-                                        tableBody.appendChild(row);
-                                    } else {
-                                        // إذا كانت هناك بيانات، نقوم بإنشاء الصفوف في الجدول
-                                        data.forEach(message => {
+                                        // إذا كانت الرسالة تحتوي على "لا توجد بيانات"
+                                        if (data.message) {
                                             const row = document.createElement('tr');
+                                            row.innerHTML = `<td colspan="7" style="text-align:center;">${data.message}</td>`;
+                                            tableBody.appendChild(row);
+                                        } else {
+                                            // إذا كانت هناك بيانات، نقوم بإنشاء الصفوف في الجدول
+                                            data.forEach(message => {
+                                                const row = document.createElement('tr');
 
-                                            row.innerHTML = `
+                                                row.innerHTML = `
                                             <td>${$counter++}</td>
                                             <td>${message.employee_name}</td>
                                             <td>${message.message_text}</td>
@@ -268,27 +250,88 @@
                                             <td>${message.read_status}</td>
                                             `;
 
-                                            // إضافة الصف إلى الجدول
-                                            tableBody.appendChild(row);
-                                        });
-                                    }
-                                })
-                                .catch(error => {
-                                    console.error('خطأ في جلب البيانات:', error);
-                                });
-                        });
-                    </script>
+                                                // إضافة الصف إلى الجدول
+                                                tableBody.appendChild(row);
+                                            });
+                                        }
+                                    })
+                                    .catch(error => {
+                                        console.error('خطأ في جلب البيانات:', error);
+                                    });
+                            });
+                        </script>
 
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
+
     </div>
 
     <!-- دالة الطباعة -->
     <script>
-        function printPage() {
-            window.print();
+        function printTable() {
+            const tableContent = document.querySelector('.employee-table').outerHTML; // الحصول على محتوى الجدول
+            const newWindow = window.open('', '', 'width=800, height=600'); // فتح نافذة جديدة
+
+            // كتابة محتوى جديد في النافذة للطباعة
+            newWindow.document.write(`
+            <html>
+            <head>
+                <title>طباعة الجدول</title>
+                <style>
+                    body {
+                        font-family: 'Amiri', serif;
+                        direction: rtl;  /* عكس اتجاه النص ليكون من اليمين إلى اليسار */
+                        text-align: right;  /* محاذاة النص لليمين */
+                        margin: 20px;
+                    }
+                    table {
+                        width: 100%;
+                        border-collapse: collapse;
+                    }
+                    th {
+                        background-color: #CA9733;
+                        color: white;
+                    }
+                    th, td {
+                        border: 1px solid black;
+                        padding: 8px;
+                        text-align: center;
+                    }
+                    button#printBtn {
+                        display: block; 
+                        margin-bottom: 20px; 
+                        color: #fff;
+                        background-color: #198754;
+                        border-color: #198754;
+                        width: 10%;
+                        padding: 10px;
+                    }
+
+                    /* إخفاء زر الطباعة عند الطباعة */
+                    @media print {
+                        button#printBtn {
+                            display: none; 
+                        }
+                    }
+                </style>
+            </head>
+            <body>
+                <h1 style="text-align:center;">تقارير الرسائل المرسلة</h1>
+                <br>
+                <button id="printBtn" onclick="window.print()">طباعة</button>
+                <div>
+                    ${tableContent}
+                </div>        
+            </body>
+            </html>
+        `);
+
+            newWindow.document.close(); // إنهاء تحرير الصفحة
+            newWindow.focus(); // التركيز على النافذة الجديدة
         }
+
 
 
         /*
