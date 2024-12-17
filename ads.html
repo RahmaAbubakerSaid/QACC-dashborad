@@ -31,12 +31,12 @@
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
 
-    
-     <!-- SweetAlert2 CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
-<!-- SweetAlert2 JS -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>
 
@@ -53,17 +53,17 @@
 
 
         <!-- Sidebar Start -->
-        <div id="sidebar-container"></div> 
+        <div id="sidebar-container"></div>
         <script>
             fetch('php/sidebar.php')
-            .then(response => {
-                if (!response.ok) throw new Error('Network response was not ok');
-                return response.text();
-            })
-            .then(data => {
-                document.getElementById('sidebar-container').innerHTML = data;
-            })
-            .catch(error => console.error('هناك خطأ:', error));
+                .then(response => {
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    return response.text();
+                })
+                .then(data => {
+                    document.getElementById('sidebar-container').innerHTML = data;
+                })
+                .catch(error => console.error('هناك خطأ:', error));
         </script>
         <!-- Sidebar End -->
 
@@ -79,76 +79,7 @@
                 <a href="#" class="sidebar-toggler flex-shrink-0" style="color: #BB822C">
                     <i class="fa fa-bars"></i>
                 </a>
-                <form class="d-none d-md-flex ms-4">
-                    <input class="form-control border-0" type="search" placeholder="Search">
-                </form>
-                <div class="navbar-nav align-items-center ms-auto">
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <i class="fa fa-envelope me-lg-2"></i>
-                            <span class="d-none d-lg-inline-flex">الرسائل</span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                            <a href="#" class="dropdown-item">
-                                <div class="d-flex align-items-center">
-                                    <img class="rounded-circle" src="img/user.jpg" alt=""
-                                        style="width: 40px; height: 40px;">
-                                    <div class="ms-2">
-                                        <h6 class="fw-normal mb-0">Jhon send you a message</h6>
-                                        <small>15 minutes ago</small>
-                                    </div>
-                                </div>
-                            </a>
-                            <hr class="dropdown-divider">
-                            <a href="#" class="dropdown-item">
-                                <div class="d-flex align-items-center">
-                                    <img class="rounded-circle" src="img/user.jpg" alt=""
-                                        style="width: 40px; height: 40px;">
-                                    <div class="ms-2">
-                                        <h6 class="fw-normal mb-0">Jhon send you a message</h6>
-                                        <small>15 minutes ago</small>
-                                    </div>
-                                </div>
-                            </a>
-                            <hr class="dropdown-divider">
-                            <a href="#" class="dropdown-item">
-                                <div class="d-flex align-items-center">
-                                    <img class="rounded-circle" src="img/user.jpg" alt=""
-                                        style="width: 40px; height: 40px;">
-                                    <div class="ms-2">
-                                        <h6 class="fw-normal mb-0">Jhon send you a message</h6>
-                                        <small>15 minutes ago</small>
-                                    </div>
-                                </div>
-                            </a>
-                            <hr class="dropdown-divider">
-                            <a href="#" class="dropdown-item text-center">See all message</a>
-                        </div>
-                    </div>
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <i class="fa fa-bell me-lg-2"></i>
-                            <span class="d-none d-lg-inline-flex">الاشعارات</span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                            <a href="#" class="dropdown-item">
-                                <h6 class="fw-normal mb-0">Profile updated</h6>
-                                <small>15 minutes ago</small>
-                            </a>
-                            <hr class="dropdown-divider">
-                            <a href="#" class="dropdown-item">
-                                <h6 class="fw-normal mb-0">New user added</h6>
-                                <small>15 minutes ago</small>
-                            </a>
-                            <hr class="dropdown-divider">
-                            <a href="#" class="dropdown-item">
-                                <h6 class="fw-normal mb-0">Password changed</h6>
-                                <small>15 minutes ago</small>
-                            </a>
-                            <hr class="dropdown-divider">
-                            <a href="#" class="dropdown-item text-center">See all notifications</a>
-                        </div>
-                    </div>
+                <div class="navbar-nav align-items-center me-auto">
                     <!-- جلب اسم المستخدم والعمل على القائمة -->
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
@@ -176,24 +107,24 @@
                                         }
                                     });
                                 }
-                                </script>
-                                <script>
-                                    fetch('php/user_info.php')
-                                        .then(response => response.json())
-                                        .then(data => {
-                                            if (data.loggedIn) {
-                                        // تحديث اسم المستخدم والصورة
-                                        document.getElementById('userName').innerText = data.username; // عرض اسم المستخدم
-                                            } else {
-                                                window.location.href = 'http://localhost/QACC-dashborad/signin.html'; // إعادة توجيه إلى صفحة تسجيل الدخول
-                                            }
-                                        });
-                                    </script>
+                            </script>
+                            <script>
+                                fetch('php/user_info.php')
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        if (data.loggedIn) {
+                                            // تحديث اسم المستخدم والصورة
+                                            document.getElementById('userName').innerText = data.username; // عرض اسم المستخدم
+                                        } else {
+                                            window.location.href = 'http://localhost/QACC-dashborad/signin.html'; // إعادة توجيه إلى صفحة تسجيل الدخول
+                                        }
+                                    });
+                            </script>
                         </div>
                     </div>
                     <!-------------------------------------------->
 
-               
+
                 </div>
             </nav>
             <!-- Navbar End -->
@@ -210,33 +141,21 @@
             </div>
 
             <div class="dialog-overlay" id="dialog">
-                <div class="dialog-content-main">
-                    <!-- Your dialog content goes here -->
+                <div class="dialog-content-main" style="max-height: 80vh; overflow-y: auto; width: 40%;">
                     <div class="bg-light rounded p-4 p-sm-4 my-4 mx-3">
                         <div class="d-flex flex-column align-items-center">
                             <h5>إدارة الإعلانات</h5>
                         </div>
-                        </div>
+                    </div>
                     <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingText" placeholder="jhondoe">
-                            <label for="floatingText">عنوان الإعلان</label>
-                        </div>
                         <div class="form-container">
-                            <form action="#" method="post" enctype="multipart/form-data">
-                                <label for="imageUpload">ارفاق صورة للإعلان :</label><br><br>
-                                <input type="file" id="imageUpload" name="imageUpload" accept="image/*"><br><br>
+                            <form style="display: block;">
+                                <label for="imageUpload">إرفاق صورة للإعلان:</label><br><br>
+                                <input type="file" id="imageUpload" name="imageUpload" accept="image/*"
+                                    multiple><br><br>
                             </form>
                         </div>
-                        <div class="form-floating mb-3">
-                            <input type="date" class="form-control" id="startDate" placeholder="تاريخ البدء" onchange="setEndDateMin()">
-                            <label for="startDate">تاريخ البدء</label>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <input type="date" class="form-control" id="endDate" placeholder="تاريخ الانتهاء">
-                            <label for="endDate">تاريخ الانتهاء</label>
-                        </div>
-
+                        <div id="imagePreview" style="display: flex; flex-wrap: wrap; gap: 10px;"></div>
                         <div class="d-grid gap-2 d-md-flex justify-content-between">
                             <button type="submit" class="btn btn-primary py-3 w-100 mb-4">إضافة إعلان</button>
                             <button type="button" class="btn btn-secondary py-3 w-0 mb-4"
@@ -245,47 +164,289 @@
                     </div>
                 </div>
             </div>
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    const dialog = document.getElementById("dialog");
+                    const closeDialogBtn = document.getElementById("closeDialog");
+                    const imageInput = document.getElementById("imageUpload");
+                    const imagePreviewContainer = document.getElementById("imagePreview");
+                    const submitButton = document.querySelector("button[type='submit']");
+                    let selectedFiles = [];
+
+                    // تهيئة المعاينة
+                    imagePreviewContainer.style.display = "flex";
+                    imagePreviewContainer.style.flexWrap = "wrap";
+
+                    // إغلاق الـ Dialog عند النقر على زر الإلغاء
+                    closeDialogBtn.addEventListener("click", function () {
+                        dialog.style.display = "none"; // إخفاء الـ Dialog
+                        resetDialog();
+                    });
+
+                    // معاينة الصور عند اختيار الملفات
+                    imageInput.addEventListener("change", function (event) {
+                        const files = event.target.files;
+                        const newFiles = Array.from(files);
+                        selectedFiles = [...selectedFiles, ...newFiles];
+                        updateImagePreview();
+                        updateFileInput();
+                    });
+
+                    // تفريغ الحقول
+                    function resetDialog() {
+                        imageInput.value = "";
+                        imagePreviewContainer.innerHTML = "";
+                        selectedFiles = [];
+                    }
+
+                    // تحديث المعاينة
+                    function updateImagePreview() {
+                        imagePreviewContainer.innerHTML = "";
+                        selectedFiles.forEach((file, index) => {
+                            const reader = new FileReader();
+                            reader.onload = function (e) {
+                                const imageWrapper = document.createElement("div");
+                                imageWrapper.style.position = "relative";
+                                imageWrapper.style.margin = "5px";
+
+                                const img = document.createElement("img");
+                                img.src = e.target.result;
+                                img.classList.add("img-thumbnail", "preview-img");
+                                img.style.width = "100px";
+                                img.style.margin = "5px";
+                                imageWrapper.appendChild(img);
+
+                                // تكبير الصورة عند النقر
+                                img.addEventListener("click", function () {
+                                    const newWindow = window.open("", "_blank");
+                                    newWindow.document.write('<img src="' + img.src + '" style="width:80%; height:auto;">');
+                                });
+
+                                const deleteButton = document.createElement("button");
+                                deleteButton.innerHTML = "X";
+                                deleteButton.style.position = "absolute";
+                                deleteButton.style.top = "5px";
+                                deleteButton.style.right = "5px";
+                                deleteButton.style.background = "rgba(255, 0, 0, 0.7)";
+                                deleteButton.style.color = "white";
+                                deleteButton.style.border = "none";
+                                deleteButton.style.borderRadius = "50%";
+                                deleteButton.style.padding = "5px 10px";
+                                deleteButton.style.fontSize = "12px";
+                                deleteButton.style.cursor = "pointer";
+
+                                deleteButton.addEventListener("click", function () {
+                                    selectedFiles.splice(index, 1);
+                                    updateImagePreview();
+                                    updateFileInput();
+                                });
+
+                                imageWrapper.appendChild(deleteButton);
+                                imagePreviewContainer.appendChild(imageWrapper);
+                            };
+                            reader.readAsDataURL(file);
+                        });
+                    }
+
+                    // تحديث الملفات في الحقل
+                    function updateFileInput() {
+                        const dataTransfer = new DataTransfer();
+                        selectedFiles.forEach(file => {
+                            dataTransfer.items.add(file);
+                        });
+                        imageInput.files = dataTransfer.files;
+                    }
+
+                    // رفع البيانات
+                    submitButton.addEventListener("click", function (event) {
+                        event.preventDefault();
+
+                        if (imageInput.files.length === 0) {
+                            Swal.fire({
+                                icon: 'warning',
+                                text: 'يرجى اختيار صورة للإعلان.',
+                                showCancelButton: false,  // حذف زر الإلغاء
+                                confirmButtonColor: '#D1A237',
+                                confirmButtonText: 'حسنًــا'
+                            });
+                            return;
+                        }
+
+                        const username = document.getElementById('userName').innerText; // افتراض وجود العنصر
+                        const formData = new FormData();
+                        for (let i = 0; i < imageInput.files.length; i++) {
+                            formData.append(`ad_image[]`, imageInput.files[i]);
+                        }
+                        formData.append("created_by", username);
+
+                        fetch("php/ads.php", {
+                            method: "POST",
+                            body: formData
+                        })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.success) {
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'تم رفع الإعلان.',
+                                        text: 'تم رفع الإعلان بنجاح.',
+                                        showCancelButton: false,  // حذف زر الإلغاء
+                                        confirmButtonColor: '#D1A237',
+                                        confirmButtonText: 'حسنًــا',
+                                        allowOutsideClick: false,
+                                        backdrop: true
+                                    }).then(() => {
+                                        fetchAndDisplayAds(); // تحديث الجدول
+                                        resetDialog(); // تفريغ الحقول
+                                        dialog.style.display = "none"; // إغلاق الـ Dialog
+                                    });
+                                } else {
+                                    Swal.fire("خطأ", data.message, "error");
+                                }
+                            })
+                            .catch(error => {
+                                Swal.fire("خطأ", "حدث خطأ أثناء الإرسال.", "error");
+                                console.error(error);
+                            });
+                    });
+                });
+
+            </script>
+
             <!-- Table Start -->
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
-
-
                     <div class="col-12">
                         <div class="bg-light rounded h-100 p-4">
-                            <h6 class="mb-4">Responsive Table</h6>
+                            <h6 class="mb-4">جدول الإعلانات</h6>
                             <div class="table-responsive">
-                                <table class="table">
+                                <table class="table" id="adsTable">
                                     <thead>
                                         <tr>
                                             <th scope="col">الرقم</th>
-                                            <th scope="col">عنوان الإعلان</th>
-                                            <th scope="col">تاريخ البدء </th>
-                                            <th scope="col">تاريخ الإنتهاء </th>
-                                            <th scope="col">الاجراءات  </th>
-                                          
+                                            <th scope="col">رابط الإعلان</th>
+                                            <th scope="col">تم الإرفاق بواسطة</th>
+                                            <th scope="col">تاريخ الإنشاء</th>
+                                            <th scope="col">الاجراءات</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>عنوان الإعلان </td>
-                                            <td>2024/10/10 </td>
+                                        <script>
+                                            // دالة لحذف الإعلان
+                                            function deleteAd(adId, adImage) {
+                                                fetch('php/delete_ad.php', {
+                                                    method: 'POST',
+                                                    headers: {
+                                                        'Content-Type': 'application/json',
+                                                    },
+                                                    body: JSON.stringify({
+                                                        ad_id: adId,
+                                                        ad_image: adImage, // إرسال رابط الصورة التي سيتم حذفها
+                                                    })
+                                                })
+                                                    .then(response => response.json())
+                                                    .then(data => {
+                                                        if (data.success) {
+                                                            // تحديث الجدول بعد الحذف
+                                                            fetchAndDisplayAds();
+                                                            Swal.fire({
+                                                                icon: 'success',
+                                                                title: 'تم حذف الإعلان.',
+                                                                text: 'تم حذف الإعلان بنجاح',
+                                                                showCancelButton: false,  // حذف زر الإلغاء
+                                                                confirmButtonColor: '#D1A237',
+                                                                confirmButtonText: 'حسنًــا',
+                                                                allowOutsideClick: false,
+                                                                backdrop: true
+                                                            });
+                                                        } else {
+                                                            alert('حدث خطأ أثناء حذف الإعلان');
+                                                        }
+                                                    })
+                                                    .catch(error => {
+                                                        console.error('خطأ في حذف الإعلان:', error);
+                                                        alert('حدث خطأ أثناء حذف الإعلان');
+                                                    });
 
-                                            <td>2024/10/15 </td>
-                                            <td>
-                                                <!-- زر حذف باللون الأحمر -->
-                                                <a href="#" class="btn btn-danger custom-btn-main">حذف</a>
-                                            </td>
-                                            
-                                        </tr>
+                                            }
+
+                                            // تعريف دالة لجلب البيانات وعرضها في الجدول
+                                            function fetchAndDisplayAds() {
+                                                fetch('php/get_ads.php')
+                                                    .then(response => response.json()) // تحويل الاستجابة إلى JSON
+                                                    .then(data => {
+                                                        const tableBody = document.querySelector('#adsTable tbody');
+                                                        tableBody.innerHTML = ''; // مسح المحتوى الحالي للجدول
+
+                                                        // التحقق إذا كانت البيانات فارغة
+                                                        if (data.length === 0) {
+                                                            // إضافة صف يحتوي على رسالة "لا توجد بيانات"
+                                                            const noDataRow = document.createElement('tr');
+                                                            noDataRow.innerHTML = `
+                                                                <td colspan="5" class="text-center">لا توجد بيانات لعرضها</td>
+                                                            `;
+                                                            tableBody.appendChild(noDataRow);
+                                                        } else {
+                                                            // التكرار عبر البيانات وإضافتها إلى الجدول
+                                                            data.forEach(item => {
+                                                                const row = document.createElement('tr');
+
+                                                                // إنشاء الأعمدة في الجدول
+                                                                row.innerHTML = `
+                                                                    <th scope="row">${item.id}</th>
+                                                                    <td><a href="${item.ad_image}" target="_blank">الإعلان</a></td>
+                                                                    <td>${item.created_by}</td>
+                                                                    <td>${item.created_at}</td>
+                                                                    <td><a href="javascript:void(0);" class="btn btn-danger custom-btn-main" 
+                                                                        onclick="
+                                                                        Swal.fire({
+                                                                            icon: 'question',
+                                                                            text: 'هل أنت متأكد من حذف هذا الإعلان؟',
+                                                                            showCancelButton: true,
+                                                                            confirmButtonColor: '#dc3545',
+                                                                            cancelButtonColor: '#6c757d',
+                                                                            cancelButtonText: 'إلغاء',
+                                                                            confirmButtonText: 'نـعـم'
+                                                                        }).then((result) => {
+                                                                            if (result.isConfirmed) {
+                                                                                deleteAd(${item.id}, '${item.ad_image}'); // استدعاء دالة الحذف
+                                                                            }
+                                                                        });
+                                                                    "
+                                                                        >حذف</a></td>
+                                                                    `;
+                                                                // إضافة الصف إلى الجدول
+                                                                tableBody.appendChild(row);
+                                                            });
+                                                        }
+                                                    })
+                                                    .catch(error => {
+                                                        console.error('خطأ في جلب البيانات:', error);
+
+                                                        // عرض رسالة خطأ في حالة فشل الطلب
+                                                        const tableBody = document.querySelector('#adsTable tbody');
+                                                        tableBody.innerHTML = `
+                                                            <tr>
+                                                                <td colspan="5" class="text-center text-danger">حدث خطأ أثناء جلب البيانات.</td>
+                                                            </tr>
+                                                        `;
+                                                    });
+                                            }
+
+                                            // استدعاء الدالة عند تحميل الصفحة
+                                            document.addEventListener("DOMContentLoaded", function () {
+                                                fetchAndDisplayAds();
+                                            });
+                                        </script>
+
+
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- Table End -->
+            </div> <!-- Table End -->
 
         </div>
         <!-- Content End -->
