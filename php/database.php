@@ -2,7 +2,7 @@
 $servername = "localhost";
 $username = "root"; // أو اسم المستخدم الخاص بك
 $password = ""; // كلمة المرور الخاصة بك
-$dbname = "db_aqcc"; // اسم قاعدة البيانات
+$dbname = "db_qacc"; // اسم قاعدة البيانات
 
 // إنشاء اتصال
 $conn = new mysqli($servername, $username, $password, $dbname);
