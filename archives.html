@@ -474,10 +474,27 @@
                         <div class="row mb-3">
                             <div class="col">
                                 <div class="form-floating">
-                                    <input type="number" class="form-control" id="sequence" required
+                                    <input type="text" class="form-control" id="sequence" readonly
                                         placeholder="أدخل التسلسل">
                                     <label for="sequence">التسلسل</label>
                                 </div>
+                                <script>
+                                    function updateSequenceNumber() {
+                                        fetch('php/get_sequence.php')
+                                            .then(response => response.json())
+                                            .then(data => {
+                                                if (data.status === 'success') {
+                                                    // تعيين قيمة العداد مع السنة
+                                                    document.getElementById('sequence').value = data.sequence;
+                                                } else {
+                                                    console.error('Failed to fetch sequence number');
+                                                }
+                                            })
+                                            .catch(error => {
+                                                console.error('Error:', error);
+                                            });
+                                    }
+                                </script>
                             </div>
                             <div class="col">
                                 <div class="form-floating">
@@ -979,6 +996,7 @@
 
         document.addEventListener('DOMContentLoaded', (event) => {
             loadMessages(); // تحميل الرسائل عند بدء تشغيل الصفحة
+
         });
 
 
@@ -991,7 +1009,7 @@
             // تعيين القيم للحقول المخفية
             document.getElementById('fileName').value = fileName;
             document.getElementById('fileUrl').value = fileUrl;
-
+            updateSequenceNumber();
 
         }
 
