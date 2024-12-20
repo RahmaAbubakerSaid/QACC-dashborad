@@ -405,8 +405,8 @@
 
 
                         <!--<button class="btn btn-success custom-btn-main">تقارير</button>-->
-                        <a href="message_archive_hub.html" class="btn btn-success custom-btn-main" style="margin-right: 10px;"
-                            onclick="">الأرشيف</a>
+                        <a href="message_archive_hub.html" class="btn btn-success custom-btn-main"
+                            style="margin-right: 10px;" onclick="">الأرشيف</a>
                         <a href="archives_reports.html" class="btn btn-success custom-btn-main"
                             style="margin-right: 10px;" onclick="showDetails()">التقارير</a>
                     </div>
@@ -467,8 +467,8 @@
                         <div class="form-floating mb-3">
                             <select id="archiveType" style="color: #757575;" required>
                                 <option selected disabled>اختر نوع الأرشفة</option>
-                                <option value="صادرة">صادرة</option>
-                                <option value="واردة">واردة</option>
+                                <option value="صادر">صادر</option>
+                                <option value="داخلي">داخلي</option>
                             </select>
                         </div>
                         <div class="row mb-3">
@@ -481,7 +481,7 @@
                             </div>
                             <div class="col">
                                 <div class="form-floating">
-                                    <input type="number" class="form-control" id="referenceNumber" required
+                                    <input type="text" class="form-control" id="referenceNumber" required
                                         placeholder="أدخل الرقم الإشاري">
                                     <label for="referenceNumber">الرقم الإشاري</label>
                                 </div>
@@ -519,14 +519,16 @@
                         <div class="form-floating mb-3">
                             <select id="documentType" style="color: #757575;" required>
                                 <option selected disabled>اختر نوع الوثيقة</option>
-                                <option value="استقالة">استقالة</option>
+                                <option value="تكليفات">تكليفات</option>
+                                <option value="تقارير">تقارير</option>
+                                <option value="محاضر">محاضر</option>
+                                <option value="إنذار">إنذار</option>
+                                <option value="مباشرة عمل">مباشرة عمل</option>
+                                <option value="كتاب">كتاب</option>
                                 <option value="تشكيل لجنة">تشكيل لجنة</option>
-                                <option value="تصريح اجازة">تصريح اجازة</option>
-                                <option value="تصريح بالتجول">تصريح بالتجول</option>
-                                <option value="تصريح نقل">تصريح نقل</option>
                                 <option value="تعميم">تعميم</option>
-                                <option value="تكليف">تكليف</option>
-                                <option value="عقد عمل">عقد عمل</option>
+                                <option value="تنسيب">تنسيب</option>
+
                             </select>
                         </div>
 
@@ -553,9 +555,6 @@
                     </div>
                 </div>
             </div>
-
-
-
         </div>
         <!-- Content End -->
 
@@ -669,10 +668,10 @@
             if (messageText.trim() === '' && files.length === 0) {
                 Swal.fire({
                     icon: 'warning',
-                    title: 'خطأ!',
+                    title: 'تنبيه!',
                     text: 'يرجى كتابة رسالة أو إرفاق ملف قبل الإرسال.',
                     confirmButtonText: 'حسنًا',
-                    customClass: { confirmButton: 'btn btn-primary' }
+                    confirmButtonColor: '#D1A237',
                 });
                 return false;
             }
@@ -681,10 +680,10 @@
             if (selectedEmployees.length === 0) {
                 Swal.fire({
                     icon: 'warning',
-                    title: 'خطأ!',
+                    title: 'تنبيه!',
                     text: 'يرجى اختيار موظف واحد على الأقل لإرسال الرسالة.',
                     confirmButtonText: 'حسنًا',
-                    customClass: { confirmButton: 'btn btn-primary' }
+                    confirmButtonColor: '#D1A237',
                 });
                 return false;
             }
@@ -716,12 +715,63 @@
                         loadMessages();
                         Swal.fire({
                             icon: 'success',
-                            title: 'تم إرسال الرسالة بنجاح!',
+                            title: '<strong style="font-size: 20px;">تم إرسال الرسالة بنجاح!</strong>',   // أيقونة التحذير
                             confirmButtonText: 'حسنًا',
-                            customClass: { confirmButton: 'btn btn-primary' }
+                            confirmButtonColor: '#D1A237',
                         });
                         messageInput.value = ''; // مسح حقل الإدخال
                         fileInput.value = ''; // مسح حقل الملفات
+                    } else if (data.action === 'confirm_required') {
+                        // عرض نافذة تأكيد للمستخدم
+                        Swal.fire({
+                            title: '<strong style="font-size: 20px;">تأكيد الإرسال</strong>',   // أيقونة التحذير
+                            text: data.message,
+                            icon: 'question',
+                            showCancelButton: true,
+                            confirmButtonText: 'نعم، المتابعة',
+                            cancelButtonText: 'إلغاء',
+                            confirmButtonColor: '#D1A237',
+                            cancelButtonColor: '#6c757d',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                // إعادة إرسال البيانات مع إشارة إلى أن المستخدم أكد المتابعة
+                                formData.append('confirm', 'true');
+                                fetch('php/send_messages.php', {
+                                    method: 'POST',
+                                    body: formData
+                                })
+                                    .then(response => response.json())
+                                    .then(confirmData => {
+                                        if (confirmData.success) {
+                                            loadMessages();
+                                            Swal.fire({
+                                                icon: 'success',
+                                                title: '<strong style="font-size: 20px;">تم إرسال الرسالة بنجاح!</strong>',   // أيقونة التحذير
+                                                confirmButtonText: 'حسنًا',
+                                                confirmButtonColor: '#D1A237',
+                                            });
+                                        } else {
+                                            Swal.fire({
+                                                icon: 'error',
+                                                title: 'خطأ',
+                                                text: confirmData.message,
+                                                confirmButtonText: 'حسنًا',
+                                                customClass: { confirmButton: 'btn btn-danger' }
+                                            });
+                                        }
+                                    });
+                            } else {
+                                Swal.fire({
+                                    icon: 'warning',
+                                    title: 'تم الإلغاء',
+                                    text: 'لم يتم إرسال الرسالة. يرجى تغيير اسم الملف وإعادة المحاولة إذا كان المحتوى مختلفًا.',
+                                    confirmButtonText: 'حسنًا',
+                                    confirmButtonColor: '#D1A237',
+                                });
+                                messageInput.value = ''; // مسح حقل الإدخال
+                                fileInput.value = ''; // مسح حقل الملفات
+                            }
+                        });
                     } else {
                         Swal.fire({
                             icon: 'error',
@@ -742,6 +792,7 @@
                         customClass: { confirmButton: 'btn btn-danger' }
                     });
                 });
+
         }
 
         // وظيفة لتحميل الرسائل من قاعدة البيانات وعرضها
