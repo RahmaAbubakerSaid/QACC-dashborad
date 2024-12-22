@@ -11,6 +11,7 @@ if (!isset($_POST['employees'], $_POST['username'])) {
 $username = $_POST['username']; // استلام اسم المستخدم
 $employees = json_decode($_POST['employees']); // تحويل بيانات الموظفين من JSON إلى مصفوفة
 $message = isset($_POST['message']) ? trim($_POST['message']) : ''; // إذا لم تكن الرسالة موجودة تكون فارغة
+$confirmed = isset($_POST['confirm']) && $_POST['confirm'] === 'true'; // التحقق من تأكيد المستخدم
 
 // التحقق من وجود الموظفين
 if (empty($employees)) {
@@ -44,6 +45,25 @@ if (isset($_FILES['files']) && count($_FILES['files']['name']) > 0) {
         $file_name = basename($_FILES['files']['name'][$i]);
         $file_url = $base_url . $file_name; // رابط الوصول إلى الملف عبر الإنترنت
 
+        // التحقق من وجود الملف في جدول Archival
+        $file_check_stmt = $conn->prepare("SELECT COUNT(*) FROM Archival WHERE file_name = ? OR file_url = ?");
+        $file_check_stmt->bind_param("ss", $file_name, $file_url);
+        $file_check_stmt->execute();
+        $file_check_stmt->bind_result($count);
+        $file_check_stmt->fetch();
+        $file_check_stmt->close();
+
+        if ($count > 0 && !$confirmed) {
+            // إرسال استجابة للمستخدم تطلب تأكيد الإرسال
+            echo json_encode([
+                'success' => false,
+                'action' => 'confirm_required',
+                'message' => 'يوجد ملف مؤرشف بنفس الاسم. إذا كان محتوى الملف مختلفًا، يرجى تغيير الاسم وإعادة الإرسال. أما إذا كان الملف نفسه، يمكنك تأكيد الإرسال للمتابعة.',
+                'file_name' => $file_name
+            ]);
+            exit;
+        }
+
         // نقل الملف إلى المجلد المناسب
         if (!move_uploaded_file($file_tmp, $upload_dir . $file_name)) {
             echo json_encode(['success' => false, 'message' => 'حدث خطأ أثناء تحميل الملف: ' . $file_name]);
@@ -57,6 +77,8 @@ if (isset($_FILES['files']) && count($_FILES['files']['name']) > 0) {
     $file_names = implode(', ', $file_names);
     $file_urls = implode(', ', $file_urls);
 }
+
+
 
 // إرسال الرسالة لجميع الموظفين
 foreach ($employees as $employee_id) {

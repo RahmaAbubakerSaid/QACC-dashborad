@@ -17,17 +17,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
     
     // إذا وجدنا الملف في قاعدة البيانات
     if ($stmt->fetch()) {
-        // مسار الملف الفعلي على الخادم
-        $file_path_on_server = $_SERVER['DOCUMENT_ROOT'] . '/QACC-dashborad/employeeFiles/' . $file_name;
-
-        // حذف الملف من المجلد إذا كان موجودًا
-        if (file_exists($file_path_on_server)) {
-            if (!unlink($file_path_on_server)) {
-                echo json_encode(['success' => false, 'message' => 'فشل في حذف الملف من المجلد']);
-                exit;
-            }
-        }
-
         // استعلام لحذف الملف من جدول employee_files
         $stmt_delete = $conn->prepare("DELETE FROM employee_files WHERE id = ?");
         $stmt_delete->bind_param("i", $file_id);  // ربط الـ file_id بالاستعلام
@@ -44,20 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
         // إغلاق الاستعلام
         $stmt_delete->close();
     } else {
-        // حذف السجل حتى لو لم يكن موجودًا على الخادم
-        $stmt_delete = $conn->prepare("DELETE FROM employee_files WHERE id = ?");
-        $stmt_delete->bind_param("i", $file_id);  // ربط الـ file_id بالاستعلام
-
-        if ($stmt_delete->execute()) {
-            // إذا تم الحذف بنجاح، إرسال استجابة بنجاح
-            echo json_encode(['success' => true, 'message' => 'تم حذف السجل بنجاح ']);
-        } else {
-            // إذا فشل الحذف في قاعدة البيانات، إرسال رسالة خطأ
-            echo json_encode(['success' => false, 'message' => 'فشل في حذف السجل من قاعدة البيانات']);
-        }
-
-        // إغلاق الاستعلام
-        $stmt_delete->close();
+        echo json_encode(['success' => false, 'message' => 'الملف غير موجود في قاعدة البيانات']);
     }
 
     // إغلاق الاتصال
