@@ -115,20 +115,28 @@
                     </div>
                 </div>
             </div>
+            
             <!-- Sale & Revenue Start -->
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
+ 
+                    <!--كارد عدد الموظفين -->
                     <div class="col-sm-6 col-xl-3">
                         <div class="bg-light rounded d-flex align-items-center justify-content-center p-4">
                             <div class="info-container">
-                                <i class="fa fa-user fa-3x " style="color: #414141;"></i>
+                                <i class="fa fa-user fa-3x" style="color: #414141;"></i>
                                 <div class="ms-0">
                                     <p class="mb-2" style="margin-top: 30px;">عدد الموظفين</p>
-                                    <h6 class="mb-0" style="margin: 10px;">150</h6>
+                                    <!-- هذا العنصر سيعرض عدد الموظفين تلقائيًا -->
+                                    <h6 id="employee-count" class="mb-0" style="margin: 10px;"></h6>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    
+                    
+                   
+
                     <div class="col-sm-6 col-xl-3">
                         <div class="bg-light rounded d-flex align-items-center justify-content-center p-4">
                             <div class="info-container">
@@ -272,7 +280,7 @@
                     </div>
                 </div>
             </div>
-            
+            <!-- ملف جافا سكريبت يقوم بعرض بيانات جدول الادارات -->
             <script>
                
                function loadDepartmentsTable() {
@@ -426,24 +434,6 @@ document.addEventListener("DOMContentLoaded", loadDepartmentsTable);
                     
                 </div>
             </div>
-<script>
- // دالة لتحميل المكاتب وعرضها في الجدول الثاني
-function loadOfficesSecondTable() {
-    fetch('php/fetch_offices_second.php') // جلب البيانات من ملف PHP
-        .then(response => response.text()) // الحصول على البيانات النصية
-        .then(data => {
-            document.getElementById('officeTableBody2').innerHTML = data; // ملء الجدول بالبيانات
-        })
-        .catch(error => console.error('Error:', error)); // التعامل مع الأخطاء
-}
-
-// استدعاء الدالة عند تحميل الصفحة
-window.onload = function() {
-    loadOfficesSecondTable();  // تحميل البيانات في الجدول الثاني
-};
-
-
-</script>
             <!-- Widgets End -->
 
 
@@ -480,20 +470,69 @@ window.onload = function() {
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
 
-    <script>
-        fetch('php/user_info.php')
-            .then(response => response.json())
-            .then(data => {
-                if (data.loggedIn) {
-            // تحديث اسم المستخدم والصورة
-            document.getElementById('userName').innerText = data.username; // عرض اسم المستخدم
+    
+            <!-- ملف جافا سكريبت لعرض بيانات جدول المكاتب  -->
+<script>
+    // دالة لتحميل المكاتب وعرضها في الجدول الثاني
+   function loadOfficesSecondTable() {
+       fetch('php/fetch_offices_second.php') // جلب البيانات من ملف PHP
+           .then(response => response.text()) // الحصول على البيانات النصية
+           .then(data => {
+               document.getElementById('officeTableBody2').innerHTML = data; // ملء الجدول بالبيانات
+           })
+           .catch(error => console.error('Error:', error)); // التعامل مع الأخطاء
+   }
+   
+   // استدعاء الدالة عند تحميل الصفحة
+   window.onload = function() {
+       loadOfficesSecondTable();  // تحميل البيانات في الجدول الثاني
+   };
+   
+   
+   </script>
+   
+
+   <script>
+    fetch('php/user_info.php')
+        .then(response => response.json())
+        .then(data => {
+            if (data.loggedIn) {
+        // تحديث اسم المستخدم والصورة
+        document.getElementById('userName').innerText = data.username; // عرض اسم المستخدم
 /*             document.getElementById('profilePic').src = data.profile_pic; // عرض صورة المستخدم
- */
-                } else {
-                    window.location.href = 'http://localhost/QACC-dashborad/signin.html'; // إعادة توجيه إلى صفحة تسجيل الدخول
-                }
-            });
-        </script>
+*/
+            } else {
+                window.location.href = 'http://localhost/QACC-dashborad/signin.html'; // إعادة توجيه إلى صفحة تسجيل الدخول
+            }
+        });
+    </script>
+
+
+<!-- ملف جاف ا سكريبت المسؤول عن جلب عدد الموظفين داخل جدول الموظفين  -->
+<script>
+        // وظيفة لجلب عدد الموظفين من الملف PHP
+    async function fetchEmployeeCount() {
+    try {
+    // تعديل المسار ليشمل المجلد php
+    const response = await fetch('php/fetch_employee_count.php'); // استدعاء ملف PHP من مجلد php
+    const data = await response.json(); // تحويل الرد إلى JSON
+
+    // التحقق إذا كانت الاستجابة تحتوي على عدد الموظفين
+    if (data.employee_count !== undefined) {
+        // تحديث النص داخل العنصر بـ عدد الموظفين
+        document.getElementById('employee-count').textContent = data.employee_count;
+    } else {
+        console.error("خطأ في جلب البيانات:", data.message);
+    }
+    } catch (error) {
+    console.error("حدث خطأ أثناء الاتصال:", error);
+    }
+    }
+
+    // استدعاء الوظيفة عند تحميل الصفحة
+    window.onload = fetchEmployeeCount;
+
+    </script>
 </body>
 
 </html>
