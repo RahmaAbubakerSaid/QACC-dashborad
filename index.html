@@ -489,18 +489,19 @@
 
 
     <script>
-        fetch('php/user_info.php')
-            .then(response => response.json())
-            .then(data => {
-                if (data.loggedIn) {
-                    // تحديث اسم المستخدم والصورة
-                    document.getElementById('userName').innerText = data.username; // عرض اسم المستخدم
-                    /*             document.getElementById('profilePic').src = data.profile_pic; // عرض صورة المستخدم
-                    */
-                } else {
-                    window.location.href = 'http://localhost/QACC-dashborad/signin.html'; // إعادة توجيه إلى صفحة تسجيل الدخول
-                }
-            });
+        // التحقق من تسجيل الدخول وتحديث واجهة المستخدم
+        function checkUserLogin() {
+            fetch('php/user_info.php')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.loggedIn) {
+                        document.getElementById('userName').innerText = data.username;
+                        // document.getElementById('profilePic').src = data.profile_pic;
+                    } else {
+                        window.location.href = 'http://localhost/QACC-dashborad/signin.html';
+                    }
+                });
+        }
     </script>
 
 
@@ -531,6 +532,7 @@
         // استدعاء جميع الوظائف عند تحميل الصفحة
         document.addEventListener('DOMContentLoaded', () => {
             loadOfficesSecondTable();
+            checkUserLogin();
             fetchEmployeeCount();
         });
     </script>
