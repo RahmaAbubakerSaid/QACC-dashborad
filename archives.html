@@ -498,7 +498,7 @@
                             </div>
                             <div class="col">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control" id="referenceNumber" required
+                                    <input type="text" class="form-control" id="referenceNumber" readonly
                                         placeholder="أدخل الرقم الإشاري">
                                     <label for="referenceNumber">الرقم الإشاري</label>
                                 </div>
@@ -527,11 +527,216 @@
                             <label for="from">القسم/ من</label>
                         </div>
 
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="to" required
-                                placeholder="أدخل الجهة المعنية/ إلى">
-                            <label for="to">الجهة المعنية/ إلى</label>
+                        <div class="form-floating mb-3 d-flex align-items-center">
+                            <select id="to" class="flex-grow-1" style="color: #757575;" required
+                                onchange="updateReferenceNumber()">
+                                <option selected disabled value="0/0">اختر الجهة المعنية/ إلى</option>
+                            </select>
+                            <button type="button" class="btn btn-success flex-shrink-0"
+                                style="margin-right: 10px; padding: 15px 15px;" onclick="openAddEntityDialog()">إضافة
+                                جهة</button>
                         </div>
+                        <script>
+                            function openAddEntityDialog() {
+                                Swal.fire({
+                                    title: 'إضافة جهة جديدة',
+                                    html: `
+                                        <div class="form-floating mb-3">
+                                            <input type="text" id="entityNumber" class="form-control" placeholder="أدخل الرقم">
+                                            <label for="entityNumber">الرقم</label>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <input type="text" id="entityName" class="form-control" placeholder="أدخل اسم الجهة">
+                                            <label for="entityName">اسم الجهة</label>
+                                        </div>
+                                        <div style="overflow-y: auto; max-height: 200px;">
+                                            <table class="table table-striped" id="entitiesTable" style="width: 100%; table-layout: auto;">
+                                            <thead>
+                                                <tr>
+                                                <th style="min-width: 100px;">الرقم</th>
+                                                <th style="min-width: 200px; word-wrap: break-word;">الاسم</th>
+                                                <th style="min-width: 100px;">الإجراء</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="entitiesTableBody">
+                                                <!-- سيتم إضافة الجهات هنا -->
+                                            </tbody>
+                                        </table>
+                                    `,
+                                    showCancelButton: true,
+                                    confirmButtonText: 'حفظ',
+                                    cancelButtonText: 'إلغاء',
+                                    confirmButtonColor: '#198754',
+                                    preConfirm: () => {
+                                        const entityNumber = document.getElementById('entityNumber').value.trim();
+                                        const entityName = document.getElementById('entityName').value.trim();
+                                        if (!entityNumber || !entityName) {
+                                            Swal.showValidationMessage('يرجى إدخال جميع الحقول!');
+                                            return false;
+                                        }
+                                        return { entityNumber, entityName };
+                                    }
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        saveEntity(result.value.entityNumber, result.value.entityName);
+                                    }
+                                });
+                                // تحميل الجهات من الخادم وعرضها في الجدول
+                                updateEntityTable();
+                                updateEntityList();
+                            }
+
+                            function saveEntity(entityNumber, entityName) {
+                                const username = document.getElementById('userName').innerText;
+                                fetch('php/save_entity.php', {
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify({ number: entityNumber, name: entityName, username: username })
+                                })
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        if (data.status === 'success') {
+                                            Swal.fire({
+                                                icon: 'success',               // أيقونة التحذير
+                                                title: 'تم الحفظ',
+                                                text: data.message,
+                                                confirmButtonColor: '#198754',
+                                                confirmButtonText: 'حسنًــا'
+                                            });
+                                            updateEntityTable(); // تحديث الجدول
+                                            updateEntityList(); // تحديث القائمة المنسدلة
+                                        } else {
+                                            // عرض رسالة الخطأ القادمة من الخادم
+                                            Swal.fire({
+                                                icon: 'error',
+                                                title: 'حدث خطأ!',
+                                                text: data.message || 'حدث خطأ أثناء الحفظ!',
+                                                showCancelButton: true,
+                                                confirmButtonText: 'حسنًــا',
+                                                confirmButtonColor: '#dc3545',
+                                                cancelButtonText: 'إلغاء'
+                                            });
+                                        }
+                                    })
+                                    .catch(error => {
+                                        console.error('Error:', error);
+                                        Swal.fire('خطأ', 'حدث خطأ في الاتصال بالخادم!', 'error');
+                                    });
+                            }
+
+
+                            function updateEntityList() {
+                                fetch('php/get_entities.php')
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        const select = document.getElementById('to');
+                                        select.innerHTML = '<option selected disabled value="0/0">اختر الجهة المعنية/ إلى</option>';
+                                        data.entities.forEach(entity => {
+                                            const option = document.createElement('option');
+                                            option.value = entity.number;
+                                            option.textContent = `${entity.name}`;
+                                            select.appendChild(option);
+                                        });
+                                    })
+                                    .catch(error => console.error('Error fetching entities:', error));
+                            }
+
+                            function updateEntityTable() {
+                                fetch('php/get_entities.php')
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        const tableBody = document.getElementById('entitiesTableBody');
+                                        tableBody.innerHTML = ''; // مسح الجدول قبل إضافة البيانات الجديدة
+
+                                        if (data.entities.length === 0) {
+                                            const row = document.createElement('tr');
+                                            row.innerHTML = `
+                                                <td colspan="3" style="text-align: center;">لا يوجد بيانات</td>
+                                            `;
+                                            tableBody.appendChild(row);
+                                        } else {
+                                            data.entities.forEach(entity => {
+                                                const row = document.createElement('tr');
+                                                row.innerHTML = `
+                                                <td>${entity.number}</td>
+                                                <td>${entity.name}</td>
+                                                <td><button class="btn btn-danger custom-btn-main" onclick="deleteEntity('${entity.id}', '${entity.name}')">حذف</button></td>
+                                            `;
+                                                tableBody.appendChild(row);
+                                            });
+                                        }
+                                    })
+                                    .catch(error => console.error('Error fetching entities:', error));
+                            }
+
+                            function deleteEntity(entityId, entityName) {
+                                Swal.fire({
+                                    title: 'هل أنت متأكد؟',
+                                    text: `سيتم حذف ${entityName}, اضغظ نعم لتأكيد الحذف.`,
+                                    icon: 'question',
+                                    showCancelButton: true,
+                                    confirmButtonText: 'نعم, حذف',
+                                    confirmButtonColor: '#dc3545',
+                                    cancelButtonText: 'إلغاء'
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        fetch('php/delete_entity.php', {
+                                            method: 'POST',
+                                            headers: { 'Content-Type': 'application/json' },
+                                            body: JSON.stringify({ id: entityId })  // هنا يجب إرسال id وليس number
+                                        })
+                                            .then(response => response.json())
+                                            .then(data => {
+                                                if (data.status === 'success') {
+                                                    Swal.fire({
+                                                        icon: 'success',               // أيقونة التحذير
+                                                        title: 'تم الحذف',
+                                                        text: 'تم حذف الجهة بنجاح!',
+                                                        confirmButtonColor: '#198754',
+                                                        confirmButtonText: 'حسنًــا'
+                                                    });
+
+                                                    updateEntityTable(); // تحديث الجدول بعد الحذف
+                                                    updateEntityList();
+                                                    updateReferenceNumber();
+                                                } else {
+                                                    Swal.fire('خطأ', 'حدث خطأ أثناء الحذف!', 'error');
+                                                }
+                                            })
+                                            .catch(error => {
+                                                console.error('Error:', error);
+                                                Swal.fire('خطأ', 'حدث خطأ في الاتصال بالخادم!', 'error');
+                                            });
+                                    }
+                                });
+                            }
+
+
+                            function updateReferenceNumber() {
+                                const select = document.getElementById('to');
+                                const selectedOption = select.options[select.selectedIndex];
+                                const referenceNumberField = document.getElementById('referenceNumber');
+                                const sequenceField = document.getElementById('sequence');
+
+                                // التحقق إذا كانت قيمة الخيار المحدد ليست "0/0" أو غير فارغة
+                                if (selectedOption && selectedOption.value && selectedOption.value !== '0/0' && sequenceField) {
+                                    // الحصول على رقم الجهة
+                                    const entityNumber = selectedOption.value;
+
+                                    // الحصول على التسلسل
+                                    const sequence = sequenceField.value;
+
+                                    // تحديث الرقم الإشاري ليشمل رقم الجهة مع التسلسل
+                                    referenceNumberField.value = `${sequence}/${entityNumber}`;
+                                } else {
+                                    // تفريغ الرقم الإشاري إذا لم يتم اختيار جهة أو إذا كانت القيمة الافتراضية
+                                    referenceNumberField.value = '';
+                                }
+                            }
+
+
+
+                        </script>
 
                         <div class="form-floating mb-3">
                             <select id="documentType" style="color: #757575;" required>
@@ -1010,7 +1215,8 @@
             document.getElementById('fileName').value = fileName;
             document.getElementById('fileUrl').value = fileUrl;
             updateSequenceNumber();
-
+            updateEntityList();
+            updateEntityTable();
         }
 
 
@@ -1040,7 +1246,7 @@
             const date = document.getElementById('date').value;
             const decisionNumber = document.getElementById('decisionNumber').value;
             const from = document.getElementById('from').value;
-            const to = document.getElementById('to').value;
+            const to = document.getElementById('to').options[document.getElementById('to').selectedIndex].text;
             const documentType = document.getElementById('documentType').value;
             const attachments = document.getElementById('attachments').value;
             const messageSubject = document.getElementById('messageSubject').value;
